@@ -1,0 +1,71 @@
+<!doctype html>
+<html ng-app="mockupApp">
+	<head>
+		<title>Unsure Mockup</title>
+		<script src="javascripts/angular.js"></script>
+		<script src="javascripts/angular-sanitize.js"></script>
+		<script src="javascripts/ui-bootstrap-tpls-0.11.0.min.js"></script>
+		<script src="mockup.js"></script>
+		<link rel="stylesheet" href="stylesheets/bootstrap.css">
+		<link href="stylesheets/bootstrap.css" rel="stylesheet">
+	</head>
+	<body ng-controller="mockupCtrl">
+		<div class="container" ng-controller="modalCtrl">
+			<button type="submit" class="btn btn-default" ng-click="openNewOrderModal()">New</button>
+		</div>
+		<div class="container-fluid" id="spa">
+			<div class="col-md-4">
+				<div>
+					Current User
+					<select ng-model="currentUser" ng-options="user for user in users"></select>
+				</div>
+				{{data.currentOrderId || 'Order #'}}
+				<div class="panel">
+					<h2 class="panel-heading">Incoming</h2>
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th><a href="" ng-click="predicate='orderid'">Order</a></th>
+								<th><a href="" ng-click="predicate='name'">Cust</a></th>
+								<th><a href="" ng-click="predicate='status'">Status</a></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="order in incomingOrders() | orderBy:customSorter" ng-class="order.orderid === data.currentOrderId ? 'danger' : ''" ng-click="click(order)">
+								<td>{{order.orderid}}</td>
+								<td>{{foind(customers, 'custid', order.custid).name}}</td>
+								<td>{{order.status}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div>
+					<h2>Active</h2>
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th><a href="" ng-click="predicate='orderid'">Order</a></th>
+								<th><a href="" ng-click="predicate='name'">Cust</a></th>
+								<th><a href="" ng-click="predicate='status'">Status</a></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="order in activeOrders() | orderBy:customSorter" ng-class="order.orderid === currentOrderId ? 'success' : ''" ng-click="click(order)">
+								<td>{{order.orderid}}</td>
+								<td>{{foind(customers, 'custid', order.custid).name}}</td>
+								<td>{{order.status}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<div class="well">
+					<h1>{{foind(customers, 'custid', foind(orders, 'orderid', data.currentOrderId).custid).name}}</h1>
+					{{foind(customers, 'custid', foind(orders, 'orderid', data.currentOrderId).custid).phone}}
+				</div>
+				<ng-include src="viewOrEdit()"></ng-include>
+			</div>
+		</div>
+	</body>
+</html>

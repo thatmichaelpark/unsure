@@ -1,0 +1,49 @@
+<!-- http://angularcode.com/how-to-create-a-facebook-style-autocomplete-using-angularjs/ -->
+<!doctype html>
+<html ng-app="myApp">
+	<head>
+		<script src="javascripts/angular.js"></script>
+		<script src="javascripts/ui-bootstrap-tpls-0.11.0.min.js"></script>
+		<script>
+			var app = angular.module('myApp', ['ui.bootstrap']);
+			 
+			app.controller('autocompleteController', function($scope, $http) {
+				getCountries(); // Load all countries with capitals
+				function getCountries(){
+					$http.get("/users/customers").success(function(data){
+						$scope.countries = data;
+					});
+				};
+				$scope.onSelectPart = function( item ) {
+					console.log( item['Company Name'] );
+					$scope.x = item['Company Name'];
+				}
+			});
+		</script>
+		<script type="text/ng-template" id="customTemplate">
+			<a>
+				<span bind-html-unsafe="match.model['First Name'] | typeaheadHighlight:query"></span>
+				<span bind-html-unsafe="match.model['Last Name'] | typeaheadHighlight:query"></span>
+				<i>({{match.model['Company Name']}})</i>
+			</a>
+		</script>
+		<link href="stylesheets/bootstrap.css" rel="stylesheet">
+		<link href="stylesheets/autocomplete.css" rel="stylesheet"/>
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+
+		<form class="form-search" ng-controller="autocompleteController">
+		X: {{x}}<br>
+		Selected: {{selectedCountries}}
+		<br>
+			<input type="text" placeholder="Search Countries"
+				ng-model="selectedCountries"
+				typeahead="c as c['Company Name'] for c in countries | filter:$viewValue | limitTo:10"
+				typeahead-on-select="onSelectPart($item)"
+				typeahead-min-length='1'
+				typeahead-template-url="customTemplate" style="width:350px;" class="form-control"></input>
+		</form>
+
+	</body>
+</html>

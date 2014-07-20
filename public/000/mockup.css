@@ -1,0 +1,88 @@
+.abs {
+	position : absolute;
+	border-radius : 0x 0x 0x 0x;
+	overflow: hidden;
+	overflow-y: auto;
+	border: solid black 1px
+}
+#spa {
+	top : 0px;
+	left : 0px;
+	bottom : 0px;
+	right : 0px;
+	min-height : 300px;
+	min-width : 300px;
+}
+#left {
+	top: 0;
+	right: 60%;
+	bottom: 0;
+	left: 0;
+}
+#right {
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 40%;
+}
+#user {
+	top : 0;
+	right : 0;
+	bottom : 90%;
+	left : 0;
+}
+#incoming {
+	top : 10%;
+	right : 0;
+	bottom : 60%;
+	left : 0;
+}
+#active {
+	top : 40%;
+	right : 0;
+	bottom : 0;
+	left : 0;
+}
+#cust {
+	top : 0;
+	right : 0;
+	bottom : 85%;
+	left : 0;
+}
+#bill {
+	top : 15%;
+	left : 0;
+	bottom : 65%;
+	right : 0;
+}
+#symptoms {
+	top : 35%;
+	left : 0;
+	bottom : 60%;
+	right : 0;
+}
+#computer {
+	top : 40%;
+	left : 0;
+	bottom : 40%;
+	right : 0;
+}
+#notes {
+	top : 60%;
+	left : 0;
+	bottom : 5%;
+	right : 0;
+}
+#misc {
+	top : 95%;
+	left : 0;
+	bottom : 0%;
+	right : 0;
+}
+.selected {
+	background-color: lightgreen;
+}
+
+.blah {
+	border: solid yellow;
+}

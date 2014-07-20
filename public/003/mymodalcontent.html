@@ -1,0 +1,91 @@
+			<div class='container-fluid' ng-controller="TypeaheadCtrl">
+
+				<div class="col-md-9">
+					<label>Search</label>
+					<input type="text" placeholder="Search Customers"
+						ng-model="customerSelected"
+						typeahead="c as nameMaker(c) for c in customers  | blah:$viewValue | limitTo:10"
+						typeahead-min-length='1'
+						typeahead-on-select="onSelectPart($item)"
+						ng-blur="blur()"
+						style="width:350px;"
+						class="form-control">
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>Account Number</label>
+						<pre>#: {{customerSelected.custNo || 'New'}}</pre>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>First Name</label>
+						<input type="text" ng-model="data.customerCopy.firstName" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Last Name</label>
+						<input type="text" ng-model="data.customerCopy.lastName" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Company Name</label>
+						<input type="text" ng-model="data.customerCopy.companyName" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>Phone 1</label>
+						<input type="text" ng-model="data.customerCopy.phone1" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>Phone 2</label>
+						<input type="text" ng-model="data.customerCopy.phone2" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Address 1</label>
+						<input type="text" ng-model="data.customerCopy.address1" class="form-control">
+						<label>Address 2</label>
+						<input type="text" ng-model="data.customerCopy.address2" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>City</label>
+						<input type="text" ng-model="data.customerCopy.city" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>State</label>
+						<input type="text" ng-model="data.customerCopy.state" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>Zip</label>
+						<input type="text" ng-model="data.customerCopy.postalCode" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label>Country</label>
+						<input type="text" ng-model="data.customerCopy.country" class="form-control">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<textarea class="form-control" style="resize: none" ng-model="data.desc"></textarea>
+					</div
+				</div>
+				<div class="form-group">
+					<button class="btn" ng-click="ok()">OK</button>
+					<button class="btn" ng-click="cancel()">Cancel</button>
+				</div>
+			</div>

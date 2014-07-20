@@ -1,0 +1,48 @@
+				<div class="well" id="bill">
+					<table class="table table-condensed">
+						<thead>
+							<tr>
+								<th>SKU</th>
+								<th>Description</th>
+								<th>Qty</th>
+								<th>Price</th>
+								<th>Ext. Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="item in data.currentOrder.bill track by $index">
+								<td>{{item.sku}}</td>
+								<td>{{item.desc}}</td>
+								<td>{{item.qty}}</td>
+								<td>{{item.price | currency}}</td>
+								<td>{{item.qty * item.price | currency}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="well">
+					{{data.currentOrder.desc}}
+				</div>
+				<div class="well" id="notes">
+					<table>
+						<tr ng-repeat="note in data.currentOrder.notes track by $index">
+							<td>Date/time</td>
+							<td>Someone</td>
+							<td contenteditable ng-model="note.note">{{note.note}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="well" id="misc">
+					<div class="abs" id="status">
+						Status:
+						<select ng-model="data.currentOrder.status" ng-options="status for status in statuses" ng-change="statusChange()"></select>
+					</div>
+					<div class="abs" id="assigned">
+						Assigned To:
+						<select ng-model="data.currentOrder.assignedTo" ng-options="user for user in users" ng-change="assignedChange()"></select>
+					</div>
+					<div class="abs" id="buttons">
+						<button ng-click="okClick()">OK</button>
+						<button ng-click="cancelClick()">Cancel</button>
+					</div>
+				</div>

@@ -1,0 +1,27 @@
+				<div class="well">
+					Bill goes here
+				</div>
+				<div id="symptoms"  class="well">
+					Symptoms
+				</div>
+				<div  class="well">
+				HP Pfasdf 5325<br>
+				Doesfekf; bjdadfj 
+				</div>
+				<div class="well">
+						<div ng-repeat="note in foind(orders, 'orderid', currentOrderId).notes track by $index">
+							<div ng-bind-html="note.note"></div>
+						</div>
+				</div>
+				<div class="well">
+					<div id="status" class="panel">
+						Status: {{foind(orders, 'orderid', currentOrderId).status}}
+					</div>
+					<div id="assigned" class="panel">
+						Assigned To: {{foind(orders, 'orderid', currentOrderId).assignedTo}}
+						<br>Assigned By: {{foind(orders, 'orderid', currentOrderId).assignedBy}}
+					</div>
+					<div id="buttons" class="panel">
+						<button class="btn" ng-click="editClick()">Edit</button>
+					</div>
+				</div>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html ng-app="mockupApp">
+	<head>
+		<title>Unsure Mockup</title>
+		<script src="angular.js"></script>
+		<script src="mockup.js"></script>
+		<link rel="stylesheet" href="mockup.css">
+	</head>
+	<body ng-controller="mockupCtrl">
+		<div class="abs" id="spa">
+			<div class="abs" id="left">
+				<div class="abs" id="user">
+					Current User
+					<select ng-model="currentUser" ng-options="user for user in users"></select>
+				</div>
+				<div class="abs" id="incoming">
+					<h2>Incoming</h2>
+					<table>
+						<tr>
+							<th><a href="" ng-click="predicate='orderid'">Order</a></th>
+							<th><a href="" ng-click="predicate='name'">Cust</a></th>
+							<th><a href="" ng-click="predicate='status'">Status</a></th>
+						</tr>
+						<tr ng-repeat="order in incomingOrders() | orderBy:customSorter" ng-class="order.orderid === currentOrderId ? 'selected' : ''" ng-click="click(order)">
+							<td>{{order.orderid}}</td>
+							<td>{{foind(customers, 'custid', order.custid).name}}</td>
+							<td>{{order.status}}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="abs" id="active">
+					<h2>Active</h2>
+					<table>
+						<tr>
+							<th><a href="" ng-click="predicate='orderid'">Order</a></th>
+							<th><a href="" ng-click="predicate='name'">Cust</a></th>
+							<th><a href="" ng-click="predicate='status'">Status</a></th>
+						</tr>
+						<tr ng-repeat="order in activeOrders() | orderBy:customSorter" ng-class="order.orderid === currentOrderId ? 'selected' : ''" ng-click="click(order)">
+							<td>{{order.orderid}}</td>
+							<td>{{foind(customers, 'custid', order.custid).name}}</td>
+							<td>{{order.status}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="abs" id="right">
+				<div class="abs" id="cust">
+					<h1>{{foind(customers, 'custid', foind(orders, 'orderid', currentOrderId).custid).name}}</h1>
+					{{foind(customers, 'custid', foind(orders, 'orderid', currentOrderId).custid).phone}}
+				</div>
+				<div class="abs" id="bill">
+					Bill goes here
+				</div>
+				<div class="abs" id="symptoms">
+					Symptoms
+				</div>
+				<div class="abs" id="computer">
+				HP Pfasdf 5325<br>
+				Doesfekf; bjdadfj 
+				</div>
+				<div class="abs" id="notes">
+						<div ng-repeat="note in foind(orders, 'orderid', currentOrderId).notes track by $index" contenteditable ng-model="note.note">{{note.note}}</div>
+				</div>
+				<div class="abs" id="misc">
+					Assigned To:
+						<select ng-model="foind(orders, 'orderid', currentOrderId).assignedTo" ng-options="user for user in users" ng-click="assign()"></select>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

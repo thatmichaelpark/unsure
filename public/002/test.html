@@ -1,0 +1,120 @@
+<!-- test of orders resource -->
+<!doctype html>
+<html ng-app="testApp">
+	<head>
+		<title>Resource Test</title>
+		<script src="javascripts/angular.js"></script>
+		<script src="javascripts/angular-resource.js"></script>
+		<script>
+			var testApp = angular.module( 'testApp', ['ngResource'] );
+			testApp.constant( 'baseOrdersUrl', 'http://localhost:3000/orders/' );
+			testApp.constant( 'baseCustomersUrl', 'http://localhost:3000/customers/' );
+			testApp.controller( 'MainCtrl', function ( $scope, $resource, baseOrdersUrl, baseCustomersUrl ) {
+				$scope.ordersResource = $resource( baseOrdersUrl + 'byassignee/:user', { user: '@_user', id : '@_id' },
+					{
+						get: { method : 'GET', url : baseOrdersUrl + 'order/:id' },
+						add: { method : 'POST', url : baseOrdersUrl + 'addorder/' },
+						save: { method : 'PUT', url : baseOrdersUrl + 'updateorder/:id' },
+						delete : { method : 'DELETE', url : baseOrdersUrl + 'deleteorder/:id' }
+					}
+				);
+				$scope.customersResource = $resource( baseCustomersUrl + 'all', { custNo: '@custNo', id : '@_id' },
+					{
+						get: { method : 'GET', url : baseCustomersUrl + 'bycustno/:custNo' },
+						add: { method : 'POST', url : baseCustomersUrl + 'addorder/' },
+						save: { method : 'PUT', url : baseCustomersUrl + 'updateorder/:id' },
+						delete : { method : 'DELETE', url : baseCustomersUrl + 'deleteorder/:id' }
+					}
+				);
+				$scope.getOrders = function () {
+					$scope.orders = $scope.ordersResource.query( { user: $scope.currentUser }, function(){
+						$scope.incomingOrders = [];
+						$scope.activeOrders = [];
+						for ( var i=0; i<$scope.orders.length; ++i ) {
+							if ( $scope.orders[i].assignedTo == $scope.orders[i].assignedBy ) {
+								$scope.activeOrders.push( $scope.orders[i] );
+							} else {
+								$scope.incomingOrders.push( $scope.orders[i] );
+							}
+							(function () {
+								var index = i;
+								$scope.orders[index].customer = new $scope.customersResource();
+								$scope.orders[index].customer.$get( { custNo: $scope.orders[index].custNo } ).then( function(){});
+							}());
+						}
+					});
+				}
+				
+				$scope.users = ['Doug', 'Justin', 'Michael'];
+				$scope.currentUser = 'Michael';
+				
+				$scope.incomingOrders = [];
+				$scope.activeOrders = [];
+				$scope.getOrders();
+				
+				$scope.change = function( o ) {
+					o.changed = true;
+					console.log('changed');
+				}
+			});
+			testApp.directive( 'SortableTable', function () {
+				return {
+					link: function ( scope, element, attrs ) {
+					},
+					restrict: "E"					
+				}
+			});
+		</script>
+	</head>
+	<body ng-controller="MainCtrl">
+		<div>
+			Current User
+			<select ng-model="currentUser" ng-options="user for user in users" ng-change="getOrders()"></select>
+		</div>
+		
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>Order#</a></th>
+					<th>First Name</a></th>
+					<th>Last Name</a></th>
+					<th>Assigned To</a></th>
+					<th>Assigned By</a></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="order in incomingOrders">
+					<td>{{order.orderNo}}</td>
+					<td>{{order.customer['First Name'] || '???'}}</td>
+					<td>{{order.customer['Last Name'] || '???'}}</td>
+					<td>{{order.assignedTo}}</td>
+					<td>{{order.assignedBy}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="table table-condensed">
+			<thead>
+				<tr>
+					<th>Order#</a></th>
+					<th>First Name</a></th>
+					<th>Last Name</a></th>
+					<th>Assigned To</a></th>
+					<th>Assigned By</a></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="order in activeOrders">
+					<td>{{order.orderNo}}</td>
+					<td>{{order.customer['First Name'] || '???'}}</td>
+					<td>{{order.customer['Last Name'] || '???'}}</td>
+					<td>{{order.assignedTo}}</td>
+					<td>{{order.assignedBy}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<hr>
+		<table>
+		</table>
+	</body>
+	
+</html>
