@@ -1,0 +1,50 @@
+<div class="container-fluid" id="spa" ng-controller="InventoryCtrl">
+	<div class="col-xs-6">
+		<h2>Inventory</h2>
+		<table class="table table-condensed" ng-controller="SortableTableCtrl">
+			<thead>
+				<tr>
+					<th><a href="" ng-click="predicate='sku'">SKU</a></th>
+					<th><a href="" ng-click="predicate='desc'">Description</a></th>
+					<th><a href="" ng-click="predicate='price'">Price</a></th>
+					<th><a href="" ng-click="predicate='qty'">Quantity</a></th>
+					<th><a href="" ng-click="predicate='taxable'">Taxable</a></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="i in inventory | orderBy:customSorter" ng-click="clickItem(i)">
+					<td>{{i.sku}}</td>
+					<td>{{i.desc}}</td>
+					<td>{{i.price | currency}}</td>
+					<td>{{i.qty}}</td>
+					<td>{{i.taxable}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-6">
+		<div class="form-group">
+			<label>SKU</label>
+			<input type="text" ng-model="item.sku" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>Description</label>
+			<input type="text" ng-model="item.desc" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>Price</label>
+			<input type="text" ng-model="item.price" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>Quantity</label>
+			<input type="text" ng-model="item.qty" class="form-control">
+		</div>
+		<div class="form-group">
+			<label>Taxable</label>
+			<input type="checkbox" ng-model="item.taxable" class="form-control">
+		</div>
+		<button ng-if="!item._id" ng-click="clickAdd()">Add To Inventory</button>
+		<button ng-if="item._id" ng-click="clickUpdate()">Update</button>
+		<button ng-click="clickClear()">Clear</button>
+	</div>
+</div>

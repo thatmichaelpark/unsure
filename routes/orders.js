@@ -18,7 +18,7 @@ router.get('/byassignee/:user', function(req, res) {
 		var a = result.group;
 		console.log(a);;;
 		a.push( req.params.user );
-		db.collection('orders').find( { assignedTo: { $in: a } } ).toArray(function (err, items) {
+		db.collection('orders').find( { $and: [ { assignedTo: { $in: a } }, { status: { $ne: 'Closed' } } ] } ).toArray(function (err, items) {
 			res.json(items);
 		});
 	});
