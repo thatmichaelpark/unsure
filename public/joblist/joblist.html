@@ -49,7 +49,9 @@
 			</div>
 			<div class="col-xs-8" ng-if="data.currentOrderNo" ng-controller="OrderCtrl">
 				<div class="well">
-					<h3>{{data.currentOrderNo}}	{{data.currentOrder.custName}} ({{data.currentOrder.custNo}})</h3>
+					<h3>{{data.currentOrderNo}}	{{data.currentOrderCopy.custName}} ({{data.currentOrderCopy.custNo}})</h3>
+					{{data.currentOrderCopy.phone1 | tel}}
+					{{data.currentOrderCopy.phone2 | tel}}
 				</div>
 				<div class="well">
 					<table class="table table-condensed">
@@ -203,10 +205,9 @@
 						<select ng-model="data.currentOrderCopy.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
 						Assigned To:
 						<select ng-model="data.currentOrderCopy.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
-						<span>Assigned By: {{data.currentOrderCopy.assignedBy}}</span>
-					<div class="pull-right" id="buttons" ng-if="!unchanged">
-						<button ng-click="clickOk()" ng-disabled="unchanged">OK</button>
-						<button ng-click="clickCancel()" ng-disabled="unchanged">Cancel</button>
+					<div class="pull-right" id="buttons" ng-if="!data.unchanged">
+						<button ng-click="clickOk()" ng-disabled="data.unchanged">OK</button>
+						<button ng-click="clickCancel()" ng-disabled="data.unchanged">Cancel</button>
 					</div>
 				</div>
 			</div>

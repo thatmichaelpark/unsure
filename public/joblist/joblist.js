@@ -1,7 +1,8 @@
 mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location ) {
-	$scope.data.currentOrderNo = null;
 
 	$scope.getOrders = function () {
+		$scope.data.currentOrder = null;
+		$scope.data.currentOrderCopy = null;
 		$scope.orders = $scope.ordersResource.query( { user: $scope.data.currentView }, function(){
 			$scope.incomingOrders = [];
 			$scope.activeOrders = [];
@@ -16,12 +17,32 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 					var c = new $scope.customersResource();
 					c.$get( { custNo: $scope.orders[index].custNo } ).then( function () {
 						$scope.orders[index].custName = makeDisplayName( c );
+						$scope.orders[index].phone1 = c.phone1;
+						$scope.orders[index].phone2 = c.phone2;
+						if ( $scope.orders[index].orderNo === $scope.data.currentOrderNo ) {
+							$scope.data.currentOrder = $scope.orders[index];
+							$scope.data.currentOrderCopy = angular.copy( $scope.orders[index] );	// currentOrderCopy is a *copy* of an order. Edits are done on this copy.
+						}
 					});
 				}());
-				if ( $scope.orders[i].orderNo === $scope.data.currentOrderNo ) {
-					$scope.data.currentOrder = $scope.orders[i];
-					$scope.data.currentOrderCopy = angular.copy( $scope.orders[i] );	// currentOrderCopy is a *copy* of an order. Edits are done on this copy.
-				}
+			}
+
+			if ( $scope.data.currentOrderNo ) {
+				$scope.data.currentOrder = new $scope.ordersResource();
+				$scope.data.currentOrder.$get( { orderNo: $scope.data.currentOrderNo } ).
+				then( function () {
+					if ( angular.isDefined( $scope.data.currentOrder.orderNo ) ) {
+						var c = new $scope.customersResource();
+						c.$get( { custNo: $scope.data.currentOrder.custNo } ).then( function () {
+							$scope.data.currentOrder.custName = makeDisplayName( c );
+							$scope.data.currentOrder.phone1 = c.phone1;
+							$scope.data.currentOrder.phone2 = c.phone2;
+							$scope.data.currentOrderCopy = angular.copy( $scope.data.currentOrder );	// currentOrderCopy is a *copy* of an order. Edits are done on this copy.
+						});
+					} else {
+						$scope.data.currentOrderNo = null;
+					}
+				});
 			}
 		});
 	}
@@ -38,8 +59,6 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 	}
 	$scope.getInventory();
 	$scope.allUsers = ['Doug', 'Justin', 'Michael', 'Techs', 'Front', 'All'];
-
-	$scope.getOrders();
 
 	$scope.$on( 'userChanged', function ( e, u ) {
 		$scope.data.currentView = u;
@@ -65,7 +84,7 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 //		$scope.foind($scope.orders, 'orderid', $scope.data.currentOrderId).assignedBy = currentUser;
 	}
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Work approved', 'In progress', 'Yours!', 'Part request',
-	'Part ordered', 'Part received', 'Service complete', 'Customer notified', 'Closed' ];
+	'Part ordered', 'Part received', 'Complete: call customer', 'Customer notified', 'Closed' ];
 
 	$scope.data.unchanged = true;
 
@@ -78,8 +97,8 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 	$scope.$on( '$routeChangeSuccess', function () {
 		if ( $location.path().indexOf( '/joblist/' ) == 0 ) {
 			$scope.data.currentOrderNo = Number( $routeParams.orderNo );
-			$scope.getOrders(); //hack
 		}
+		$scope.getOrders(); //hack
 	});
 });
 
@@ -97,11 +116,12 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 		item.sku = $item.sku;
 		item.desc = $item.desc;
 		item.price = $item.price;
+		item.taxable = $item.taxable;
 		item.qty = 1;
 	}
 
 	$scope.subtotal = function () {
-		if ( angular.isDefined( $scope.data.currentOrderCopy ) && angular.isDefined( $scope.data.currentOrderCopy.bill ) ) {
+		if ( $scope.data.currentOrderCopy ) {
 			var t = 0;
 			for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
 				t += $scope.data.currentOrderCopy.bill[i].qty * $scope.data.currentOrderCopy.bill[i].price;
@@ -110,12 +130,12 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 		}
 	}
 	$scope.tax = function () {
-		if ( angular.isDefined( $scope.data.currentOrderCopy ) && angular.isDefined( $scope.data.currentOrderCopy.bill ) ) {
+		if ( $scope.data.currentOrderCopy ) {
 			var t = 0;
 			for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
-//				if ( $scoope.data.currentOrderCopy.bill[i].taxable ) {
+				if ( $scope.data.currentOrderCopy.bill[i].taxable ) {
 					t += $scope.data.currentOrderCopy.bill[i].qty * $scope.data.currentOrderCopy.bill[i].price;
-//				}
+				}
 			}
 			return t * 0.095;
 		}
@@ -126,8 +146,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 	}
 	$scope.paymentMethods = [ 'Cash', 'Check', 'Visa', 'MasterCard', 'Other CC', 'Gift Certificate' ];
 	$scope.totalTender = function ( ) {
-		if ( angular.isDefined( $scope.data.currentOrderCopy ) 
-				&& angular.isDefined( $scope.data.currentOrderCopy.tenders ) ) {
+		if ( $scope.data.currentOrderCopy ) {
 			var t = 0.0;
 			for ( var i=0; i<$scope.data.currentOrderCopy.tenders.length; ++i ) {
 				t += Number( $scope.data.currentOrderCopy.tenders[i].amount );
@@ -168,7 +187,6 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 		for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
 			delete $scope.data.currentOrderCopy.bill[i].edit;
 			if ( Number($scope.data.currentOrderCopy.bill[i].qty) ) {
-				console.log( $scope.data.currentOrderCopy.bill[i].qty );;;
 				newBill[ j++ ] = $scope.data.currentOrderCopy.bill[i];
 			}
 		}
@@ -217,4 +235,49 @@ mockupApp.controller( 'SortableTableCtrl', function ( $scope ) {
 	$scope.customSorter = function ( order ) {
 		return order[ $scope.predicate ];
 	}
+});
+
+mockupApp.filter('tel', function () {
+    return function (tel) {
+        if (!tel) { return ''; }
+
+        var value = tel.toString().trim().replace(/^\+/, '');
+
+        if (value.match(/[^0-9]/)) {
+            return tel;
+        }
+
+        var country, city, number;
+
+        switch (value.length) {
+            case 10: // +1PPP####### -> C (PPP) ###-####
+                country = 1;
+                city = value.slice(0, 3);
+                number = value.slice(3);
+                break;
+
+            case 11: // +CPPP####### -> CCC (PP) ###-####
+                country = value[0];
+                city = value.slice(1, 4);
+                number = value.slice(4);
+                break;
+
+            case 12: // +CCCPP####### -> CCC (PP) ###-####
+                country = value.slice(0, 3);
+                city = value.slice(3, 5);
+                number = value.slice(5);
+                break;
+
+            default:
+                return tel;
+        }
+
+        if (country == 1) {
+            country = "";
+        }
+
+        number = number.slice(0, 3) + '-' + number.slice(3);
+
+        return (country + " (" + city + ") " + number).trim();
+    };
 });

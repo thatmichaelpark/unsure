@@ -16,11 +16,21 @@ router.get('/byassignee/:user', function(req, res) {
 	var db = req.db;
 	db.collection('users').findOne( { name: req.params.user }, function ( err, result ) {
 		var a = result.group;
-		console.log(a);;;
 		a.push( req.params.user );
 		db.collection('orders').find( { $and: [ { assignedTo: { $in: a } }, { status: { $ne: 'Closed' } } ] } ).toArray(function (err, items) {
 			res.json(items);
 		});
+	});
+});
+
+router.get('/byorderno/:orderNo', function(req, res) {
+	var db = req.db;
+	db.collection('orders').findOne( { orderNo: Number(req.params.orderNo) }, function ( err, result ) {
+		if ( err ) {
+			console.log( err );
+		} else {
+			res.json( result );
+		}
 	});
 });
 
