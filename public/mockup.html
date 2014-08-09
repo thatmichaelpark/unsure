@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="mockupApp">
 	<head>
-		<title>Unsure Mockup</title>
+		<title>Unsure Mockup 0.011</title>
 		<script src="javascripts/angular.js"></script>
 		<script src="javascripts/angular-sanitize.js"></script>
 		<script src="javascripts/angular-resource.js"></script>
@@ -11,6 +11,7 @@
 		<script src="mockup.factory.js"></script>
 		<script src="joblist/joblist.js"></script>
 		<script src="createorder/createorder.js"></script>
+		<script src="customers/customers.js"></script>
 		<script src="inventory/inventory.js"></script>
 		<link rel="stylesheet" href="stylesheets/bootstrap.css">
 		<link href="stylesheets/bootstrap.css" rel="stylesheet">
@@ -20,9 +21,8 @@
 			Current User
 			<select ng-model="currentUser" ng-options="user for user in users" ng-change="userChanged()"></select>
 			<a class="btn btn-default" href="/jobslist">Work</a>
-			<a class="btn btn-default" href="/createorder">New</a>
-			<a class="btn btn-default" href="/customers">Customers</a>
-			<a class="btn btn-default" href="/inventory">Inventory</a>
+			<a class="btn btn-default" href="/createorder">New Order</a>
+			<a class="btn btn-default" href="/other">Other</a>
 		</div>
 		<div ng-view></div>
 	</body>

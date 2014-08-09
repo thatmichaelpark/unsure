@@ -36,6 +36,19 @@ router.post('/addcustomer', function(req, res) {
     });
 });
 
+/*
+ * PUT to update customer.
+ */
+router.put('/update/:id', function( req, res ) {
+	var db = req.db;
+	var customerToUpdate = req.params.id;
+	delete req.body._id;
+	db.collection( 'customers' ).updateById( customerToUpdate, req.body, function ( err, result ) {
+		res.send( err === null ? { msg: '' } : { msg: err } );
+	});
+});
+
+
 router.get('/nextCustNo', function(req, res) {
 	var db = req.db;
 	db.collection('nominalNumbers').findOne( { type: 'cust' }, function(err, result) {

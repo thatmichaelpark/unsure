@@ -29,6 +29,8 @@ mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location ) {
 				$scope.currentOrder.status = "Intake";
 				$scope.currentOrder.assignedTo = $scope.currentUser;
 				$scope.currentOrder.assignedBy = $scope.currentUser;
+				$scope.currentOrder.createdDate = new Date();
+				$scope.currentOrder.modifiedDate = new Date();
 				new $scope.ordersResource( $scope.currentOrder ).$add().then(function(){
 					$location.path( '/joblist/' + orderNo );
 				});

@@ -16,7 +16,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="order in incomingOrders | orderBy:customSorter" ng-class="order.orderNo === data.currentOrderNo ? 'danger' : ''" ng-click="clickOrder(order)">
+							<tr ng-repeat="order in incomingOrders | orderBy:customSorter" ng-class="orderClass(order)" ng-click="clickOrder(order)">
 								<td>{{order.orderNo}}</td>
 								<td>{{order.custName}}</td>
 								<td>{{order.status}}</td>
@@ -37,7 +37,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="order in activeOrders | orderBy:customSorter" ng-class="order.orderNo === data.currentOrderNo ? 'success' : ''" ng-click="clickOrder(order)">
+							<tr ng-repeat="order in activeOrders | orderBy:customSorter" ng-class="orderClass(order)" ng-click="clickOrder(order)">
 								<td>{{order.orderNo}}</td>
 								<td>{{order.custName}}</td>
 								<td>{{order.status}}</td>
@@ -205,6 +205,7 @@
 						<select ng-model="data.currentOrderCopy.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
 						Assigned To:
 						<select ng-model="data.currentOrderCopy.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
+						 Assigned By: {{data.currentOrderCopy.assignedBy}} ...{{data.unchanged}}
 					<div class="pull-right" id="buttons" ng-if="!data.unchanged">
 						<button ng-click="clickOk()" ng-disabled="data.unchanged">OK</button>
 						<button ng-click="clickCancel()" ng-disabled="data.unchanged">Cancel</button>

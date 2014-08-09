@@ -14,6 +14,7 @@ mockupApp.config( function ( $routeProvider, $locationProvider ) {
 	$routeProvider.when( '/createorder', { templateUrl: '/createorder/createorder.html' } );
 	$routeProvider.when( '/customers', { templateUrl: '/customers/customers.html' } );
 	$routeProvider.when( '/inventory', { templateUrl: '/inventory/inventory.html' } );
+	$routeProvider.when( '/other', { templateUrl: '/other.html' } );
 	$routeProvider.otherwise( { templateUrl: '/joblist/joblist.html' } );
 });
 

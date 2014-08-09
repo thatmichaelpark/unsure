@@ -84,7 +84,7 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 //		$scope.foind($scope.orders, 'orderid', $scope.data.currentOrderId).assignedBy = currentUser;
 	}
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Work approved', 'In progress', 'Yours!', 'Part request',
-	'Part ordered', 'Part received', 'Complete: call customer', 'Customer notified', 'Closed' ];
+	'Part ordered', 'Part received', 'Declined', 'Complete: call customer', 'Customer notified', 'Closed' ];
 
 	$scope.data.unchanged = true;
 
@@ -94,6 +94,17 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 			$scope.getOrders();
 		}	
 	}
+	
+	$scope.orderClass = function ( order ) {
+		if ( order.orderNo === $scope.data.currentOrderNo ) {
+			return 'success';
+		}
+		if ( order.assignedBy != $scope.currentUser ) {
+			return 'danger';
+		}
+		return '';
+	}
+	
 	$scope.$on( '$routeChangeSuccess', function () {
 		if ( $location.path().indexOf( '/joblist/' ) == 0 ) {
 			$scope.data.currentOrderNo = Number( $routeParams.orderNo );
@@ -137,7 +148,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 					t += $scope.data.currentOrderCopy.bill[i].qty * $scope.data.currentOrderCopy.bill[i].price;
 				}
 			}
-			return t * 0.095;
+			return Math.round( t * 9.5 ) / 100;
 		}
 	}
 	$scope.clickTender = function ( ) {

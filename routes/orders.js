@@ -23,6 +23,13 @@ router.get('/byassignee/:user', function(req, res) {
 	});
 });
 
+router.get('/bycustno/:custNo', function(req, res) {
+	var db = req.db;
+	db.collection('orders').find( { custNo: req.params.custNo } ).toArray(function (err, items) {
+		res.json(items);
+	});
+});
+
 router.get('/byorderno/:orderNo', function(req, res) {
 	var db = req.db;
 	db.collection('orders').findOne( { orderNo: Number(req.params.orderNo) }, function ( err, result ) {
