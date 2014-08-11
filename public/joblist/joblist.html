@@ -113,7 +113,11 @@
 						</tbody>
 						<tbody ng-controller="editableDeetParentCtrl">
 							<tr ng-repeat="tender in data.currentOrderCopy.tenders track by $index" ng-if="data.showDetailsCheckbox" ng-controller="editableCtrl">
-								<td>{{tender.date | date}}</td>
+								<td>
+									<a href="#" tooltip="{{tender.date | date:'h:mm a'}}" tooltip-placement="right">
+										{{tender.date | date}}
+									</a>
+								</td>
 								<td>
 									<div ng-if="!editing($last)">{{tender.method}}</div>
 									<select ng-if="editing($last)" ng-model="tender.method" ng-options="m for m in paymentMethods">
@@ -157,7 +161,11 @@
 						</thead>
 						<tbody>
 							<tr  ng-repeat="note in data.currentOrderCopy.notes track by $index" ng-show="showStatusChanges(note.note)" ng-controller="editableCtrl">
-								<td>{{note.date | date}}</td>
+								<td>
+									<a href="#" tooltip="{{note.date | date:'h:mm a'}}" tooltip-placement="right">
+										{{note.date | date}}
+									</a>
+								</td>
 								<td>{{note.by}}</td>
 								<td>
 									<div ng-if="!editing($last)" ng-bind-html="note.note | nl2br"></div>
