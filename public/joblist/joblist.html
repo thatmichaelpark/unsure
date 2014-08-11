@@ -65,52 +65,44 @@
 								<th></th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr ng-repeat="item in data.currentOrderCopy.bill track by $index">
+						<tbody ng-controller="editableParentCtrl">
+							<tr ng-repeat="item in data.currentOrderCopy.bill track by $index" ng-controller="editableCtrl">
 								<td>
-									<div ng-if="!item.edit">{{item.sku}}</div>
-									<input ng-if="item.edit" ng-model="item.sku" style="width: 100%">
+									<div ng-if="!editing($last)">{{item.sku}}</div>
+									<input ng-if="editing($last)" ng-model="item.sku" style="width: 100%">
 								</td>
 								<td>
-									<div ng-if="!item.edit">{{item.desc}}</div>
-									<input ng-if="item.edit" ng-model="item.desc" style="width: 100%"
+									<div ng-if="!editing($last)">{{item.desc}}</div>
+									<input ng-if="editing($last)" ng-model="item.desc" style="width: 100%"
 						typeahead="d as i.desc for i in inventory | filter:$viewValue | limitTo:10"
 						typeahead-min-length='1'
 						typeahead-on-select="onSelectInventory($item, item)"
-						class="form-control">
+						class="form-control" focus>
 								</td>
-								<td>
-									<div ng-if="!item.edit">{{item.qty}}</div>
-									<input ng-if="item.edit" ng-model="item.qty">
+								<td style="width: 10%">
+									<div ng-if="!editing($last)">{{item.qty}}</div>
+									<input ng-if="editing($last)" ng-model="item.qty" style="width: 50px">
 								</td>
-								<td>
-									<div ng-if="!item.edit">{{item.price | currency}}</div>
-									<input ng-if="item.edit" ng-model="item.price">
+								<td style="width: 10%">
+									<div ng-if="!editing($last)">{{item.price | currency}}</div>
+									<input ng-if="editing($last)" ng-model="item.price" style="width: 50px">
 								</td>
 								<td>{{item.qty * item.price | currency}}</td>
 								<td>
-									<button ng-click="clickEditItem( item )">Edit</button>
+									<button ng-click="clickEdit()">Edit</button>
 								</td>
 							</tr>
 							<tr>
 								<td></td>
 								<td></td>
 								<td></td>
-								<td></td>
-								<td></td>
-								<td>
-									<button ng-click="clickAddItem()">Add</button>
-								</td>
-							</tr>
-							<tr ng-if="showDetailsCheckbox">
-								<td></td>
-								<td></td>
-								<td></td>
 								<td>Subtotal</td>
 								<td>{{subtotal() | currency}}</td>
-								<td></td>
+								<td>
+									<button ng-click="clickAdd(data.currentOrderCopy.bill, {sku:'', desc:'', qty:'', price:''})">Add</button>
+								</td>
 							</tr>
-							<tr ng-if="showDetailsCheckbox">
+							<tr ng-if="data.showDetailsCheckbox">
 								<td></td>
 								<td></td>
 								<td></td>
@@ -118,39 +110,43 @@
 								<td>{{tax() | currency}}</td>
 								<td></td>
 							</tr>
-							<tr ng-repeat="tender in data.currentOrderCopy.tenders track by $index" ng-if="showDetailsCheckbox || tender.visible">
+						</tbody>
+						<tbody ng-controller="editableDeetParentCtrl">
+							<tr ng-repeat="tender in data.currentOrderCopy.tenders track by $index" ng-if="data.showDetailsCheckbox" ng-controller="editableCtrl">
 								<td>{{tender.date | date}}</td>
 								<td>
-									<div ng-if="!tender.edit">{{tender.method}}</div>
-									<select ng-if="tender.edit" ng-model="tender.method" ng-options="m for m in paymentMethods">
+									<div ng-if="!editing($last)">{{tender.method}}</div>
+									<select ng-if="editing($last)" ng-model="tender.method" ng-options="m for m in paymentMethods">
 									</select>
 								</td>
 								<td>
-									<div ng-if="!tender.edit">{{tender.note}}</div>
-									<input ng-if="tender.edit" ng-model="tender.note">
+									<div ng-if="!editing($last)">{{tender.note}}</div>
+									<input ng-if="editing($last)" ng-model="tender.note" style="width: 50px">
 								</td>
 								<td></td>
 								<td>
-									<div ng-if="!tender.edit">{{-tender.amount | currency}}</div>
-									<input ng-if="tender.edit" ng-model="tender.amount">
+									<div ng-if="!editing($last)">{{-tender.amount | currency}}</div>
+									<input ng-if="editing($last)" ng-model="tender.amount" style="width: 50px" focus>
 								</td>
-								<td></td>
+								<td>
+									<button ng-click="clickEdit()">Edit</button>
+								</td>
 							</tr>
 							<tr>
 								<td></td>
 								<td></td>
-								<td>Deets <input type="checkbox" ng-model="showDetailsCheckbox"></td>
+								<td>Deets <input type="checkbox" ng-model="data.showDetailsCheckbox"></td>
 								<td>Total</td>
 								<td>{{subtotal() + tax() - totalTender() | currency}}</td>
 								<td>
-									<button ng-click="clickTender()">$</button>
+									<button ng-click="clickAdd( data.currentOrderCopy.tenders, {date: newDate(), method:'', note:'', amount:subtotal() + tax() - totalTender()} )">$</button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="well">
-					<table class="table table-condensed">
+					<table class="table table-condensed" ng-controller="editableParentCtrl">
 						<thead>
 							<tr>
 								<th>Date</th>
@@ -160,15 +156,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr  ng-repeat="note in data.currentOrderCopy.notes track by $index" ng-show="showStatusChanges(note.note)">
+							<tr  ng-repeat="note in data.currentOrderCopy.notes track by $index" ng-show="showStatusChanges(note.note)" ng-controller="editableCtrl">
 								<td>{{note.date | date}}</td>
 								<td>{{note.by}}</td>
 								<td>
-									<div ng-if="!note.edit" ng-bind-html="note.note | nl2br"></div>
-									<textarea ng-if="note.edit" ng-model="note.note" style="resize: none; width: 100%"></textarea>
+									<div ng-if="!editing($last)" ng-bind-html="note.note | nl2br"></div>
+									<textarea ng-if="editing($last)" ng-model="note.note" style="resize: none; width: 100%" focus></textarea>
 								</td>
 								<td>
-									<button ng-click="clickEditNote( note )">Edit</button>
+									<button ng-click="clickEdit()">Edit</button>
 								</td>
 							</tr>
 							<tr>
@@ -176,25 +172,25 @@
 								<td></td>
 								<td></td>
 								<td>
-									<button ng-click="clickAddNote()">Add</button>
+									<button ng-click="clickAdd(data.currentOrderCopy.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<table class="table table-condensed">
+					<table class="table table-condensed" ng-controller="editableParentCtrl">
 						<thead>
 							<tr>
 								<th>Internal Notes</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr ng-controller="editableCtrl">
 								<td>
-									<div ng-if="!data.currentOrderCopy.internalNoteEdit" ng-bind-html="data.currentOrderCopy.internalNote | nl2br"></div>
-									<textarea ng-if="data.currentOrderCopy.internalNoteEdit" ng-model="data.currentOrderCopy.internalNote" style="resize: none; width: 100%"></textarea>
+									<div ng-if="!editing($last)" ng-bind-html="data.currentOrderCopy.internalNote | nl2br"></div>
+									<textarea ng-if="editing($last)" ng-model="data.currentOrderCopy.internalNote" style="resize: none; width: 100%" focus></textarea>
 								</td>
 								<td>
-									<button ng-click="clickEditInternalNote( )">Edit</button>
+									<button ng-click="clickEdit()">Edit</button>
 								</td>
 							</tr>
 						</tbody>
@@ -205,7 +201,7 @@
 						<select ng-model="data.currentOrderCopy.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
 						Assigned To:
 						<select ng-model="data.currentOrderCopy.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
-						 Assigned By: {{data.currentOrderCopy.assignedBy}} ...{{data.unchanged}}
+						 Assigned By: {{data.currentOrderCopy.assignedBy}}
 					<div class="pull-right" id="buttons" ng-if="!data.unchanged">
 						<button ng-click="clickOk()" ng-disabled="data.unchanged">OK</button>
 						<button ng-click="clickCancel()" ng-disabled="data.unchanged">Cancel</button>

@@ -1,8 +1,8 @@
 //http://www.chroder.com/2014/02/01/using-ngmodelcontroller-with-custom-directives/
 var mockupApp = angular.module( 'mockupApp', ['ngSanitize', 'ngResource', 'ui.bootstrap', 'ngRoute'] );
 
-var baseUrl = 'http://10.0.0.191:3000/';
-//var baseUrl = 'http://localhost:3000/';
+//var baseUrl = 'http://10.0.0.191:3000/';
+var baseUrl = 'http://localhost:3000/';
 mockupApp.constant( 'baseOrdersUrl', baseUrl + 'orders/' );
 mockupApp.constant( 'baseCustomersUrl', baseUrl + 'customers/' );
 mockupApp.constant( 'baseInventoryUrl', baseUrl + 'inventory/' );

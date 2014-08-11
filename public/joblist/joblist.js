@@ -114,14 +114,8 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 });
 
 mockupApp.controller( 'OrderCtrl', function ( $scope ) {
-	$scope.clickEditItem = function ( i ) {
-		i.edit = true;
-		$scope.data.unchanged = false;
-	}
-	$scope.clickAddItem = function () {
-		$scope.data.currentOrderCopy.bill.push( { edit: true } );
-		$scope.data.unchanged = false;
-	}
+
+	$scope.data.showDetailsCheckbox = false;
 
 	$scope.onSelectInventory = function ( $item, item ) {
 		item.sku = $item.sku;
@@ -153,7 +147,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 	}
 	$scope.clickTender = function ( ) {
 		$scope.data.unchanged = false;
-		$scope.data.currentOrderCopy.tenders.push( { date: new Date(), method: '', amount: 0.00, edit: true, visible: true } );
+		$scope.data.currentOrderCopy.tenders.push( { date: new Date(), method: '', amount: 0.00 } );
 	}
 	$scope.paymentMethods = [ 'Cash', 'Check', 'Visa', 'MasterCard', 'Other CC', 'Gift Certificate' ];
 	$scope.totalTender = function ( ) {
@@ -166,20 +160,6 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 		}
 	}
 	
-	$scope.clickEditNote = function ( n ) {
-		n.edit = true;
-		$scope.data.unchanged = false;
-	}
-	$scope.clickAddNote = function () {
-		$scope.data.currentOrderCopy.notes.push( { date: new Date(), by: $scope.currentUser, note: '', edit: true } );
-		$scope.data.unchanged = false;
-	}
-
-	$scope.clickEditInternalNote = function ( ) {
-		$scope.data.currentOrderCopy.internalNoteEdit = true;
-		$scope.data.unchanged = false;
-	}
-	
 	$scope.clickOk = function ( ) {
 		$scope.data.unchanged = true;
 		if( ($scope.data.currentOrder.status !== $scope.data.currentOrderCopy.status)
@@ -190,33 +170,28 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 				$scope.data.currentOrder.status + '/' + $scope.data.currentOrder.assignedTo + ' => ' +
 				$scope.data.currentOrderCopy.status + '/' + $scope.data.currentOrderCopy.assignedTo } );
 		}
-		for ( var i=0; i<$scope.data.currentOrderCopy.notes.length; ++i ) {
-			delete $scope.data.currentOrderCopy.notes[i].edit;
-		}
 		var j = 0;
 		var newBill = [];
 		for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
-			delete $scope.data.currentOrderCopy.bill[i].edit;
 			if ( Number($scope.data.currentOrderCopy.bill[i].qty) ) {
 				newBill[ j++ ] = $scope.data.currentOrderCopy.bill[i];
 			}
 		}
 		$scope.data.currentOrderCopy.bill = newBill;
 		
-		for ( var i=0; i<$scope.data.currentOrderCopy.tenders.length; ++i ) {
-			delete $scope.data.currentOrderCopy.tenders[i].edit;
-			delete $scope.data.currentOrderCopy.tenders[i].visible;
-		}
-		delete $scope.data.currentOrderCopy.internalNoteEdit;
 		$scope.data.currentOrder = angular.copy( $scope.data.currentOrderCopy );
-		new $scope.ordersResource( $scope.data.currentOrder ).$save().then(
-			function () { console.log('ok'); $scope.getOrders(); },
-			function () { console.log('wah');;;alert( 'wah-wah' ); }
+		new $scope.ordersResource( $scope.data.currentOrder ).$save()
+		.then(
+			function () { $scope.getOrders(); }
+		).catch(
+			function ( e ) { console.log(e); alert( 'wah-wah:' + e ); }
 		);
+		$scope.$broadcast('resetEdit');
 	}
 	$scope.clickCancel = function ( ) {
 		$scope.data.currentOrderCopy = angular.copy( $scope.data.currentOrder );
 		$scope.data.unchanged = true;
+		$scope.$broadcast('resetEdit');
 	}
 	$scope.changeStatus = function () {
 		$scope.data.currentOrder.assignedTo = $scope.currentUser;
@@ -248,7 +223,7 @@ mockupApp.controller( 'SortableTableCtrl', function ( $scope ) {
 	}
 });
 
-mockupApp.filter('tel', function () {
+mockupApp.filter('tel', function () { // stolen from the interwebz
     return function (tel) {
         if (!tel) { return ''; }
 
@@ -291,4 +266,63 @@ mockupApp.filter('tel', function () {
 
         return (country + " (" + city + ") " + number).trim();
     };
+});
+
+// The next few things are for tables with Edit/Add buttons
+
+mockupApp.directive('focus', function($timeout, $rootScope) {
+	return {
+		restrict: 'A',
+		link: function($scope, $element, attrs) {
+			$element[0].focus();
+		}
+	}
+});
+
+mockupApp.controller( 'editableParentCtrl', function ( $scope ) {
+	$scope.added = false;
+	$scope.clickAdd = function ( table, a ) {
+		table.push( a );
+		$scope.added = true;
+		$scope.data.unchanged = false;
+	}
+	$scope.newDate = function ( ) { // hack because I couldn't get 'new Date()' to work
+		return new Date();
+	}
+	$scope.$on( 'resetEdit', function ( ) {
+		$scope.added = false;
+	});
+});
+
+mockupApp.controller( 'editableCtrl', function ( $scope ) {
+	$scope.edit = false;
+	$scope.editing = function ( last ) {
+		if ( $scope.added && last ) {
+			$scope.edit = true;
+		}
+		return $scope.edit;
+	}
+	$scope.clickEdit = function ( ) {
+		$scope.edit = !$scope.edit;
+		$scope.data.unchanged = false;
+	}
+	$scope.$on( 'resetEdit', function ( ) {
+		$scope.edit = false;
+	});
+});
+
+mockupApp.controller( 'editableDeetParentCtrl', function ( $scope ) {
+	$scope.added = false;
+	$scope.clickAdd = function ( table, a ) {
+		table.push( a );
+		$scope.added = true;
+		$scope.data.unchanged = false;
+		$scope.data.showDetailsCheckbox = true;	// turn on deets display
+	}
+	$scope.newDate = function ( ) { // hack because I couldn't get 'new Date()' to work
+		return new Date();
+	}
+	$scope.$on( 'resetEdit', function ( ) {
+		$scope.added = false;
+	});
 });
