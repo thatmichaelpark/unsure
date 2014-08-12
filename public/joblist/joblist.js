@@ -80,11 +80,10 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 	}, 60000 );
 /**/	
 	
-	$scope.assign = function () {
-//		$scope.foind($scope.orders, 'orderid', $scope.data.currentOrderId).assignedBy = currentUser;
-	}
-	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Work approved', 'In progress', 'Yours!', 'Part request',
-	'Part ordered', 'Part received', 'Declined', 'Complete: call customer', 'Customer notified', 'Closed' ];
+	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Work approved',
+	'In progress', 'Yours!',
+	'Part request',	'Part ordered', 'Part received',
+	'Needs QA', 'Complete: call customer', 'Customer notified', 'Declined', 'Closed' ];
 
 	$scope.data.unchanged = true;
 
@@ -178,7 +177,8 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 			}
 		}
 		$scope.data.currentOrderCopy.bill = newBill;
-		
+		$scope.data.currentOrderCopy.modifiedDate = new Date();
+
 		$scope.data.currentOrder = angular.copy( $scope.data.currentOrderCopy );
 		new $scope.ordersResource( $scope.data.currentOrder ).$save()
 		.then(
