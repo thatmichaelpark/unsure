@@ -80,8 +80,8 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 	}, 60000 );
 /**/	
 	
-	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Work approved',
-	'In progress', 'Yours!',
+	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Awaiting response',
+	'Work approved', 'In progress', 'Needs attention', 
 	'Part request',	'Part ordered', 'Part received',
 	'Needs QA', 'Complete: call customer', 'Customer notified', 'Declined', 'Closed' ];
 
@@ -148,7 +148,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 		$scope.data.unchanged = false;
 		$scope.data.currentOrderCopy.tenders.push( { date: new Date(), method: '', amount: 0.00 } );
 	}
-	$scope.paymentMethods = [ 'Cash', 'Check', 'Visa', 'MasterCard', 'Other CC', 'Gift Certificate' ];
+	$scope.paymentMethods = [ 'Cash', 'Check', 'Credit card', 'Debit card', 'Gift certificate', 'Other' ];
 	$scope.totalTender = function ( ) {
 		if ( $scope.data.currentOrderCopy ) {
 			var t = 0.0;
