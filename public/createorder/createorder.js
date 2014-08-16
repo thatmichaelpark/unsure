@@ -86,7 +86,6 @@ mockupApp.controller( 'TypeaheadCtrl',
 				return n;
 			}
 		}
-		$scope.customer = [];
 		$scope.onSelectPart = function ( item ) {
 			$scope.data.customer = angular.copy( item );
 		}
@@ -111,7 +110,7 @@ mockupApp.controller( 'TypeaheadCtrl',
 			if ( !angular.isObject( $scope.customerSelected ) ) {
 				$scope.data.customer = [];
 				$scope.data.customer.firstName = firstName($scope.customerSelected);
-				$scope.data.customer.LastName = lastName($scope.customerSelected);
+				$scope.data.customer.lastName = lastName($scope.customerSelected);
 			}
 		}
 	}

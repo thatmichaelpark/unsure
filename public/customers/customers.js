@@ -3,7 +3,6 @@ mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, m
 	$scope.data = {};
 	
     $scope.save = function () {
-		console.log( $scope.data.customer );;;
 		$scope.data.customer = new mockupFactory.customersResource( $scope.data.customer ).$save()
 		.then( function ( stuff ) {
 //			console.log( 'success: ' + stuff );;;
@@ -12,7 +11,6 @@ mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, m
 			alert( 'fail (contact mp): ' + stuff );;;
 			console.log( stuff );;;
 		});
-//		$http.post('/customers/addcustomer/', $scope.data.customer );	// change to update
     }
 	
 	$scope.cancel = function ( ) {
