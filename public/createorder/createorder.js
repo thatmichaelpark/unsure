@@ -108,7 +108,7 @@ mockupApp.controller( 'TypeaheadCtrl',
 				}
 			}
 			if ( !angular.isObject( $scope.customerSelected ) ) {
-				$scope.data.customer = [];
+				$scope.data.customer = {};
 				$scope.data.customer.firstName = firstName($scope.customerSelected);
 				$scope.data.customer.lastName = lastName($scope.customerSelected);
 			}
