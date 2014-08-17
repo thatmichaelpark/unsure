@@ -1,5 +1,7 @@
 mockupApp.factory( 'mockupFactory', function ( $resource, baseOrdersUrl, baseCustomersUrl, baseInventoryUrl ) {
 
+	var timerId; // for setInterval in joblist
+	
 	return {
 		ordersResource: $resource( baseOrdersUrl + 'byassignee/:user', { orderNo: '@orderNo', id : '@_id' },
 			{
@@ -24,7 +26,8 @@ mockupApp.factory( 'mockupFactory', function ( $resource, baseOrdersUrl, baseCus
 				save: { method: 'PUT', url: baseInventoryUrl + 'update/:id' },
 				delete: { method: 'DELETE', url: baseInventoryUrl + 'delete/:id' }
 			}
-		)
+		),
+		timerId: timerId
 	};
 });
 

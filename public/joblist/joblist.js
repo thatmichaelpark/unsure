@@ -1,4 +1,4 @@
-mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location ) {
+mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location, mockupFactory ) {
 
 	$scope.getOrders = function () {
 		$scope.data.currentOrder = null;
@@ -67,18 +67,15 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location 
 	
 	$scope.viewChanged = function () {
 		$scope.getOrders();
-//		$timeout( function () {
-//			$scope.data.currentView = $scope.currentUser;
-//			$scope.getOrders();
-//		}, 5000 );
 	}
-/**/
-	setInterval( function () {
-		if ( $scope.data.unchanged ) {
-			$scope.getOrders();
-		}
-	}, 60000 );
-/**/	
+
+	if ( !angular.isDefined( mockupFactory.timerId ) ) {
+		mockupFactory.timerId = setInterval( function () {
+			if ( $scope.data.unchanged ) {
+				$scope.getOrders();
+			}
+		}, 60000 );
+	}
 	
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Awaiting response',
 	'Work approved', 'In progress', 'Needs attention', 
