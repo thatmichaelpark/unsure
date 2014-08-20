@@ -69,13 +69,22 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		$scope.getOrders();
 	}
 
-	if ( !angular.isDefined( mockupFactory.timerId ) ) {
-		mockupFactory.timerId = setInterval( function () {
-			if ( $scope.data.unchanged ) {
-				$scope.getOrders();
-			}
-		}, 60000 );
+	// use a timer to auto-refresh orders list
+	// We only want one, so we kill the previous one.
+	if ( angular.isDefined( mockupFactory.timerId ) ) {
+		clearInterval( mockupFactory.timerId );
 	}
+	mockupFactory.timerId = setInterval( function () {
+		if ( $scope.data.unchanged ) {
+			$scope.getOrders();
+		}
+	}, 60000 );
+	/* Previously (0.16), I had it so only the first timer stayed alive, and no new timers were
+	allowed; unfortunately there was a problem. The first timer worked ok as long as you remained
+	on the mockup.html page, but once you moved to joblist.html autorefresh stopped. Apparently
+	the first timer's call to getOrders only updated mockup.html. Changing to use the latest
+	timer calls the getOrders for joblist.html
+	*/
 	
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Awaiting response',
 	'Work approved', 'In progress', 'Needs attention', 
