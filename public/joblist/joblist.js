@@ -101,13 +101,14 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	}
 	
 	$scope.orderClass = function ( order ) {
+		var c = '';
 		if ( order.orderNo === $scope.data.currentOrderNo ) {
-			return 'success';
+			c = 'success ';
 		}
 		if ( order.assignedBy != $scope.currentUser ) {
-			return 'danger';
+			c += 'danger';
 		}
-		return '';
+		return c;
 	}
 	
 	$scope.$on( '$routeChangeSuccess', function () {
@@ -167,7 +168,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 	
 	$scope.clickOk = function ( ) {
 		$scope.data.unchanged = true;
-		if( ($scope.data.currentOrder.status !== $scope.data.currentOrderCopy.status)
+		if ( ($scope.data.currentOrder.status !== $scope.data.currentOrderCopy.status)
 			|| ($scope.data.currentOrder.assignedTo !== $scope.data.currentOrderCopy.assignedTo) 
 			|| ($scope.data.currentOrder.assignedBy !== $scope.data.currentOrderCopy.assignedBy) ) {
 			$scope.data.currentOrderCopy.assignedBy = $scope.currentUser;
@@ -175,6 +176,11 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 				$scope.data.currentOrder.status + '/' + $scope.data.currentOrder.assignedTo + ' => ' +
 				$scope.data.currentOrderCopy.status + '/' + $scope.data.currentOrderCopy.assignedTo } );
 		}
+		
+		if ( $scope.data.currentOrderCopy.status == 'Closed' && $scope.data.currentOrderCopy.closedDate ) {
+			$scope.data.currentOrderCopy.closedDate = new Date();
+		}
+		
 		var j = 0;
 		var newBill = [];
 		for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {

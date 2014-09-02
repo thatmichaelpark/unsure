@@ -1,108 +1,167 @@
-.abs {
-	position : absolute;
-	border-radius : 0x 0x 0x 0x;
-	overflow: hidden;
-	overflow-y: auto;
-	border: solid black 1px
-}
 #spa {
-	top : 50px;
-	left : 0px;
-	bottom : 0px;
-	right : 0px;
+	position : absolute;
+	top : 1em;
+	left : 1em;
+	bottom : 1em;
+	right : 1em;
 	min-height : 300px;
 	min-width : 300px;
 }
-#left {
+#top-part {
+	position : absolute;
 	top: 0;
-	right: 60%;
+	height: 3em;
+	right: 0%;
+	left: 0;
+}
+#main-part {
+	position : absolute;
+	top: 3em;
+	right: 0%;
+	bottom: 0;
+	left: 0;
+	overflow-y: auto;
+}
+#left {
+	position : absolute;
+	top: 0;
+	right: 65%;
 	bottom: 0;
 	left: 0;
 }
+#left-top {
+	position : absolute;
+	top: 0;
+	height: 2em;
+	right: 0%;
+	left: 0;
+}
+#left-bottom {
+	position : absolute;
+	top: 2em;
+	right: 0%;
+	bottom: 0;
+	left: 0;
+	overflow-y: auto;
+}
+
 #right {
+	position : absolute;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	left: 40%;
 }
-#user {
-	top : 0;
-	right : 0;
-	bottom : 90%;
-	left : 0;
+#right-top{
+	position : absolute;
+	top: 0;
+	height: 5em;
+	right: 0;
+	left: 0;
+	overflow: none;
 }
-#incoming {
-	top : 10%;
-	right : 0;
-	bottom : 60%;
-	left : 0;
+#right-middle{
+	position : absolute;
+	top: 8em;
+	right: 0;
+	bottom: 5em;
+	left: 0;
+	overflow-y: auto;
 }
-#active {
-	top : 40%;
-	right : 0;
-	bottom : 0;
-	left : 0;
-}
-#cust {
-	top : 0;
-	right : 0;
-	bottom : 85%;
-	left : 0;
-}
-#bill {
-	top : 15%;
-	left : 0;
-	bottom : 65%;
-	right : 0;
-}
-#symptoms {
-	top : 35%;
-	left : 0;
-	bottom : 60%;
-	right : 0;
-}
-#computer {
-	top : 40%;
-	left : 0;
-	bottom : 40%;
-	right : 0;
-}
-#notes {
-	top : 60%;
-	left : 0;
-	bottom : 5%;
-	right : 0;
-}
-#misc {
-	top : 95%;
-	left : 0;
-	bottom : 0%;
-	right : 0;
-}
-#status {
-	top : 0;
-	left : 0;
-	bottom : 0%;
-	right : 67%;
-}
-#assigned {
-	top : 0;
-	left : 33%;
-	bottom : 0%;
-	right : 33%;
-}
-#buttons {
-	top : 0;
-	left : 67%;
-	bottom : 0%;
-	right : 0;
+#right-bottom {
+	position : absolute;
+	height: 2em;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 
-
-.selected {
-	background-color: lightgreen;
+.yellow div, .yellow button {
+	background-color: yellow;
 }
 
-.blah {
-	border: solid yellow;
+.mytable {
+	margin: 0em 2em 0em 2em;
+	border-collapse: collapse;
+}
+
+.mytable th {
+	text-align: left;
+	padding: 0.1em 1em;
+}
+
+.mytable tbody > tr {
+	border-top: solid 1px #d0d0d0;
+}
+
+.mytable td {
+	vertical-align: top;
+	padding: 0.1em 1em;
+}
+
+.mytable td div {
+	word-break: break-all;
+}
+
+.mytable a:link {
+	text-decoration: none;
+}
+
+.mytable .success {
+	border: solid 3px #80e080;
+}
+.danger {
+	background: #fff0f0;
+}
+
+.dropdown-menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: block;
+	position: absolute;
+	background: white;
+	border: solid 1px #d0d0d0;
+}
+
+.dropdown-menu > li > a {
+	padding: 13px 20px;
+}
+
+.dropdown-menu > li.active  {
+	color: white;
+	background-color: #428bca;
+}
+
+.mywell {
+	border-radius: 8px 8px 8px 8px;
+	border: solid 1px #d0d0d0;
+	background: #f8f8f8;
+	padding: 1em;
+}
+
+.mywell2 {
+	border-radius: 8px 8px 8px 8px;
+	border: solid 1px #d0d0d0;
+	background: #f8f8f8;
+	margin: 1em;
+}
+
+.pull-right {
+	float: right;
+}
+
+a.btn {
+	-webkit-appearance: button;
+	padding: 4px 6px;
+	text-decoration: none;
+	font-family: Arial;
+	font-size: 10pt;
+	color: black;
+}
+
+label {
+	float: left;
+	width: 8em;
+	margin-right: 1em;
 }

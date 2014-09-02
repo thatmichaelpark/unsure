@@ -1,0 +1,11 @@
+ <div ng-controller="DailyClosingCtrl">
+ {{lastTime.date | date}}
+ {{lastTime.till | currency}}
+	<table>
+		<tr ng-repeat="order in orders">
+			<td>{{order.orderNo}}</td>
+			<td>{{order.status}}</td>
+			<td>{{order.modifiedDate | date}}</td>
+		</tr>
+	</table>
+ </div>

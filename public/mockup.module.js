@@ -14,6 +14,7 @@ mockupApp.config( function ( $routeProvider, $locationProvider ) {
 	$routeProvider.when( '/createorder', { templateUrl: '/createorder/createorder.html' } );
 	$routeProvider.when( '/customers', { templateUrl: '/customers/customers.html' } );
 	$routeProvider.when( '/inventory', { templateUrl: '/inventory/inventory.html' } );
+	$routeProvider.when( '/dailyclosing', { templateUrl: '/dailyclosing/dailyclosing.html' } );
 	$routeProvider.when( '/other', { templateUrl: '/other.html' } );
 	$routeProvider.otherwise( { templateUrl: '/joblist/joblist.html' } );
 });
@@ -26,7 +27,7 @@ mockupApp.controller( 'MockupCtrl', function ( $scope, mockupFactory, $timeout )
 	
 	$scope.data = {};
 
-	$scope.users = ['Doug', 'Justin', 'Michael'];
+	$scope.users = ['Doug', 'Justin', 'Michael', 'Front'];
 	$scope.currentUser = 'Michael';
 	$scope.userChanged = function () {
 		$scope.$broadcast( 'userChanged', $scope.currentUser );

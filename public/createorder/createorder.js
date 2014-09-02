@@ -31,6 +31,7 @@ mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location ) {
 				$scope.currentOrder.assignedBy = $scope.currentUser;
 				$scope.currentOrder.createdDate = new Date();
 				$scope.currentOrder.modifiedDate = new Date();
+				$scope.currentOrder.closedDate = null;
 				new $scope.ordersResource( $scope.currentOrder ).$add().then(function(){
 					$location.path( '/joblist/' + orderNo );
 				});

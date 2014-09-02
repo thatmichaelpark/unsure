@@ -79,4 +79,30 @@ router.get('/nextOrderNo', function(req, res) {
 	});
 });
 
+router.get('/lastTime', function(req, res) {
+	var db = req.db;
+	db.collection('lastTime').findOne( {}, function ( err, result ) {
+		if ( err ) {
+			throw err;
+		}
+		res.json(result);
+	});
+});
+
+router.get('/between/:from/:to', function(req, res) {
+	var db = req.db;
+	var from = new Date(Number(req.params.from));
+	var to = new Date(Number(req.params.to));
+	db.collection('orders').find( { modifiedDate: { $gte: from, $lt: to } } ).toArray( function ( err, result ) {
+		if ( err ) {
+			throw err;
+		}
+	console.log(from);;;
+	console.log(to);;;
+		console.log(result);;;
+		res.json( result );
+	});
+});
+
+
 module.exports = router;
