@@ -128,6 +128,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 		item.desc = $item.desc;
 		item.price = $item.price;
 		item.taxable = $item.taxable;
+		item.department = $item.department;
 		item.qty = 1;
 	}
 
@@ -148,7 +149,8 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 					t += $scope.data.currentOrderCopy.bill[i].qty * $scope.data.currentOrderCopy.bill[i].price;
 				}
 			}
-			return Math.round( t * 9.5 ) / 100;
+			$scope.data.currentOrderCopy.tax = Math.round( t * 9.5 ) / 100;
+			return $scope.data.currentOrderCopy.tax;
 		}
 	}
 	$scope.clickTender = function ( ) {
