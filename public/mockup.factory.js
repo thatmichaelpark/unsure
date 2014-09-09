@@ -3,14 +3,16 @@ mockupApp.factory( 'mockupFactory', function ( $resource, baseOrdersUrl, baseCus
 	var timerId; // for setInterval in joblist
 	
 	return {
-		ordersResource: $resource( baseOrdersUrl + 'byassignee/:user', { orderNo: '@orderNo', id : '@_id', from: '@from', to: '@to' },
+		ordersResource: $resource( baseOrdersUrl + 'byassignee/:user', { orderNo: '@orderNo', custNo: '@custNo', id : '@_id', from: '@from', to: '@to' },
 			{
 				get: { method : 'GET', url : baseOrdersUrl + 'byorderno/:orderNo' },
+				getbycustno: { method : 'GET', url : baseOrdersUrl + 'bycustno/:custNo', isArray: true },
 				add: { method : 'POST', url : baseOrdersUrl + 'add/' },
 				save: { method : 'PUT', url : baseOrdersUrl + 'update/:id' },
 				delete : { method : 'DELETE', url : baseOrdersUrl + 'delete/:id' },
 				getLastTime: { method: 'GET', url: baseOrdersUrl + 'lastTime/' },
-				between: { method: 'GET', url: baseOrdersUrl + 'between/:from/:to', isArray: true }
+				modifiedbetween: { method: 'GET', url: baseOrdersUrl + 'modifiedbetween/:from/:to', isArray: true },
+				openbetween: { method: 'GET', url: baseOrdersUrl + 'openbetween/:from/:to', isArray: true }
 			}
 		),
 		customersResource: $resource( baseCustomersUrl + 'all', { custNo: '@custNo', id : '@_id' },

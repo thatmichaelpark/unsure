@@ -25,7 +25,7 @@ router.get('/byassignee/:user', function(req, res) {
 
 router.get('/bycustno/:custNo', function(req, res) {
 	var db = req.db;
-	db.collection('orders').find( { custNo: req.params.custNo } ).toArray(function (err, items) {
+	db.collection('orders').find( { custNo: Number(req.params.custNo) } ).toArray(function (err, items) {
 		res.json(items);
 	});
 });
@@ -89,11 +89,29 @@ router.get('/lastTime', function(req, res) {
 	});
 });
 
-router.get('/between/:from/:to', function(req, res) {
+router.get('/modifiedbetween/:from/:to', function(req, res) {
 	var db = req.db;
 	var from = new Date(Number(req.params.from));
 	var to = new Date(Number(req.params.to));
 	db.collection('orders').find( { modifiedDate: { $gte: from, $lt: to } } ).toArray( function ( err, result ) {
+		if ( err ) {
+			throw err;
+		}
+	console.log(from);;;
+	console.log(to);;;
+		console.log(result);;;
+		res.json( result );
+	});
+});
+
+router.get('/openbetween/:from/:to', function(req, res) {
+	var db = req.db;
+	var from = new Date(Number(req.params.from));
+	var to = new Date(Number(req.params.to));
+	db.collection('orders').find( { $and: [
+		{ createdDate: { $lt: to } }/**,
+		{ closedDate: { $exists: true, $gte: from } }**/
+	] } ).toArray( function ( err, result ) {
 		if ( err ) {
 			throw err;
 		}

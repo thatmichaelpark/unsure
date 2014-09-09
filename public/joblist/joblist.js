@@ -179,7 +179,7 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 				$scope.data.currentOrderCopy.status + '/' + $scope.data.currentOrderCopy.assignedTo } );
 		}
 		
-		if ( $scope.data.currentOrderCopy.status == 'Closed' && $scope.data.currentOrderCopy.closedDate ) {
+		if ( $scope.data.currentOrderCopy.status == 'Closed' && !$scope.data.currentOrderCopy.closedDate ) {
 			$scope.data.currentOrderCopy.closedDate = new Date();
 		}
 		

@@ -1,11 +1,18 @@
  <div ng-controller="DailyClosingCtrl">
+	<input ng-model="year">
+	<input ng-model="month">
+	<input ng-model="date">
+	<button ng-click="acceptDate()">OK</button>
  {{lastTime.date | date}}
  {{lastTime.till | currency}}
 	<table>
-		<tr ng-repeat="order in orders">
+		<tr ng-repeat="order in orders | orderBy: 'orderNo'">
 			<td>{{order.orderNo}}</td>
+			<td>{{order.custName}}</td>
 			<td>{{order.status}}</td>
+			<td>{{order.createdDate | date}}</td>
 			<td>{{order.modifiedDate | date}}</td>
+			<td>{{order.closedDate | date}}</td>
 		</tr>
 	</table>
  </div>
