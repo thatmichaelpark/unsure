@@ -197,7 +197,8 @@
 							<tbody>
 								<tr ng-controller="editableCtrl">
 									<td>
-										<div ng-if="!editing($last)" ng-bind-html="data.currentOrderCopy.internalNote | nl2br"></div>
+										<div ng-if="!editing($last)" ng-bind-html="data.currentOrderCopy.internalNote | nl2br" class="breakall">
+										</div>
 										<textarea ng-if="editing($last)" ng-model="data.currentOrderCopy.internalNote" style="resize: none; width: 100%" focus></textarea>
 									</td>
 									<td>

@@ -99,7 +99,7 @@
 	padding: 0.1em 1em;
 }
 
-.mytable td div {
+div.breakall {
 	word-break: break-all;
 }
 
