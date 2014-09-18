@@ -230,10 +230,10 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 	}
 })
 
-mockupApp.controller( 'SortableTableCtrl', function ( $scope ) {
-	$scope.predicate = 'orderNo';
+mockupApp.controller( 'SortableTableCtrl', function ( $scope, sortPredicateFactory ) {
+	$scope.data = sortPredicateFactory.data;
 	$scope.customSorter = function ( order ) {
-		return order[ $scope.predicate ];
+		return order[ $scope.data.predicate ];
 	}
 });
 
