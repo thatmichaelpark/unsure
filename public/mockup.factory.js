@@ -38,7 +38,7 @@ mockupApp.factory( 'mockupFactory', function ( $resource, baseOrdersUrl, baseCus
 mockupApp.factory( 'sortPredicateFactory', function ( ) {
 	var predicate = "orderNo"
 	return {
-		data: {	predicate: predicate }
+		predicate: predicate
 	};
 });
 

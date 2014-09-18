@@ -231,9 +231,9 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 })
 
 mockupApp.controller( 'SortableTableCtrl', function ( $scope, sortPredicateFactory ) {
-	$scope.data = sortPredicateFactory.data;
+	$scope.predicate = sortPredicateFactory.predicate;
 	$scope.customSorter = function ( order ) {
-		return order[ $scope.data.predicate ];
+		return order[ $scope.predicate ];
 	}
 });
 
