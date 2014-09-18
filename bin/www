@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var debug = require('debug')('mockup');
+var debug = require('debug')('unsure');
 var app = require('../app');
 
 app.set('port', process.env.PORT || 3000);
