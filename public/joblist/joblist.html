@@ -51,9 +51,14 @@
 			</div>
 			<div class="col-xs-8" ng-if="data.currentOrderNo" ng-controller="OrderCtrl" id="right">
 				<div class="well mywell" id="right-top">
-					<h3>{{data.currentOrderNo}}	{{data.currentOrderCopy.custName}} ({{data.currentOrderCopy.custNo}})</h3>
+					<span><h3>{{data.currentOrderNo}}	{{data.currentOrderCopy.custName}} ({{data.currentOrderCopy.custNo}})</h3></span>
+					<span>
 					{{data.currentOrderCopy.phone1 | tel}}
 					{{data.currentOrderCopy.phone2 | tel}}
+					</span>
+					<span>
+						<a class="btn pull-right" ng-href="/cust/{{data.currentOrderCopy.custNo}}">Customer Info</a>
+					</span>
 				</div>
 				<div id="right-middle" ng-class="data.unchanged ? '' : 'yellow'">
 					<div class="well mywell2">
