@@ -1,4 +1,4 @@
-mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location ) {
+mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $routeParams, mockupFactory ) {
 
 	$scope.data = {};
 	
@@ -42,6 +42,10 @@ mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location ) {
 	$scope.clear = function () {
 		$scope.data.customer = {};
     };
+	
+	$scope.getOrders = function ( custNo) {
+		$scope.data.orders = mockupFactory.ordersResource.getbycustno( { custNo: custNo }, function () {} );
+	}
 });
 
 mockupApp.filter("nl2br", function($filter) {
@@ -89,6 +93,7 @@ mockupApp.controller( 'TypeaheadCtrl',
 		}
 		$scope.onSelectPart = function ( item ) {
 			$scope.data.customer = angular.copy( item );
+			$scope.getOrders( $scope.data.customer.custNo );;;
 		}
 		$scope.blur = function () {
 			var firstName = function(s) {
@@ -112,6 +117,7 @@ mockupApp.controller( 'TypeaheadCtrl',
 				$scope.data.customer = {};
 				$scope.data.customer.firstName = firstName($scope.customerSelected);
 				$scope.data.customer.lastName = lastName($scope.customerSelected);
+				$scope.data.orders = null;
 			}
 		}
 	}

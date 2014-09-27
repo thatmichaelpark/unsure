@@ -1,22 +1,11 @@
 <div class='container-fluid' ng-controller="EditCustomerCtrl">
 	<div class="col-xs-3"></div>
-	<div class="col-xs-6" ng-controller="TypeaheadCtrl">
+	<div class="col-xs-6">
 		<h2>Edit Customer Info</h2>
-		<div class="col-xs-9">
-			<label>Search</label>
-			<input type="text" placeholder="Search Customers"
-				ng-model="customerSelected"
-				typeahead="c as nameMaker(c) for c in customers  | blah:$viewValue | limitTo:10"
-				typeahead-min-length='1'
-				typeahead-on-select="onSelectPart($item)"
-				ng-blur="blur()"
-				style="width:350px;"
-				class="form-control" focus>
-		</div>
 		<div class="col-xs-3">
 			<div class="form-group">
 				<label>Account Number</label>
-				<pre>{{customerSelected.custNo || ''}}</pre>
+				<pre class="form-control">{{data.customer.custNo || '???'}}</pre>
 			</div>
 		</div>
 		<div class="col-xs-6">
@@ -95,23 +84,20 @@
 				<textarea ng-model="data.customer.notes" style="resize: none" class="form-control"></textarea>
 			</div>
 		</div>
-		<div class="form-group">
-			<button class="btn" ng-click="getorders()">Get Orders</button>
 		<div class="col-xs-12">
 			<div class="form-group">
-				<label>Orders</label>
+				<h2>Orders</h2>
 				<table>
 					<tr ng-repeat="order in data.orders">
-						<td>{{order.orderNo}}</td>
-						<td>{{order.createdDate}}</td>
-						<td>{{order.status}}</td>
+						<td><a href="/joblist/{{order.orderNo}}">{{order.orderNo}}</a></td>
+						<td><a href="/joblist/{{order.orderNo}}">{{order.createdDate | date}}</a></td>
+						<td><a href="/joblist/{{order.orderNo}}">{{order.status}}</a></td>
 					</tr>
 				</table>
 			</div>
 		</div>
-		<div class="form-group pull-right">
+		<div class="form-group">
 			<button class="btn" ng-click="save()">Save</button>
-			<button class="btn" ng-click="cancel()">Cancel</button>
 		</div>
 	</div>
 </div>

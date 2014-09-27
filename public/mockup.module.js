@@ -11,8 +11,8 @@ mockupApp.config( function ( $routeProvider, $locationProvider ) {
 	$locationProvider.html5Mode( true );
 	
 	$routeProvider.when( '/joblist/:orderNo', { templateUrl: '/joblist/joblist.html' } );
-	$routeProvider.when( '/createorder', { templateUrl: '/createorder/createorder.html' } );
-	$routeProvider.when( '/customers', { templateUrl: '/customers/customers.html' } );
+	$routeProvider.when( '/createorder/', { templateUrl: '/createorder/createorder.html' } );
+	$routeProvider.when( '/customers/:custNo', { templateUrl: '/customers/customers.html' } );
 	$routeProvider.when( '/inventory', { templateUrl: '/inventory/inventory.html' } );
 	$routeProvider.when( '/dailyclosing', { templateUrl: '/dailyclosing/dailyclosing.html' } );
 	$routeProvider.when( '/other', { templateUrl: '/other.html' } );

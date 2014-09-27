@@ -1,12 +1,27 @@
-mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, mockupFactory ) {
+mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, mockupFactory, $routeParams ) {
 
 	$scope.data = {};
-	$scope.getorders = function () {
-		$scope.data.orders = new mockupFactory.ordersResource.getbycustno( {custNo: $scope.data.customer.custNo } );
-		console.log($scope.data.orders);;;
+
+	$scope.$on( '$routeChangeSuccess', function () {
+		if ( $location.path().indexOf( '/customers/' ) == 0 ) {
+			getCustomer( $routeParams.custNo );
+			getOrders( $routeParams.custNo );
+		}
+	});
+	
+	function getOrders( custNo ) {
+		$scope.data.orders = mockupFactory.ordersResource.getbycustno( { custNo: custNo }, function () {} );
 	}
+	function getCustomer( custNo ) {
+		$scope.data.customer = new mockupFactory.customersResource();
+		$scope.data.customer.$get( { custNo: custNo } ).then ( function () {
+		}).catch( function (e) {
+			console.log( 'nope ' + e );;;
+		});
+	}
+
     $scope.save = function () {
-		$scope.data.customer = new mockupFactory.customersResource( $scope.data.customer ).$save()
+		new mockupFactory.customersResource( $scope.data.customer ).$save()
 		.then( function ( stuff ) {
 //			console.log( 'success: ' + stuff );;;
 		})
@@ -15,10 +30,6 @@ mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, m
 			console.log( stuff );;;
 		});
     }
-	
-	$scope.cancel = function ( ) {
-		alert('cancel');;;
-	}
 	
 	$scope.clear = function () {
 		$scope.data.customer = {};

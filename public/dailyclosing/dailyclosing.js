@@ -24,8 +24,6 @@
 				user: 'All'
 			}, function () {
 /**/
-				console.log('!!');;;
-				console.log($scope.orders);;;
 			});
 		});
 	}

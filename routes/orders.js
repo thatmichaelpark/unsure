@@ -99,7 +99,7 @@ router.get('/modifiedbetween/:from/:to', function(req, res) {
 		}
 	console.log(from);;;
 	console.log(to);;;
-		console.log(result);;;
+//		console.log(result);;;
 		res.json( result );
 	});
 });
@@ -109,15 +109,15 @@ router.get('/openbetween/:from/:to', function(req, res) {
 	var from = new Date(Number(req.params.from));
 	var to = new Date(Number(req.params.to));
 	db.collection('orders').find( { $and: [
-		{ createdDate: { $lt: to } }/**,
-		{ closedDate: { $exists: true, $gte: from } }**/
+		{ createdDate: { $lt: to } },
+		{ closedDate: { $exists: true, $gte: from } }
 	] } ).toArray( function ( err, result ) {
 		if ( err ) {
 			throw err;
 		}
 	console.log(from);;;
 	console.log(to);;;
-		console.log(result);;;
+//		console.log(result);;;
 		res.json( result );
 	});
 });

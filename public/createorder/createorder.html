@@ -97,5 +97,17 @@
 		<div class="form-group">
 			<button class="btn" ng-click="ok()">Create Order</button>
 		</div>
+		<div class="col-xs-12">
+			<div class="form-group">
+				<h2>Orders</h2>
+				<table>
+					<tr ng-repeat="order in data.orders">
+						<td><a href="/joblist/{{order.orderNo}}">{{order.orderNo}}</a></td>
+						<td><a href="/joblist/{{order.orderNo}}">{{order.createdDate | date}}</a></td>
+						<td><a href="/joblist/{{order.orderNo}}">{{order.status}}</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
