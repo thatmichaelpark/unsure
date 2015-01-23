@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="mockupApp">
 	<head>
-		<title>Unsure Mockup 0.024</title>
+		<title>Unsure Mockup 0.024g</title>
 		<script src="javascripts/angular.js"></script>
 		<script src="javascripts/angular-sanitize.js"></script>
 		<script src="javascripts/angular-resource.js"></script>
@@ -9,6 +9,7 @@
 		<script src="javascripts/ui-bootstrap-tpls-0.11.0.min.js"></script>
 		<script src="mockup.module.js"></script>
 		<script src="mockup.factory.js"></script>
+		<script src="onbeforeprint.js"></script>
 		<script src="joblist/joblist.js"></script>
 		<script src="createorder/createorder.js"></script>
 		<script src="customers/customers.js"></script>
@@ -19,7 +20,7 @@
 	</head>
 	<body ng-controller="MockupCtrl">
 	<div id="spa">
-		<div class="panel" id="top-part">
+		<div class="panel non-printing" id="top-part">
 			Current User
 			<select ng-model="currentUser" ng-options="user for user in users" ng-change="userChanged()"></select>
 			<a class="btn btn-default" href="/jobslist">Work</a>

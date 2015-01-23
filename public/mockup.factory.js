@@ -12,7 +12,9 @@ mockupApp.factory( 'mockupFactory', function ( $resource, baseOrdersUrl, baseCus
 				delete : { method : 'DELETE', url : baseOrdersUrl + 'delete/:id' },
 				getLastTime: { method: 'GET', url: baseOrdersUrl + 'lastTime/' },
 				modifiedbetween: { method: 'GET', url: baseOrdersUrl + 'modifiedbetween/:from/:to', isArray: true },
-				openbetween: { method: 'GET', url: baseOrdersUrl + 'openbetween/:from/:to', isArray: true }
+				openbetween: { method: 'GET', url: baseOrdersUrl + 'openbetween/:from/:to', isArray: true },
+				createdbetween: { method: 'GET', url: baseOrdersUrl + 'createdbetween/:from/:to', isArray: true },
+				closedbetween: { method: 'GET', url: baseOrdersUrl + 'closedbetween/:from/:to', isArray: true }
 			}
 		),
 		customersResource: $resource( baseCustomersUrl + 'all', { custNo: '@custNo', id : '@_id' },

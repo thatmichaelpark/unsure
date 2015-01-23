@@ -1,3 +1,4 @@
+@media screen {
 #spa {
 	position : absolute;
 	top : 1em;
@@ -83,6 +84,7 @@
 .mytable {
 	margin: 0em 2em 0em 2em;
 	border-collapse: collapse;
+	width: 90%;
 }
 
 .mytable th {
@@ -164,4 +166,45 @@ label {
 	float: left;
 	width: 8em;
 	margin-right: 1em;
+}
+
+.print-only { display: none; }
+
+}
+
+#ordertable tr > td:first-child { text-align: left;} /* first column */
+#ordertable tr > td:first-child + td { text-align: left;} /* second column */
+#ordertable tr > td:first-child + td + td { text-align: right;} /* third column */
+#ordertable tr > td:first-child + td + td + td { text-align: right;}
+#ordertable tr > td:first-child + td + td + td + td { text-align: right;}
+
+#ordertable tr > th:first-child { text-align: left;} /* first column */
+#ordertable tr > th:first-child + th { text-align: left;} /* second column */
+#ordertable tr > th:first-child + th + th { text-align: right;} /* third column */
+#ordertable tr > th:first-child + th + th + th { text-align: right;}
+#ordertable tr > th:first-child + th + th + th + th { text-align: right;}
+
+#notestable tr > th:first-child { width: 15%;} /* first column */
+
+@media print {
+.non-printing { display: none; }
+body { font-size: small; }
+.mytable {
+	margin: 2em 0em;
+	border-collapse: collapse;
+}
+.mytable td {
+	vertical-align: top;
+}
+.mytable th {
+	text-align: left;
+}
+.mytable a:link {
+	text-decoration: none;
+}
+.mytable tbody > tr {
+	border-top: solid 1px black;
+}
+
+
 }

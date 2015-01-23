@@ -15,16 +15,18 @@
 	getLastTime = function ( ) {
 		$scope.lastTime = new mockupFactory.ordersResource();
 		$scope.lastTime.$getLastTime( null, null ).then( function () {
-			$scope.orders =  mockupFactory.ordersResource.openbetween( { 
+			$scope.ordersOpen =  mockupFactory.ordersResource.openbetween( { 
 				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
 				to: tomorrow.getTime()//now.getTime()
-			}, function ( ) {
-/*
-			$scope.orders = mockupFactory.ordersResource.query( { 
-				user: 'All'
-			}, function () {
-/**/
-			});
+			}, function ( ) {	});
+			$scope.ordersCreated =  mockupFactory.ordersResource.createdbetween( { 
+				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
+				to: tomorrow.getTime()//now.getTime()
+			}, function ( ) {	});
+			$scope.ordersClosed =  mockupFactory.ordersResource.closedbetween( { 
+				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
+				to: tomorrow.getTime()//now.getTime()
+			}, function ( ) {	});
 		});
 	}
 	

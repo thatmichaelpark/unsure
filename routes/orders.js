@@ -108,16 +108,56 @@ router.get('/openbetween/:from/:to', function(req, res) {
 	var db = req.db;
 	var from = new Date(Number(req.params.from));
 	var to = new Date(Number(req.params.to));
-	db.collection('orders').find( { $and: [
-		{ createdDate: { $lt: to } },
-		{ closedDate: { $exists: true, $gte: from } }
-	] } ).toArray( function ( err, result ) {
+	db.collection('orders').find(
+		{ $and: [
+			{ createdDate: { $lt: to } },
+//			{ closedDate: { $exists: true, $gte: from } }
+			{ $or: [
+				{ closedDate: { $exists: true, $gte: from } },
+				{ $and: [
+					{closedDate: null },
+					{ status: { $ne: 'Closed' } }
+				] }
+			] }
+		] } 
+	).toArray( function ( err, result ) {
 		if ( err ) {
 			throw err;
 		}
-	console.log(from);;;
-	console.log(to);;;
-//		console.log(result);;;
+		res.json( result );
+	});
+});
+
+router.get('/createdbetween/:from/:to', function(req, res) {
+	var db = req.db;
+	var from = new Date(Number(req.params.from));
+	var to = new Date(Number(req.params.to));
+	db.collection('orders').find(
+		{ $and: [
+			{ createdDate: { $gte: from } },
+			{ createdDate: { $lt: to } }
+		] } 
+	).toArray( function ( err, result ) {
+		if ( err ) {
+			throw err;
+		}
+		res.json( result );
+	});
+});
+
+router.get('/closedbetween/:from/:to', function(req, res) {
+	var db = req.db;
+	var from = new Date(Number(req.params.from));
+	var to = new Date(Number(req.params.to));
+	db.collection('orders').find(
+		{ $and: [
+			{ closedDate: { $gte: from } },
+			{ closedDate: { $lt: to } }
+		] } 
+	).toArray( function ( err, result ) {
+		if ( err ) {
+			throw err;
+		}
 		res.json( result );
 	});
 });

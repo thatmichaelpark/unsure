@@ -3,10 +3,33 @@
 	<input ng-model="month">
 	<input ng-model="date">
 	<button ng-click="acceptDate()">OK</button>
- {{lastTime.date | date}}
- {{lastTime.till | currency}}
+<!-- {{lastTime.date | date}}
+ {{lastTime.till | currency}}-->
+	<h2>Created</h2>
 	<table>
-		<tr ng-repeat="order in orders | orderBy: 'orderNo'">
+		<tr ng-repeat="order in ordersCreated | orderBy: 'orderNo'">
+			<td>{{order.orderNo}}</td>
+			<td>{{order.custName}}</td>
+			<td>{{order.status}}</td>
+			<td>{{order.createdDate | date}}</td>
+			<td>{{order.modifiedDate | date}}</td>
+			<td>{{order.closedDate | date}}</td>
+		</tr>
+	</table>
+	<h2>Closed</h2>
+	<table>
+		<tr ng-repeat="order in ordersClosed | orderBy: 'orderNo'">
+			<td>{{order.orderNo}}</td>
+			<td>{{order.custName}}</td>
+			<td>{{order.status}}</td>
+			<td>{{order.createdDate | date}}</td>
+			<td>{{order.modifiedDate | date}}</td>
+			<td>{{order.closedDate | date}}</td>
+		</tr>
+	</table>
+	<h2>Open</h2>
+	<table>
+		<tr ng-repeat="order in ordersOpen | orderBy: 'orderNo'">
 			<td>{{order.orderNo}}</td>
 			<td>{{order.custName}}</td>
 			<td>{{order.status}}</td>

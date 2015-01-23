@@ -1,5 +1,9 @@
+<div class="print-only">
+	<h1>Renton Computers</h1>
+</div>
+
 		<div class="container-fluid" ng-controller="JoblistCtrl">
-			<div class="col-xs-4" id="left">
+			<div class="col-xs-4 non-printing" id="left">
 				<div class="panel" id="left-top">
 					Current View
 					<select ng-model="data.currentView" ng-options="user for user in allUsers" ng-change="viewChanged()"></select>
@@ -56,13 +60,13 @@
 					{{data.currentOrderCopy.phone1 | tel}}
 					{{data.currentOrderCopy.phone2 | tel}}
 					</span>
-					<span>
+					<span class="non-printing">
 						<a class="btn pull-right" ng-href="/customers/{{data.currentOrderCopy.custNo}}">Customer Info</a>
 					</span>
 				</div>
 				<div id="right-middle" ng-class="data.unchanged ? '' : 'yellow'">
 					<div class="well mywell2">
-						<table class="table table-condensed mytable">
+						<table class="table table-condensed mytable" id="ordertable">
 							<thead>
 								<tr>
 									<th>SKU</th>
@@ -70,7 +74,7 @@
 									<th>Qty</th>
 									<th>Price</th>
 									<th>Ext. Price</th>
-									<th></th>
+									<th class="non-printing"></th>
 								</tr>
 							</thead>
 							<tbody ng-controller="editableParentCtrl">
@@ -92,11 +96,11 @@
 										<input ng-if="editing($last)" ng-model="item.qty" style="width: 50px">
 									</td>
 									<td style="width: 10%">
-										<div ng-if="!editing($last)">{{item.price | currency}}</div>
+										<div ng-if="!editing($last)" class="pull-right">{{item.price | currency}}</div>
 										<input ng-if="editing($last)" ng-model="item.price" style="width: 50px">
 									</td>
-									<td>{{item.qty * item.price | currency}}</td>
-									<td>
+									<td class="pull-right">{{item.qty * item.price | currency}}</td>
+									<td class="non-printing">
 										<button ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
@@ -105,8 +109,8 @@
 									<td></td>
 									<td></td>
 									<td>Subtotal</td>
-									<td>{{subtotal() | currency}}</td>
-									<td>
+									<td class="pull-right">{{subtotal() | currency}}</td>
+									<td class="non-printing">
 										<button ng-click="clickAdd(data.currentOrderCopy.bill, {sku:'', desc:'', qty:'', price:''})">Add</button>
 									</td>
 								</tr>
@@ -116,7 +120,7 @@
 									<td></td>
 									<td>Tax</td>
 									<td>{{tax() | currency}}</td>
-									<td></td>
+									<td class="non-printing"></td>
 								</tr>
 							</tbody>
 							<tbody ng-controller="editableDeetParentCtrl">
@@ -128,7 +132,7 @@
 									</td>
 									<td>
 										<div ng-if="!editing($last)">{{tender.method}}</div>
-										<select ng-if="editing($last)" ng-model="tender.method" ng-options="m for m in paymentMethods">
+										<select ng-if="editing($last)" ng-model="tender.method" ng-options="m for m in paymentMethods" focus>
 										</select>
 									</td>
 									<td>
@@ -137,20 +141,24 @@
 									</td>
 									<td></td>
 									<td>
-										<div ng-if="!editing($last)">{{-tender.amount | currency}}</div>
-										<input ng-if="editing($last)" ng-model="tender.amount" style="width: 50px" focus>
+										<div ng-if="!editing($last)" class="pull-right">{{-tender.amount | currency}}</div>
+										<input ng-if="editing($last)" ng-model="tender.amount" style="width: 50px">
 									</td>
-									<td>
+									<td class="non-printing">
 										<button ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
-								<tr>
+								<tr on-before-print="data.showDetailsCheckbox = true;">
 									<td></td>
 									<td></td>
-									<td>Deets <input type="checkbox" ng-model="data.showDetailsCheckbox"></td>
+									<td>
+										<div class="non-printing">
+											Deets <input type="checkbox" ng-model="data.showDetailsCheckbox">
+										</div>
+									</td>
 									<td>Total</td>
 									<td>{{subtotal() + tax() - totalTender() | currency}}</td>
-									<td>
+									<td class="non-printing">
 										<button ng-click="clickAdd( data.currentOrderCopy.tenders, {date: newDate(), method:'', note:'', amount:subtotal() + tax() - totalTender()} )">$</button>
 									</td>
 								</tr>
@@ -158,13 +166,13 @@
 						</table>
 					</div>
 					<div class="well mywell2">
-						<table class="table table-condensed mytable" ng-controller="editableParentCtrl">
+						<table class="table table-condensed mytable" ng-controller="editableParentCtrl" id="notestable">
 							<thead>
 								<tr>
 									<th>Date</th>
 									<th>By</th>
 									<th>Note</th>
-									<th><input type="checkbox" ng-model="data.showStatusChangesCheckbox"></th>
+									<th class="non-printing"><input type="checkbox" ng-model="data.showStatusChangesCheckbox"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -179,7 +187,7 @@
 										<div ng-if="!editing($last)" ng-bind-html="note.note | nl2br"></div>
 										<textarea ng-if="editing($last)" ng-model="note.note" style="resize: none; width: 100%" focus></textarea>
 									</td>
-									<td>
+									<td class="non-printing">
 										<button ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
@@ -187,13 +195,13 @@
 									<td></td>
 									<td></td>
 									<td></td>
-									<td>
+									<td class="non-printing">
 										<button ng-click="clickAdd(data.currentOrderCopy.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<table class="table table-condensed mytable" ng-controller="editableParentCtrl">
+						<table class="table table-condensed mytable non-printing" ng-controller="editableParentCtrl">
 							<thead>
 								<tr>
 									<th>Internal Notes</th>
@@ -214,7 +222,7 @@
 						</table>
 					</div>
 				</div>
-				<div class="well mywell" id="right-bottom">
+				<div class="well mywell non-printing" id="right-bottom">
 						Status:
 						<select ng-model="data.currentOrderCopy.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
 						Assigned To:

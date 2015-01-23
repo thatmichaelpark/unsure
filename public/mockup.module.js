@@ -1,7 +1,7 @@
 //http://www.chroder.com/2014/02/01/using-ngmodelcontroller-with-custom-directives/
 var mockupApp = angular.module( 'mockupApp', ['ngSanitize', 'ngResource', 'ui.bootstrap', 'ngRoute'] );
 
-var baseUrl = 'http://10.0.0.191:3001/';
+var baseUrl = 'http://10.0.20.101:3001/';
 //var baseUrl = 'http://localhost:3000/';
 mockupApp.constant( 'baseOrdersUrl', baseUrl + 'orders/' );
 mockupApp.constant( 'baseCustomersUrl', baseUrl + 'customers/' );
@@ -27,12 +27,12 @@ mockupApp.controller( 'MockupCtrl', function ( $scope, mockupFactory, $timeout )
 	
 	$scope.data = {};
 
-	$scope.users = ['Doug', 'Justin', 'Michael', 'Front'];
-	$scope.currentUser = 'Michael';
+	$scope.users = ['Ernesto', 'Justin', 'Michael', 'Mustafa', 'Richard', 'Sam', 'Front'];
+	$scope.currentUser = '';
 	$scope.userChanged = function () {
 		$scope.$broadcast( 'userChanged', $scope.currentUser );
 	};
-	$scope.data.currentView = 'All';
+	$scope.data.currentView = '';
 
 });
 
