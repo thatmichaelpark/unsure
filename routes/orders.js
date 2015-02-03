@@ -134,6 +134,7 @@ router.get('/createdbetween/:from/:to', function(req, res) {
 	var to = new Date(Number(req.params.to));
 	db.collection('orders').find(
 		{ $and: [
+			{ status: { $ne: 'Closed' } },
 			{ createdDate: { $gte: from } },
 			{ createdDate: { $lt: to } }
 		] } 

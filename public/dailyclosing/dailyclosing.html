@@ -14,6 +14,26 @@
 			<td>{{order.createdDate | date}}</td>
 			<td>{{order.modifiedDate | date}}</td>
 			<td>{{order.closedDate | date}}</td>
+			<td>{{order['Cash'] | currency}}</td>
+			<td>{{order['Check'] | currency}}</td>
+			<td>{{order['Credit card'] | currency}}</td>
+			<td>{{order['Debit card'] | currency}}</td>
+			<td>{{order['Gift certificate'] | currency}}</td>
+			<td>{{order['Other'] | currency}}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>{{ordersCreated.totals['Cash'] | currency}}</td>
+			<td>{{ordersCreated.totals['Check'] | currency}}</td>
+			<td>{{ordersCreated.totals['Credit card'] | currency}}</td>
+			<td>{{ordersCreated.totals['Debit card'] | currency}}</td>
+			<td>{{ordersCreated.totals['Gift certificate'] | currency}}</td>
+			<td>{{ordersCreated.totals['Other'] | currency}}</td>
 		</tr>
 	</table>
 	<h2>Closed</h2>
@@ -25,6 +45,26 @@
 			<td>{{order.createdDate | date}}</td>
 			<td>{{order.modifiedDate | date}}</td>
 			<td>{{order.closedDate | date}}</td>
+			<td>{{order['Cash'] | currency}}</td>
+			<td>{{order['Check'] | currency}}</td>
+			<td>{{order['Credit card'] | currency}}</td>
+			<td>{{order['Debit card'] | currency}}</td>
+			<td>{{order['Gift certificate'] | currency}}</td>
+			<td>{{order['Other'] | currency}}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>{{ordersClosed.totals['Cash'] | currency}}</td>
+			<td>{{ordersClosed.totals['Check'] | currency}}</td>
+			<td>{{ordersClosed.totals['Credit card'] | currency}}</td>
+			<td>{{ordersClosed.totals['Debit card'] | currency}}</td>
+			<td>{{ordersClosed.totals['Gift certificate'] | currency}}</td>
+			<td>{{ordersClosed.totals['Other'] | currency}}</td>
 		</tr>
 	</table>
 	<h2>Open</h2>
@@ -36,6 +76,12 @@
 			<td>{{order.createdDate | date}}</td>
 			<td>{{order.modifiedDate | date}}</td>
 			<td>{{order.closedDate | date}}</td>
+			<td>{{order['Cash'] | currency}}</td>
+			<td>{{order['Check'] | currency}}</td>
+			<td>{{order['Credit card'] | currency}}</td>
+			<td>{{order['Debit card'] | currency}}</td>
+			<td>{{order['Gift certificate'] | currency}}</td>
+			<td>{{order['Other'] | currency}}</td>
 		</tr>
 	</table>
  </div>

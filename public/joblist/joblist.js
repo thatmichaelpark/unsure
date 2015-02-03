@@ -58,7 +58,7 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		$scope.inventory = $scope.inventoryResource.query();
 	}
 	$scope.getInventory();
-	$scope.allUsers = ['Ernesto', 'Justin', 'Michael', 'Mustafa', 'Richard', 'Sam', 'Techs', 'Front', 'All'];
+	$scope.allUsers = ['Alan', 'Justin', 'Michael', 'Mustafa', 'Richard', 'Sam', 'Techs', 'Front', 'All'];
 
 	$scope.$on( 'userChanged', function ( e, u ) {
 		$scope.data.currentView = u;

@@ -27,7 +27,7 @@ mockupApp.controller( 'MockupCtrl', function ( $scope, mockupFactory, $timeout )
 	
 	$scope.data = {};
 
-	$scope.users = ['Ernesto', 'Justin', 'Michael', 'Mustafa', 'Richard', 'Sam', 'Front'];
+	$scope.users = ['Alan', 'Justin', 'Michael', 'Mustafa', 'Richard', 'Sam', 'Front'];
 	$scope.currentUser = '';
 	$scope.userChanged = function () {
 		$scope.$broadcast( 'userChanged', $scope.currentUser );
