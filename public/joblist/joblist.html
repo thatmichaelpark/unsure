@@ -80,8 +80,9 @@
 							<tbody ng-controller="editableParentCtrl">
 								<tr ng-repeat="item in data.currentOrderCopy.bill track by $index" ng-controller="editableCtrl">
 									<td>
-										<div ng-if="!editing($last)">{{item.sku}}</div>
-										<input ng-if="editing($last)" ng-model="item.sku" style="width: 100%">
+										<div>{{item.sku}}</div>
+										<!--<div ng-if="!editing($last)">{{item.sku}}</div>
+										<input ng-if="editing($last)" ng-model="item.sku" style="width: 100%">-->
 									</td>
 									<td>
 										<div ng-if="!editing($last)">{{item.desc}}</div>
@@ -101,7 +102,7 @@
 									</td>
 									<td class="pull-right">{{item.qty * item.price | currency}}</td>
 									<td class="non-printing">
-										<button ng-click="clickEdit()">Edit</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 								<tr>
@@ -111,7 +112,7 @@
 									<td>Subtotal</td>
 									<td class="pull-right">{{subtotal() | currency}}</td>
 									<td class="non-printing">
-										<button ng-click="clickAdd(data.currentOrderCopy.bill, {sku:'', desc:'', qty:'', price:''})">Add</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickAdd(data.currentOrderCopy.bill, {sku:'', desc:'', qty:'', price:''})">Add</button>
 									</td>
 								</tr>
 								<tr ng-if="data.showDetailsCheckbox">
@@ -145,7 +146,7 @@
 										<input ng-if="editing($last)" ng-model="tender.amount" style="width: 50px">
 									</td>
 									<td class="non-printing">
-										<button ng-click="clickEdit()">Edit</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 								<tr on-before-print="data.showDetailsCheckbox = true;">
@@ -159,7 +160,7 @@
 									<td>Total</td>
 									<td>{{subtotal() + tax() - totalTender() | currency}}</td>
 									<td class="non-printing">
-										<button ng-click="clickAdd( data.currentOrderCopy.tenders, {date: newDate(), method:'', note:'', amount:subtotal() + tax() - totalTender()} )">$</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickAdd( data.currentOrderCopy.tenders, {date: newDate(), method:'', note:'', amount:subtotal() + tax() - totalTender()} )">$</button>
 									</td>
 								</tr>
 							</tbody>
@@ -188,7 +189,7 @@
 										<textarea ng-if="editing($last)" ng-model="note.note" style="resize: none; width: 100%" focus></textarea>
 									</td>
 									<td class="non-printing">
-										<button ng-click="clickEdit()">Edit</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 								<tr>
@@ -196,7 +197,7 @@
 									<td></td>
 									<td></td>
 									<td class="non-printing">
-										<button ng-click="clickAdd(data.currentOrderCopy.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickAdd(data.currentOrderCopy.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
 									</td>
 								</tr>
 							</tbody>
@@ -215,7 +216,7 @@
 										<textarea ng-if="editing($last)" ng-model="data.currentOrderCopy.internalNote" style="resize: none; width: 100%" focus></textarea>
 									</td>
 									<td>
-										<button ng-click="clickEdit()">Edit</button>
+										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 							</tbody>
