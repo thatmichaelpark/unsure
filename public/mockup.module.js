@@ -28,11 +28,11 @@ mockupApp.controller( 'MockupCtrl', function ( $scope, mockupFactory, $timeout )
 	$scope.data = {};
 
 	$scope.users = ['Alan', 'Justin', 'Michael', 'Mustafa', 'Richard', 'Sam', 'Front'];
-	$scope.currentUser = '';
+	$scope.currentUser = 'Front';
 	$scope.userChanged = function () {
 		$scope.$broadcast( 'userChanged', $scope.currentUser );
 	};
-	$scope.data.currentView = '';
+	$scope.data.currentView = 'Front';
 
 });
 

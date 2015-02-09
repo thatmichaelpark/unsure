@@ -14,6 +14,7 @@
 						<table class="table table-condensed mytable" ng-controller="SortableTableCtrl">
 							<thead>
 								<tr>
+									<th><a href="" ng-click="data.predicate='createdDate'">Date</a></th>
 									<th><a href="" ng-click="data.predicate='orderNo'">Order</a></th>
 									<th><a href="" ng-click="data.predicate='custName'">Customer</a></th>
 									<th><a href="" ng-click="data.predicate='status'">Status</a></th>
@@ -22,6 +23,7 @@
 							</thead>
 							<tbody>
 								<tr ng-repeat="order in incomingOrders | orderBy:customSorter" ng-class="orderClass(order)" ng-click="clickOrder(order)">
+									<td>{{order.createdDate | date : "M/d"}}</td>
 									<td>{{order.orderNo}}</td>
 									<td>{{order.custName}}</td>
 									<td>{{order.status}}</td>
