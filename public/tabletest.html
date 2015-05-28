@@ -1,0 +1,101 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Split Pane Test</title>
+		<script src="javascripts/angular.js"></script>
+		<script>
+			var app = angular.module( 'app', ['ui.bootstrap'] );
+			app.directive('focus', function($timeout, $rootScope) {
+				return {
+					restrict: 'A',
+					link: function($scope, $element, attrs) {
+						$element[0].focus();
+					}
+				}
+			});
+			
+			app.controller( 'testCtrl', function ( $scope ) {
+				$scope.data = {
+					table1: [
+						{ firstName: 'Nika', lastName: 'Hansen', age: '4', gender: 'F' },
+						{ firstName: 'Zara', lastName: 'Park', age: '10', gender: 'F' },
+						{ firstName: 'Nina', lastName: 'Park', age: '8', gender: 'F' }
+					],
+					table2: [
+						{ sku: 'ABC', desc: 'blah', qty: '666' },
+						{ sku: 'DEF', desc: 'foo', qty: '123' },
+						{ sku: 'QWE', desc: 'bar', qty: '456' },
+						{ sku: 'ZXC', desc: 'baz', qty: '789' },
+						{ sku: 'RTY', desc: 'quidnunc', qty: '0' },
+					]
+				};
+			});
+			
+		</script>
+		<style>
+			.outlined {
+				border-radius : 8px 8px 8px 8px;
+				overflow: hidden;
+				overflow-y: auto;
+				border: solid black 1px
+			}
+			#spa {
+				top: 0px;
+				left: 0px;
+				bottom: 100px;
+				right: 0px;
+				min-height: 300px;
+				min-width: 300px;
+			}
+/* Panels: */
+.panel{ 
+  padding: 1em; 
+  border-width: 6px; 
+  border-style: solid; 
+  height: 4em;
+  min-width: 10px;
+}
+
+/* Resizing */
+.resize-x { 
+  resize: both;
+  overflow: auto;
+}
+
+.resize-y { 
+  resize: vertical;
+  overflow: auto;
+}
+
+/* Panel Colors */
+.box-a{ border-color: #F6F2A4; background: #FFFEDB;}
+.box-b{ border-color: #F2B98D; background: #FEE5D0;}
+.box-c{ border-color: #F18FB3; background: #FDD1E2;}
+
+/* Split View */
+.split-view {
+  margin: 1em 0; 
+  width: 100%;
+  height: 100%
+  clear: both;
+  display: table;
+}
+
+.split-view .panel {
+  display: table-cell;
+}
+		</style>
+	</head>
+	<body ng-controller="testCtrl">
+		<div id="spa" class="split-view">
+			<div class="panel box-a resize-x">
+			</div>
+			<div class="split-view">
+				<div class="panel box-b">
+				</div>
+				<div class="panel box-b">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

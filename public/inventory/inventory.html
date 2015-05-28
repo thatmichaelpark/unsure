@@ -1,15 +1,15 @@
 <div class="container-fluid" id="spa" ng-controller="InventoryCtrl">
 	<div class="col-xs-6">
 		<h2>Inventory</h2>
-		<table class="table table-condensed" ng-controller="SortableTableCtrl">
+		<table class="table table-condensed mytable" ng-controller="SortableTableCtrl">
 			<thead>
 				<tr>
-					<th><a href="" ng-click="predicate='sku'">SKU</a></th>
-					<th><a href="" ng-click="predicate='desc'">Description</a></th>
-					<th><a href="" ng-click="predicate='price'">Price</a></th>
-					<th><a href="" ng-click="predicate='qty'">Quantity</a></th>
-					<th><a href="" ng-click="predicate='department'">Department</a></th>
-					<th><a href="" ng-click="predicate='taxable'">Taxable</a></th>
+					<th><a href="" ng-click="data.predicate='sku'">SKU</a></th>
+					<th><a href="" ng-click="data.predicate='desc'">Description</a></th>
+					<th><a href="" ng-click="data.predicate='price'">Price</a></th>
+					<th><a href="" ng-click="data.predicate='qty'">Quantity</a></th>
+					<th><a href="" ng-click="data.predicate='department'">Department</a></th>
+					<th><a href="" ng-click="data.predicate='taxable'">Taxable</a></th>
 				</tr>
 			</thead>
 			<tbody>

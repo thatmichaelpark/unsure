@@ -5,9 +5,40 @@
 	<button ng-click="acceptDate()">OK</button>
 <!-- {{lastTime.date | date}}
  {{lastTime.till | currency}}-->
-	<h2>Created</h2>
+	<h2>Checkins</h2>
 	<table>
-		<tr ng-repeat="order in ordersCreated | orderBy: 'orderNo'">
+		<tr ng-repeat="order in checkins | orderBy: 'orderNo'">
+			<td>{{order.orderNo}}</td>
+			<td>{{order.custName}}</td>
+			<td>{{order.status}}</td>
+			<td>{{order.createdDate | date}}</td>
+			<td>{{order.modifiedDate | date}}</td>
+			<td>{{order.closedDate | date}}</td>
+			<td>{{order['Cash'] | currency}}</td>
+			<td>{{order['Check'] | currency}}</td>
+			<td>{{order['Credit card'] | currency}}</td>
+			<td>{{order['Debit card'] | currency}}</td>
+			<td>{{order['Gift certificate'] | currency}}</td>
+			<td>{{order['Other'] | currency}}</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>{{ordersCreated.totals['Cash'] | currency}}</td>
+			<td>{{ordersCreated.totals['Check'] | currency}}</td>
+			<td>{{ordersCreated.totals['Credit card'] | currency}}</td>
+			<td>{{ordersCreated.totals['Debit card'] | currency}}</td>
+			<td>{{ordersCreated.totals['Gift certificate'] | currency}}</td>
+			<td>{{ordersCreated.totals['Other'] | currency}}</td>
+		</tr>
+	</table>
+	<h2>Closed Checkins</h2>
+	<table>
+		<tr ng-repeat="order in closedcheckins | orderBy: 'orderNo'">
 			<td>{{order.orderNo}}</td>
 			<td>{{order.custName}}</td>
 			<td>{{order.status}}</td>

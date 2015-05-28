@@ -18,7 +18,10 @@
 			$scope.ordersOpen =  mockupFactory.ordersResource.openbetween( { 
 				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
 				to: tomorrow.getTime()//now.getTime()
-			}, function ( ) { analyzeOrders( $scope.ordersOpen );});
+			}, function ( ) {
+				analyzeOrders( $scope.ordersOpen );
+				blahOrders( $scope.ordersOpen, today, tomorrow );;;
+			});
 			$scope.ordersCreated =  mockupFactory.ordersResource.createdbetween( { 
 				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
 				to: tomorrow.getTime()//now.getTime()
@@ -28,6 +31,39 @@
 				to: tomorrow.getTime()//now.getTime()
 			}, function ( ) { analyzeOrders( $scope.ordersClosed ); });
 		});
+	}
+
+	function blahOrders( orders, from, to ) {
+		var checkins = [];
+		var closedcheckins = [];
+		var invoices = [];
+		var otherdeposits = [];
+		$scope.checkins = checkins;
+		$scope.closedcheckins = closedcheckins;
+		$scope.invoices = invoices;
+		for( var i=0; i<orders.length; ++i ) {
+			var o = orders[i];
+			var createdDate = new Date(o.createdDate);
+			if (from <= createdDate && createdDate < to) {
+				if (o.status === 'Closed') {
+					closedcheckins.push( o );
+				} else {
+					checkins.push( o );
+				}
+			}
+			var closedDate = new Date(o.closedDate);
+			if (from <= closedDate && closedDate < to) {
+				invoices.push( o );
+			}
+			for( var j=0; j<o.tenders.length; ++j ) {
+				var t = o.tenders[j];
+				var d = new Date(t.date);
+				if (from <= d && d < to) {
+//					console.log( o.custName );
+//					console.log( t );;;
+				}
+			}
+		}
 	}
 	
 	var analyzeOrders = function ( orders ) {
@@ -40,7 +76,6 @@
 		orders.totals['Other'] = 0;
 		for( var i=0; i<orders.length; ++i ) {
 			var o = orders[i];
-			console.log(i + " " + orders.length + ' ' + o.custName + " " + o.tenders.length);;;
 			o['Cash'] = 0;
 			o['Check'] = 0;
 			o['Credit card'] = 0;
