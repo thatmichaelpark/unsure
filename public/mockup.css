@@ -116,6 +116,26 @@ div.breakall {
 	background: #fff0f0;
 }
 
+.mytable tr.urgency0, tr.urgency0 a {
+	color: #000;
+}
+
+.mytable tr.urgency1, tr.urgency1 a {
+	color: #400;
+}
+
+.mytable tr.urgency2, tr.urgency2 a {
+	color: 800;
+}
+
+.mytable tr.urgency3, tr.urgency3 a {
+	color: #c00;
+}
+
+.mytable tr.urgency4, tr.urgency4 a {
+	color: #f00;
+}
+
 .dropdown-menu {
 	margin: 0;
 	padding: 0;

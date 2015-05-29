@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div ng-controller="OtherCtrl">
 		<h2>On the bench</h2>
-		<table class="table table-condensed mytable" ng-controller="SortableTableCtrl">
+		<table class="mytable table table-condensed mytable" ng-controller="SortableTableCtrl">
 			<thead>
 				<tr>
 					<th><a href="" ng-click="data.predicate='createdDate'">Date</a></th>
@@ -13,7 +13,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="order in ordersOnBench | orderBy: customSorter">
+				<tr ng-repeat="order in ordersOnBench | orderBy: customSorter" ng-class="urgencyClass(order)">
 					<td>{{order.createdDate | date}}</td>
 					<td><a href="/joblist/{{order.orderNo}}">{{order.orderNo}}</a></td>
 					<td><a href="/joblist/{{order.orderNo}}">{{order.custName}}</a></td>
@@ -24,7 +24,7 @@
 			</tbody>
 		</table>
 		<h2>Other</h2>
-		<table class="table table-condensed mytable" ng-controller="SortableTableCtrl">
+		<table class="mytable table table-condensed mytable" ng-controller="SortableTableCtrl">
 			<thead>
 				<tr>
 					<th><a href="" ng-click="data.predicate='createdDate'">Date</a></th>
@@ -36,7 +36,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="order in ordersOther | orderBy: customSorter">
+				<tr ng-repeat="order in ordersOther | orderBy: customSorter" ng-class="urgencyClass(order)">
 					<td>{{order.createdDate | date}}</td>
 					<td><a href="/joblist/{{order.orderNo}}">{{order.orderNo}}</a></td>
 					<td><a href="/joblist/{{order.orderNo}}">{{order.custName}}</a></td>

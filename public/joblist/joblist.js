@@ -4,6 +4,10 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		$scope.data.currentOrder = null;
 		$scope.data.currentOrderCopy = null;
 		$scope.orders = $scope.ordersResource.query( { user: $scope.data.currentView }, function(){
+			for (var i=0; i<$scope.orders.length; ++i) {	// compute order age
+				var order = $scope.orders[i];
+				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
+			}
 			$scope.incomingOrders = [];
 			$scope.activeOrders = [];
 			for ( var i=0; i<$scope.orders.length; ++i ) {
@@ -109,6 +113,19 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 			c += 'danger';
 		}
 		return c;
+	}
+	
+	$scope.urgencyClass = function (order) {
+		if (order.age < 1) {
+			return 'urgency0';
+		} else if (order.age < 3) {
+			return 'urgency1';
+		} else if (order.age < 5) {
+			return 'urgency2';
+		} else if (order.age < 10) {
+			return 'urgency3';
+		}
+		return 'urgency4';
 	}
 	
 	$scope.$on( '$routeChangeSuccess', function () {
