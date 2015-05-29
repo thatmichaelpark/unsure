@@ -25,7 +25,7 @@
 								<tr ng-repeat="order in incomingOrders | orderBy:customSorter" ng-class="orderClass(order)" ng-click="clickOrder(order)">
 									<td>{{order.createdDate | date : "M/d"}}</td>
 									<td>{{order.orderNo}}</td>
-									<td>{{order.custName}}</td>
+									<td>{{order.custName}} {{order.tag ? '[':''}}{{order.tag}}{{order.tag ? ']':''}}</td>
 									<td>{{order.status}}</td>
 									<td>{{order.assignedTo}}</td>
 								</tr>
@@ -48,7 +48,7 @@
 								<tr ng-repeat="order in activeOrders | orderBy:customSorter" ng-class="orderClass(order)" ng-click="clickOrder(order)">
 									<td>{{order.createdDate | date : "M/d"}}</td>
 									<td>{{order.orderNo}}</td>
-									<td>{{order.custName}}</td>
+									<td>{{order.custName}} {{order.tag ? '[':''}}{{order.tag}}{{order.tag ? ']':''}}</td>
 									<td>{{order.status}}</td>
 									<td>{{order.assignedTo}}</td>
 								</tr>
@@ -233,6 +233,9 @@
 						Assigned To:
 						<select ng-model="data.currentOrderCopy.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
 						 Assigned By: {{data.currentOrderCopy.assignedBy}}
+						Tag:
+						<span ng-if="data.unchanged" ng-click="data.unchanged = false">{{data.currentOrderCopy.tag || 'None'}}</span>
+						<input ng-if="!data.unchanged" ng-model="data.currentOrderCopy.tag" focus></input>
 					<span class="pull-right yellow" ng-if="!data.unchanged">
 						<button ng-click="clickOk()" ng-disabled="data.unchanged">OK</button>
 						<button ng-click="clickCancel()" ng-disabled="data.unchanged">Cancel</button>

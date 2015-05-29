@@ -7,6 +7,7 @@
 					<th><a href="" ng-click="data.predicate='createdDate'">Date</a></th>
 					<th><a href="" ng-click="data.predicate='orderNo'">Order</a></th>
 					<th><a href="" ng-click="data.predicate='custName'">Customer</a></th>
+					<th></th>
 					<th><a href="" ng-click="data.predicate='status'">Status</a></th>
 					<th><a href="" ng-click="data.predicate='assignedTo'">Owner</a></th>
 				</tr>
@@ -15,7 +16,8 @@
 				<tr ng-repeat="order in ordersOnBench | orderBy: customSorter">
 					<td>{{order.createdDate | date}}</td>
 					<td><a href="/joblist/{{order.orderNo}}">{{order.orderNo}}</a></td>
-					<td>{{order.custName}}</td>
+					<td><a href="/joblist/{{order.orderNo}}">{{order.custName}}</a></td>
+					<td>{{order.tag}}</td>
 					<td>{{order.status}}</td>
 					<td>{{order.assignedTo}}</td>
 				</tr>
@@ -28,6 +30,7 @@
 					<th><a href="" ng-click="data.predicate='createdDate'">Date</a></th>
 					<th><a href="" ng-click="data.predicate='orderNo'">Order</a></th>
 					<th><a href="" ng-click="data.predicate='custName'">Customer</a></th>
+					<th></th>
 					<th><a href="" ng-click="data.predicate='status'">Status</a></th>
 					<th><a href="" ng-click="data.predicate='assignedTo'">Owner</a></th>
 				</tr>
@@ -36,7 +39,8 @@
 				<tr ng-repeat="order in ordersOther | orderBy: customSorter">
 					<td>{{order.createdDate | date}}</td>
 					<td><a href="/joblist/{{order.orderNo}}">{{order.orderNo}}</a></td>
-					<td>{{order.custName}}</td>
+					<td><a href="/joblist/{{order.orderNo}}">{{order.custName}}</a></td>
+					<td>{{order.tag}}</td>
 					<td>{{order.status}}</td>
 					<td>{{order.assignedTo}}</td>
 				</tr>
