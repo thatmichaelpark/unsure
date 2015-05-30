@@ -131,7 +131,7 @@
 							<tbody ng-controller="editableDeetParentCtrl">
 								<tr ng-repeat="tender in data.currentOrderCopy.tenders track by $index" ng-if="data.showDetailsCheckbox" ng-controller="editableCtrl">
 									<td>
-										<a href="#" tooltip="{{tender.date | date:'h:mm a'}}" tooltip-placement="right">
+										<a href="#" title="{{tender.date | date:'h:mm a'}}" >
 											{{tender.date | date}}
 										</a>
 									</td>
@@ -183,7 +183,7 @@
 							<tbody>
 								<tr  ng-repeat="note in data.currentOrderCopy.notes track by $index" ng-show="showStatusChanges(note.note)" ng-controller="editableCtrl">
 									<td>
-										<a href="#" tooltip="{{note.date | date:'h:mm a'}}" tooltip-placement="right">
+										<a href="#" title="{{note.date | date:'h:mm a'}}">
 											{{note.date | date}}
 										</a>
 									</td>
