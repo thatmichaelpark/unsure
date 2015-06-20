@@ -1,4 +1,4 @@
-mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location, mockupFactory ) {
+unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location, resourceFactory ) {
 
 	$scope.getOrders = function () {
 		$scope.data.currentOrder = null;
@@ -75,10 +75,10 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 
 	// use a timer to auto-refresh orders list
 	// We only want one, so we kill the previous one.
-	if ( angular.isDefined( mockupFactory.timerId ) ) {
-		clearInterval( mockupFactory.timerId );
+	if ( angular.isDefined( resourceFactory.timerId ) ) {
+		clearInterval( resourceFactory.timerId );
 	}
-	mockupFactory.timerId = setInterval( function () {
+	resourceFactory.timerId = setInterval( function () {
 		if ( $scope.data.unchanged ) {
 			$scope.getOrders();
 		}
@@ -136,7 +136,7 @@ mockupApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	});
 });
 
-mockupApp.controller( 'OrderCtrl', function ( $scope ) {
+unsureApp.controller( 'OrderCtrl', function ( $scope ) {
 
 	$scope.data.showDetailsCheckbox = false;
 
@@ -247,14 +247,14 @@ mockupApp.controller( 'OrderCtrl', function ( $scope ) {
 	}
 })
 
-mockupApp.controller( 'SortableTableCtrl', function ( $scope, sortPredicateFactory ) {
+unsureApp.controller( 'SortableTableCtrl', function ( $scope, sortPredicateFactory ) {
 	$scope.data = sortPredicateFactory.data;
 	$scope.customSorter = function ( order ) {
 		return order[ $scope.data.predicate ];
 	}
 });
 
-mockupApp.filter('tel', function () {
+unsureApp.filter('tel', function () {
     return function (tel) {
         if (!tel) { return ''; }
 
@@ -274,7 +274,7 @@ mockupApp.filter('tel', function () {
 
 // The next few things are for tables with Edit/Add buttons
 
-mockupApp.directive('focus', function($timeout, $rootScope) {
+unsureApp.directive('focus', function($timeout, $rootScope) {
 	return {
 		restrict: 'A',
 		link: function($scope, $element, attrs) {
@@ -283,7 +283,7 @@ mockupApp.directive('focus', function($timeout, $rootScope) {
 	}
 });
 
-mockupApp.controller( 'editableParentCtrl', function ( $scope ) {
+unsureApp.controller( 'editableParentCtrl', function ( $scope ) {
 	$scope.added = false;
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );
@@ -298,7 +298,7 @@ mockupApp.controller( 'editableParentCtrl', function ( $scope ) {
 	});
 });
 
-mockupApp.controller( 'editableCtrl', function ( $scope ) {
+unsureApp.controller( 'editableCtrl', function ( $scope ) {
 	$scope.edit = false;
 	$scope.editing = function ( last ) {
 		if ( $scope.added && last ) {
@@ -315,7 +315,7 @@ mockupApp.controller( 'editableCtrl', function ( $scope ) {
 	});
 });
 
-mockupApp.controller( 'editableDeetParentCtrl', function ( $scope ) {
+unsureApp.controller( 'editableDeetParentCtrl', function ( $scope ) {
 	$scope.added = false;
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );

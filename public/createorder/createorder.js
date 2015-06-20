@@ -1,4 +1,4 @@
-mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $routeParams, mockupFactory ) {
+unsureApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $routeParams, resourceFactory ) {
 
 	$scope.data = {};
 	
@@ -44,18 +44,18 @@ mockupApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $r
     };
 	
 	$scope.getOrders = function ( custNo) {
-		$scope.data.orders = mockupFactory.ordersResource.getbycustno( { custNo: custNo }, function () {} );
+		$scope.data.orders = resourceFactory.ordersResource.getbycustno( { custNo: custNo }, function () {} );
 	}
 });
 
-mockupApp.filter("nl2br", function($filter) {
+unsureApp.filter("nl2br", function($filter) {
  return function(data) {
    if (!data) return data;
    return data.replace(/\n\r?/g, '<br />');
  };
 });
 
-mockupApp.filter( 'blah', function ( $filter ) {
+unsureApp.filter( 'blah', function ( $filter ) {
 	return function ( data, name ) {
 		// split name into names
 		var re = /(\w+)/g;
@@ -71,7 +71,7 @@ mockupApp.filter( 'blah', function ( $filter ) {
 		return result;
 	}
 });
-mockupApp.controller( 'TypeaheadCtrl', 
+unsureApp.controller( 'TypeaheadCtrl', 
 	function TypeaheadCtrl($scope, $http) {
 			
 		getCustomers = function () {

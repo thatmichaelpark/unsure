@@ -1,4 +1,4 @@
- mockupApp.controller( 'OtherCtrl', function ( $scope, mockupFactory, $location ) {
+ unsureApp.controller( 'OtherCtrl', function ( $scope, resourceFactory, $location ) {
  
  	var getOrders = function () {
 		$scope.orders = $scope.ordersResource.query( { user: 'Techs' }, function(){

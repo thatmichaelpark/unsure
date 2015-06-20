@@ -1,0 +1,230 @@
+@media screen {
+#spa {
+	position : absolute;
+	top : 1em;
+	left : 1em;
+	bottom : 1em;
+	right : 1em;
+	min-height : 300px;
+	min-width : 300px;
+}
+#top-part {
+	position : absolute;
+	top: 0;
+	height: 3em;
+	right: 0%;
+	left: 0;
+}
+#main-part {
+	position : absolute;
+	top: 3em;
+	right: 0%;
+	bottom: 0;
+	left: 0;
+	overflow-y: auto;
+}
+#left {
+	position : absolute;
+	top: 0;
+	right: 55%;
+	bottom: 0;
+	left: 0;
+}
+#left-top {
+	position : absolute;
+	top: 0;
+	height: 2em;
+	right: 0%;
+	left: 0;
+}
+#left-bottom {
+	position : absolute;
+	top: 2em;
+	right: 0%;
+	bottom: 0;
+	left: 0;
+	overflow-y: auto;
+}
+
+#right {
+	position : absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 45%;
+}
+#right-top{
+	position : absolute;
+	top: 0;
+	height: 5em;
+	right: 0;
+	left: 0;
+	overflow: none;
+}
+#right-middle{
+	position : absolute;
+	top: 8em;
+	right: 0;
+	bottom: 5em;
+	left: 0;
+	overflow-y: auto;
+}
+#right-bottom {
+	position : absolute;
+	height: 2em;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.yellow div, .yellow button {
+	background-color: aqua;
+}
+
+.mytable {
+	margin: 0em 2em 0em 2em;
+	border-collapse: collapse;
+	width: 90%;
+}
+
+.mytable th {
+	text-align: left;
+	padding: 0.1em 1em;
+}
+
+.mytable tbody > tr {
+	border-top: solid 1px #d0d0d0;
+}
+
+.mytable td {
+	vertical-align: top;
+	padding: 0.1em 1em;
+}
+
+div.breakall {
+	word-break: break-all;
+}
+
+.mytable a:link {
+	text-decoration: none;
+}
+
+.mytable .success {
+	border: solid 3px #80e080;
+}
+.danger {
+	background: #fff0f0;
+}
+/*
+.mytable tr.urgency0, tr.urgency0 a {
+	color: #000;
+}
+
+.mytable tr.urgency1, tr.urgency1 a {
+	color: #400;
+}
+
+.mytable tr.urgency2, tr.urgency2 a {
+	color: 800;
+}
+
+.mytable tr.urgency3, tr.urgency3 a {
+	color: #c00;
+}
+
+.mytable tr.urgency4, tr.urgency4 a {
+	color: #f00;
+}
+*/
+.dropdown-menu {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	display: block;
+	position: absolute;
+	background: white;
+	border: solid 1px #d0d0d0;
+}
+
+.dropdown-menu > li > a {
+	padding: 0px 20px;
+}
+
+.dropdown-menu > li.active  {
+	color: white;
+	background-color: #428bca;
+}
+
+.mywell {
+	border-radius: 8px 8px 8px 8px;
+	border: solid 1px #d0d0d0;
+	background: #f8f8f8;
+	padding: 1em;
+}
+
+.mywell2 {
+	border-radius: 8px 8px 8px 8px;
+	border: solid 1px #d0d0d0;
+	background: #f8f8f8;
+	margin: 1em;
+}
+
+.pull-right {
+	float: right;
+}
+
+a.btn {
+	-webkit-appearance: button;
+	padding: 4px 6px;
+	text-decoration: none;
+	font-family: Arial;
+	font-size: 10pt;
+	color: black;
+}
+
+label {
+	float: left;
+	width: 8em;
+	margin-right: 1em;
+}
+
+.print-only { display: none; }
+
+}
+
+#ordertable tr > td:first-child { text-align: left;} /* first column */
+#ordertable tr > td:first-child + td { text-align: left;} /* second column */
+#ordertable tr > td:first-child + td + td { text-align: right;} /* third column */
+#ordertable tr > td:first-child + td + td + td { text-align: right;}
+#ordertable tr > td:first-child + td + td + td + td { text-align: right;}
+
+#ordertable tr > th:first-child { text-align: left;} /* first column */
+#ordertable tr > th:first-child + th { text-align: left;} /* second column */
+#ordertable tr > th:first-child + th + th { text-align: right;} /* third column */
+#ordertable tr > th:first-child + th + th + th { text-align: right;}
+#ordertable tr > th:first-child + th + th + th + th { text-align: right;}
+
+#notestable tr > th:first-child { width: 15%;} /* first column */
+
+@media print {
+.non-printing { display: none; }
+body { font-size: small; }
+.mytable {
+	margin: 2em 0em;
+	border-collapse: collapse;
+}
+.mytable td {
+	vertical-align: top;
+}
+.mytable th {
+	text-align: left;
+}
+.mytable a:link {
+	text-decoration: none;
+}
+.mytable tbody > tr {
+	border-top: solid 1px black;
+}
+
+
+}

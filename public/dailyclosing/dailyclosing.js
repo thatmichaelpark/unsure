@@ -1,4 +1,4 @@
- mockupApp.controller( 'DailyClosingCtrl', function ( $scope, mockupFactory, $location ) {
+ unsureApp.controller( 'DailyClosingCtrl', function ( $scope, resourceFactory, $location ) {
 
 	var now = new Date();
 	$scope.year = now.getFullYear();
@@ -13,20 +13,20 @@
 	}
 	
 	var getOrders = function ( ) {
-		$scope.lastTime = new mockupFactory.ordersResource();
+		$scope.lastTime = new resourceFactory.ordersResource();
 		$scope.lastTime.$getLastTime( null, null ).then( function () {
-			$scope.ordersOpen =  mockupFactory.ordersResource.openbetween( { 
+			$scope.ordersOpen =  resourceFactory.ordersResource.openbetween( { 
 				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
 				to: tomorrow.getTime()//now.getTime()
 			}, function ( ) {
 				analyzeOrders( $scope.ordersOpen );
 				blahOrders( $scope.ordersOpen, today, tomorrow );;;
 			});
-			$scope.ordersCreated =  mockupFactory.ordersResource.createdbetween( { 
+			$scope.ordersCreated =  resourceFactory.ordersResource.createdbetween( { 
 				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
 				to: tomorrow.getTime()//now.getTime()
 			}, function ( ) { analyzeOrders( $scope.ordersCreated ); });
-			$scope.ordersClosed =  mockupFactory.ordersResource.closedbetween( { 
+			$scope.ordersClosed =  resourceFactory.ordersResource.closedbetween( { 
 				from: today.getTime(), //new Date($scope.lastTime.date).getTime(),
 				to: tomorrow.getTime()//now.getTime()
 			}, function ( ) { analyzeOrders( $scope.ordersClosed ); });
@@ -95,7 +95,7 @@
 //	getLastTime();
 /*	
 	$scope.clickAdd = function ( ) {
-		new mockupFactory.inventoryResource( $scope.item ).$add().then( getInventory );
+		new resourceFactory.inventoryResource( $scope.item ).$add().then( getInventory );
 	}
 	$scope.clickClear = function ( ) {
 		$scope.item = {};

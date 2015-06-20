@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="unsureApp">
+	<head>
+		<title>Unsure2</title>
+		<script src="javascripts/angular.js"></script>
+		<script src="javascripts/angular-sanitize.js"></script>
+		<script src="javascripts/angular-resource.js"></script>
+		<script src="javascripts/angular-route.js"></script>
+		<script src="javascripts/ui-bootstrap-tpls-0.11.0.min.js"></script>
+		<script src="unsure.module.js"></script>
+		<script src="unsure.resourcefactory.js"></script>
+		<script src="onbeforeprint.js"></script>
+		<script src="joblist/joblist.js"></script>
+		<script src="createorder/createorder.js"></script>
+		<script src="customers/customers.js"></script>
+		<script src="inventory/inventory.js"></script>
+		<script src="dailyclosing/dailyclosing.js"></script>
+		<script src="other.js"></script>
+		<!--link rel="stylesheet" href="stylesheets/bootstrap.css"-->
+		<link rel="stylesheet" href="unsure.css">
+	</head>
+	<body ng-controller="UnsureCtrl">
+	<div id="spa">
+		<div class="panel non-printing" id="top-part">
+			Current User
+			<select ng-model="currentUser" ng-options="user for user in users" ng-change="userChanged()"></select>
+			<a class="btn btn-default" href="/jobslist">Work</a>
+			<a class="btn btn-default" href="/createorder">New Order</a>
+			<a class="btn btn-default" href="/dailyclosing">Daily Closing</a>
+			<a class="btn btn-default" href="/other">Other</a>
+		</div>
+		<div id="main-part">
+			<div ng-view></div>
+		</div>
+	</div>
+	</body>
+</html>

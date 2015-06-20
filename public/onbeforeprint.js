@@ -6,7 +6,7 @@ http://avladov.com/post/74334124064/before-printing-angularjs
  * 
  * Example: <div ng-class="{printed: isPrinted}" on-before-print="printed = true" />
  */
-mockupApp.directive('onBeforePrint', ['$window', '$rootScope', '$timeout', function onBeforePrint($window, $rootScope, $timeout) {
+unsureApp.directive('onBeforePrint', ['$window', '$rootScope', '$timeout', function onBeforePrint($window, $rootScope, $timeout) {
 	var beforePrintDirty = false;
 	var listeners = [];
 

@@ -1,4 +1,4 @@
-mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, mockupFactory, $routeParams ) {
+unsureApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, resourceFactory, $routeParams ) {
 
 	$scope.data = {};
 
@@ -10,10 +10,10 @@ mockupApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, m
 	});
 	
 	function getOrders( custNo ) {
-		$scope.data.orders = mockupFactory.ordersResource.getbycustno( { custNo: custNo }, function () {} );
+		$scope.data.orders = resourceFactory.ordersResource.getbycustno( { custNo: custNo }, function () {} );
 	}
 	function getCustomer( custNo ) {
-		$scope.data.customer = new mockupFactory.customersResource();
+		$scope.data.customer = new resourceFactory.customersResource();
 		$scope.data.customer.$get( { custNo: custNo } ).then ( function () {
 		}).catch( function (e) {
 			console.log( 'nope ' + e );;;

@@ -1,7 +1,7 @@
-mockupApp.controller( 'InventoryCtrl', function ( $scope, mockupFactory, $location ) {
+unsureApp.controller( 'InventoryCtrl', function ( $scope, resourceFactory, $location ) {
 
 	getInventory = function ( ) {
-		$scope.inventory = mockupFactory.inventoryResource.query( {}, function(){
+		$scope.inventory = resourceFactory.inventoryResource.query( {}, function(){
 			$scope.item = {};
 		});
 	}
@@ -9,7 +9,7 @@ mockupApp.controller( 'InventoryCtrl', function ( $scope, mockupFactory, $locati
 	getInventory();
 	
 	$scope.clickAdd = function ( ) {
-		new mockupFactory.inventoryResource( $scope.item ).$add().then( getInventory );
+		new resourceFactory.inventoryResource( $scope.item ).$add().then( getInventory );
 	}
 	$scope.clickClear = function ( ) {
 		$scope.item = {};
