@@ -96,6 +96,10 @@
 	border-top: solid 1px #d0d0d0;
 }
 
+tr.clickable:hover {
+	background: #d0f0d0;
+	cursor: pointer;
+}
 .mytable td {
 	vertical-align: top;
 	padding: 0.1em 1em;

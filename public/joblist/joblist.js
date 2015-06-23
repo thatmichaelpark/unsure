@@ -95,6 +95,24 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 			}
 		});
 	}
+	var getTechOrders = function () {
+		$scope.orders = $scope.ordersResource.query( { user: 'Techs' }, function(){
+			$scope.ordersOnBench = [];
+			for (var i=0; i<$scope.orders.length; ++i) {
+				var order = $scope.orders[i];
+				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
+				$scope.ordersOnBench.push(order);
+			}
+		});
+		$scope.orders2 = $scope.ordersResource.query( { user: 'Front' }, function(){
+			$scope.ordersOther = [];
+			for (var i=0; i<$scope.orders2.length; ++i) {
+				var order = $scope.orders2[i];
+				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
+				$scope.ordersOther.push(order);
+			}
+		});
+	}
 	makeDisplayName = function ( c ) {
 		var name = c.lastName + ', ' + c.firstName;
 		if ( c.companyName ) {
@@ -109,19 +127,21 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	$scope.getInventory();
 	$scope.allUsers = ['Davis', 'Michael', 'Sam', 'Sergey', 'Tony', 'Techs', 'Front', 'All'];
 
-	$scope.list = "joblist/alljobslist.html"
-	getOrders = getAllOrders;
-
 	changeView = function (v) {
 		if (v === 'All') {
 			$scope.list = "joblist/alljobslist.html"
-			getOrders = getAllOrders;
+			$scope.getOrders = getAllOrders;
+		} else if (v === 'Techs') {
+			$scope.list = "joblist/techjobslist.html"
+			$scope.getOrders = getTechOrders;
 		} else {
 			$scope.list = "joblist/userjobslist.html"
-			getOrders = getUserOrders;
+			$scope.getOrders = getUserOrders;
 		}
-		getOrders();
+		$scope.getOrders();
 	}
+
+	changeView($scope.data.currentView);
 	
 	$scope.$on( 'userChanged', function ( e, u ) {
 		$scope.data.currentView = u;
@@ -139,7 +159,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	}
 	resourceFactory.timerId = setInterval( function () {
 		if ( $scope.data.unchanged ) {
-			getOrders();
+			$scope.getOrders();
 		}
 	}, 60000 );
 	/* Previously (0.16), I had it so only the first timer stayed alive, and no new timers were
@@ -159,7 +179,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	$scope.clickOrder = function( o ) {
 		if ( $scope.data.unchanged ) {
 			$scope.data.currentOrderNo = o.orderNo;
-			getOrders();
+			$scope.getOrders();
 		}	
 	}
 	
@@ -191,7 +211,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		if ( $location.path().indexOf( '/joblist/' ) == 0 ) {
 			$scope.data.currentOrderNo = Number( $routeParams.orderNo );
 		}
-		getOrders(); //hack
+		$scope.getOrders(); //hack
 	});
 });
 

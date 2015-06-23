@@ -1,6 +1,6 @@
 <div  id="left-bottom">
 	<div class="panel">
-		<h3 class="panel-heading">Incoming</h3>
+		<h3 class="panel-heading">Assigned to Techs</h3>
 		<table class="table table-condensed mytable" ng-controller="SortableTableCtrl">
 			<thead>
 				<tr>
@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="order in incomingOrders | orderBy:customSorter" ng-class="[orderClass(order), urgencyClass(order)]" ng-click="clickOrder(order)" class="clickable">
+				<tr ng-repeat="order in ordersOnBench | orderBy:customSorter" ng-class="urgencyClass(order)" ng-click="clickOrder(order)" class="clickable">
 					<td>{{order.createdDate | date : "M/d"}}</td>
 					<td>{{order.orderNo}}</td>
 					<td>{{order.custName}} {{order.tag ? '[':''}}{{order.tag}}{{order.tag ? ']':''}}</td>
@@ -23,7 +23,7 @@
 		</table>
 	</div>
 	<div>
-		<h3 class="panel-heading">Active</h3>
+		<h3 class="panel-heading">Other</h3>
 		<table class="table table-condensed mytable" ng-controller="SortableTableCtrl">
 			<thead>
 				<tr>
@@ -35,7 +35,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="order in activeOrders | orderBy:customSorter" ng-class="[orderClass(order), urgencyClass(order)]" ng-click="clickOrder(order)" class="clickable">
+				<tr ng-repeat="order in ordersOther | orderBy:customSorter" ng-class="urgencyClass(order)" ng-click="clickOrder(order)" class="clickable">
 					<td>{{order.createdDate | date : "M/d"}}</td>
 					<td>{{order.orderNo}}</td>
 					<td>{{order.custName}} {{order.tag ? '[':''}}{{order.tag}}{{order.tag ? ']':''}}</td>

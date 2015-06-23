@@ -2,8 +2,8 @@
 	<h1>Renton Computers</h1>
 </div>
 
-		<div class="container-fluid">
-			<div class="col-xs-4 non-printing" id="left" ng-controller="JoblistCtrl">
+		<div class="container-fluid" ng-controller="JoblistCtrl">
+			<div class="col-xs-4 non-printing" id="left">
 				<div class="panel" id="left-top">
 					Current View
 					<select ng-model="data.currentView" ng-options="user for user in allUsers" ng-change="viewChanged()"></select>
