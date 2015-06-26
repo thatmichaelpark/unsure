@@ -112,6 +112,23 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 				$scope.ordersOther.push(order);
 			}
 		});
+		if ( $scope.data.currentOrderNo ) {
+			$scope.data.currentOrder = new $scope.ordersResource();
+			$scope.data.currentOrder.$get( { orderNo: $scope.data.currentOrderNo } ).
+			then( function () {
+				if ( angular.isDefined( $scope.data.currentOrder.orderNo ) ) {
+					var c = new $scope.customersResource();
+					c.$get( { custNo: $scope.data.currentOrder.custNo } ).then( function () {
+						$scope.data.currentOrder.custName = makeDisplayName( c );
+						$scope.data.currentOrder.phone1 = c.phone1;
+						$scope.data.currentOrder.phone2 = c.phone2;
+						$scope.data.currentOrderCopy = angular.copy( $scope.data.currentOrder );	// currentOrderCopy is a *copy* of an order. Edits are done on this copy.
+					});
+				} else {
+					$scope.data.currentOrderNo = null;
+				}
+			});
+		}
 	}
 	makeDisplayName = function ( c ) {
 		var name = c.lastName + ', ' + c.firstName;
@@ -211,7 +228,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		if ( $location.path().indexOf( '/joblist/' ) == 0 ) {
 			$scope.data.currentOrderNo = Number( $routeParams.orderNo );
 		}
-		$scope.getOrders(); //hack
+		///$scope.getOrders(); //hack
 	});
 });
 
