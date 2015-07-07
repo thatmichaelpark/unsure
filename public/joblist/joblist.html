@@ -6,7 +6,7 @@
 			<div class="col-xs-4 non-printing" id="left">
 				<div class="panel" id="left-top">
 					Current View
-					<select ng-model="orderService.data.currentView" ng-options="user for user in allUsers" ng-change="viewChanged()"></select>
+					<select ng-model="orderService.data.currentView" ng-options="user for user in allUsers" ng-change="orderService.viewChanged()"></select>
 				</div>
 				<ng-include src="orderService.data.jobslistView"></ng-include>
 			</div>

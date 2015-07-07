@@ -11,7 +11,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 	var ordersResource = resourceFactory.ordersResource;
 	var customersResource = resourceFactory.customersResource;
 	
-	var getUserOrders = function () {
+	function getUserOrders() {
 		data.currentOrder = null;
 		orders = ordersResource.query( { user: data.currentView }, function(){
 			for (var i=0; i<orders.length; ++i) {	// compute order age
@@ -60,7 +60,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 */			
 		});
 	}
-	makeDisplayName = function ( c ) {
+	function makeDisplayName(c) {
 		var name = c.lastName + ', ' + c.firstName;
 		if ( c.companyName ) {
 			name += ' (' + c.companyName + ')';
@@ -68,32 +68,37 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 		return name;
 	}
 
-	userChanged = function () {
+	function viewChanged() {
+		var getOrders;
+		if (data.currentView === 'All') {
+			data.jobslistView = "joblist/alljobslist.html"
+			getOrders = getAllOrders;
+		} else if (data.currentView === 'Techs') {
+			data.jobslistView = "joblist/techjobslist.html"
+			getOrders = getTechOrders;
+		} else {
+			data.jobslistView = "joblist/userjobslist.html"
+			getOrders = getUserOrders;
+		}
+		console.log(data.jobslistView);;;
+		getOrders();
+	}
+	function userChanged() {
 		data.currentView = data.currentUser;
-		getUserOrders();
+		viewChanged();
 	};
 /*
-	changeView = function (v) {
-		if (v === 'All') {
-			$scope.list = "joblist/alljobslist.html"
-			$scope.getOrders = getAllOrders;
-		} else if (v === 'Techs') {
-			$scope.list = "joblist/techjobslist.html"
-			$scope.getOrders = getTechOrders;
-		} else {
-			$scope.list = "joblist/userjobslist.html"
-			$scope.getOrders = getUserOrders;
+	// use a timer to auto-refresh orders list
+	// We only want one, so we kill the previous one.
+	if ( angular.isDefined( resourceFactory.timerId ) ) {
+		clearInterval( resourceFactory.timerId );
+	}
+	resourceFactory.timerId = setInterval( function () {
+		if ( $scope.data.unchanged ) {
+			$scope.getOrders();
 		}
-		$scope.getOrders();
-	}
-
-	changeView($scope.orderServiceData.currentView);
-*/	
-	viewChanged = function () {
-//		changeView($scope.orderServiceData.currentView)
-		getUserOrders();
-	}
-	
+	}, 60000 );
+*/
 	return {
 		data: data,
 		userChanged: userChanged,
