@@ -1,9 +1,13 @@
-unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location, resourceFactory ) {
+unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location, resourceFactory, orderService ) {
 
+	$scope.orderServiceData = orderService.orderServiceData;
+
+	getUserOrders = orderService.getUserOrders;
+/*
 	getUserOrders = function () {
 		$scope.data.currentOrder = null;
 		$scope.data.currentOrderCopy = null;
-		$scope.orders = $scope.ordersResource.query( { user: $scope.data.currentView }, function(){
+		$scope.orders = $scope.ordersResource.query( { user: $scope.orderServiceData.currentView }, function(){
 			for (var i=0; i<$scope.orders.length; ++i) {	// compute order age
 				var order = $scope.orders[i];
 				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
@@ -53,7 +57,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	getAllOrders = function () {
 		$scope.data.currentOrder = null;
 		$scope.data.currentOrderCopy = null;
-		$scope.orders = $scope.ordersResource.query( { user: $scope.data.currentView }, function(){
+		$scope.orders = $scope.ordersResource.query( { user: $scope.orderServiceData.currentView }, function(){
 			for (var i=0; i<$scope.orders.length; ++i) {	// compute order age
 				var order = $scope.orders[i];
 				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
@@ -130,14 +134,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 			});
 		}
 	}
-	makeDisplayName = function ( c ) {
-		var name = c.lastName + ', ' + c.firstName;
-		if ( c.companyName ) {
-			name += ' (' + c.companyName + ')';
-		}
-		return name;
-	}
-	
+*/	
 	$scope.getInventory = function () {
 		$scope.inventory = $scope.inventoryResource.query();
 	}
@@ -158,15 +155,10 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		$scope.getOrders();
 	}
 
-	changeView($scope.data.currentView);
-	
-	$scope.$on( 'userChanged', function ( e, u ) {
-		$scope.data.currentView = u;
-		changeView(u);
-	});
+	changeView($scope.orderServiceData.currentView);
 	
 	$scope.viewChanged = function () {
-		changeView($scope.data.currentView)
+		changeView($scope.orderServiceData.currentView)
 	}
 
 	// use a timer to auto-refresh orders list

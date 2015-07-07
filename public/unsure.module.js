@@ -1,7 +1,7 @@
 //http://www.chroder.com/2014/02/01/using-ngmodelcontroller-with-custom-directives/
 var unsureApp = angular.module( 'unsureApp', ['ngSanitize', 'ngResource', 'ui.bootstrap', 'ngRoute'] );
 
-var baseUrl = 'http://10.0.20.101:3002/';
+var baseUrl = 'http://10.0.20.101:3000/';
 //var baseUrl = 'http://localhost:3000/';
 unsureApp.constant( 'baseOrdersUrl', baseUrl + 'orders/' );
 unsureApp.constant( 'baseCustomersUrl', baseUrl + 'customers/' );
@@ -19,20 +19,19 @@ unsureApp.config( function ( $routeProvider, $locationProvider ) {
 	$routeProvider.otherwise( { templateUrl: '/joblist/joblist.html' } );
 });
 
-unsureApp.controller( 'UnsureCtrl', function ( $scope, resourceFactory, $timeout ) {
+unsureApp.controller( 'UnsureCtrl', function ( $scope, resourceFactory, $timeout, orderService ) {
 
 	$scope.ordersResource = resourceFactory.ordersResource;
 	$scope.customersResource = resourceFactory.customersResource;
 	$scope.inventoryResource = resourceFactory.inventoryResource;
+	$scope.orderService = orderService;
+	$scope.orderServiceData = orderService.orderServiceData;
 	
 	$scope.data = {};
 
 	$scope.users = ['Davis', 'Michael', 'Sam', 'Sergey', 'Tony', 'Front'];
-	$scope.currentUser = 'Front';
-	$scope.userChanged = function () {
-		$scope.$broadcast( 'userChanged', $scope.currentUser );
-	};
-	$scope.data.currentView = 'Front';
+	orderService.orderServiceData.currentUser = 'Front';
+	orderService.orderServiceData.currentView = 'Front';
 
 });
 

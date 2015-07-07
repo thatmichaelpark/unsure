@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="unsureApp">
 	<head>
-		<title>Unsure 0.30</title>
+		<title>Unsure BIG CHANGES</title>
 		<script src="javascripts/angular.js"></script>
 		<script src="javascripts/angular-sanitize.js"></script>
 		<script src="javascripts/angular-resource.js"></script>
@@ -9,6 +9,7 @@
 		<script src="javascripts/ui-bootstrap-tpls-0.11.0.min.js"></script>
 		<script src="unsure.module.js"></script>
 		<script src="unsure.resourcefactory.js"></script>
+		<script src="unsure.orderservice.js"></script>
 		<script src="onbeforeprint.js"></script>
 		<script src="joblist/order.js"></script>
 		<script src="joblist/joblist.js"></script>
@@ -24,7 +25,7 @@
 	<div id="spa">
 		<div class="panel non-printing" id="top-part">
 			Current User
-			<select ng-model="currentUser" ng-options="user for user in users" ng-change="userChanged()"></select>
+			<select ng-model="orderServiceData.currentUser" ng-options="user for user in users" ng-change="orderService.userChanged()"></select>
 			<a class="btn btn-default" href="/jobslist">Work</a>
 			<a class="btn btn-default" href="/createorder">New Order</a>
 			<a class="btn btn-default" href="/dailyclosing">Daily Closing</a>
