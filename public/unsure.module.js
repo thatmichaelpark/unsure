@@ -31,7 +31,7 @@ unsureApp.controller( 'UnsureCtrl', function ( $scope, resourceFactory, $timeout
 	$scope.users = ['Davis', 'Michael', 'Sam', 'Sergey', 'Tony', 'Front'];
 	orderService.data.currentUser = 'Front';
 	orderService.data.currentView = 'Front';
-	orderService.getUserOrders();
+	orderService.viewChanged();
 });
 
 
