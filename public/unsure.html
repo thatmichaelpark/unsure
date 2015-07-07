@@ -25,7 +25,7 @@
 	<div id="spa">
 		<div class="panel non-printing" id="top-part">
 			Current User
-			<select ng-model="orderServiceData.currentUser" ng-options="user for user in users" ng-change="orderService.userChanged()"></select>
+			<select ng-model="orderService.data.currentUser" ng-options="user for user in users" ng-change="orderService.userChanged()"></select>
 			<a class="btn btn-default" href="/jobslist">Work</a>
 			<a class="btn btn-default" href="/createorder">New Order</a>
 			<a class="btn btn-default" href="/dailyclosing">Daily Closing</a>

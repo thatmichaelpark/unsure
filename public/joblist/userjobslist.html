@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="order in orderServiceData.incomingOrders | orderBy:customSorter" ng-class="[orderClass(order), urgencyClass(order)]" ng-click="clickOrder(order)" class="clickable">
+				<tr ng-repeat="order in orderService.data.incomingOrders | orderBy:customSorter" ng-class="[orderClass(order), urgencyClass(order)]" ng-click="clickOrder(order)" class="clickable">
 					<td>{{order.createdDate | date : "M/d"}}</td>
 					<td>{{order.orderNo}}</td>
 					<td>{{order.custName}} {{order.tag ? '[':''}}{{order.tag}}{{order.tag ? ']':''}}</td>
@@ -35,7 +35,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="order in orderServiceData.activeOrders | orderBy:customSorter" ng-class="[orderClass(order), urgencyClass(order)]" ng-click="clickOrder(order)" class="clickable">
+				<tr ng-repeat="order in orderService.data.activeOrders | orderBy:customSorter" ng-class="[orderClass(order), urgencyClass(order)]" ng-click="clickOrder(order)" class="clickable">
 					<td>{{order.createdDate | date : "M/d"}}</td>
 					<td>{{order.orderNo}}</td>
 					<td>{{order.custName}} {{order.tag ? '[':''}}{{order.tag}}{{order.tag ? ']':''}}</td>

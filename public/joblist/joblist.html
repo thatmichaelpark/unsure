@@ -6,9 +6,9 @@
 			<div class="col-xs-4 non-printing" id="left">
 				<div class="panel" id="left-top">
 					Current View
-					<select ng-model="orderServiceData.currentView" ng-options="user for user in allUsers" ng-change="viewChanged()"></select>
+					<select ng-model="orderService.data.currentView" ng-options="user for user in allUsers" ng-change="viewChanged()"></select>
 				</div>
-				<ng-include src="list"></ng-include>
+				<ng-include src="orderService.data.jobslistView"></ng-include>
 			</div>
 			<div class="col-xs-8" ng-if="orderServiceData.currentOrderNo" ng-controller="OrderCtrl" id="right">
 				<div class="well mywell" id="right-top">

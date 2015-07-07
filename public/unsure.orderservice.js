@@ -5,6 +5,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 		currentOrderNo: null,
 		currentUser: null,
 		currentView: null,
+		jobslistView: 'joblist/userjobslist.html'
 	};
 	var orders;
 	var ordersResource = resourceFactory.ordersResource;
@@ -94,7 +95,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 	}
 	
 	return {
-		orderServiceData: data,
+		data: data,
 		userChanged: userChanged,
 		viewChanged: viewChanged,
 		getUserOrders: getUserOrders

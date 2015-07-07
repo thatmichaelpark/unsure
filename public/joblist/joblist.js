@@ -141,26 +141,6 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	$scope.getInventory();
 	$scope.allUsers = ['Davis', 'Michael', 'Sam', 'Sergey', 'Tony', 'Techs', 'Front', 'All'];
 
-	changeView = function (v) {
-		if (v === 'All') {
-			$scope.list = "joblist/alljobslist.html"
-			$scope.getOrders = getAllOrders;
-		} else if (v === 'Techs') {
-			$scope.list = "joblist/techjobslist.html"
-			$scope.getOrders = getTechOrders;
-		} else {
-			$scope.list = "joblist/userjobslist.html"
-			$scope.getOrders = getUserOrders;
-		}
-		$scope.getOrders();
-	}
-
-	changeView($scope.orderServiceData.currentView);
-	
-	$scope.viewChanged = function () {
-		changeView($scope.orderServiceData.currentView)
-	}
-
 	// use a timer to auto-refresh orders list
 	// We only want one, so we kill the previous one.
 	if ( angular.isDefined( resourceFactory.timerId ) ) {

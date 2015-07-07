@@ -25,14 +25,13 @@ unsureApp.controller( 'UnsureCtrl', function ( $scope, resourceFactory, $timeout
 	$scope.customersResource = resourceFactory.customersResource;
 	$scope.inventoryResource = resourceFactory.inventoryResource;
 	$scope.orderService = orderService;
-	$scope.orderServiceData = orderService.orderServiceData;
 	
 	$scope.data = {};
 
 	$scope.users = ['Davis', 'Michael', 'Sam', 'Sergey', 'Tony', 'Front'];
-	orderService.orderServiceData.currentUser = 'Front';
-	orderService.orderServiceData.currentView = 'Front';
-
+	orderService.data.currentUser = 'Front';
+	orderService.data.currentView = 'Front';
+	orderService.getUserOrders();
 });
 
 
