@@ -5,14 +5,14 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 		currentOrderNo: null,
 		currentUser: null,
 		currentView: null,
-		jobslistView: null
+		jobslistView: null,
+		unchanged: true
 	};
 	var orders;
 	var ordersResource = resourceFactory.ordersResource;
 	var customersResource = resourceFactory.customersResource;
 	
 	function getUserOrders() {
-		data.currentOrder = null;
 		orders = ordersResource.query( { user: data.currentView }, function(){
 			for (var i=0; i<orders.length; ++i) {	// compute order age
 				var order = orders[i];
@@ -33,9 +33,6 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 						orders[index].custName = makeDisplayName( c );
 						orders[index].phone1 = c.phone1;
 						orders[index].phone2 = c.phone2;
-						if ( orders[index].orderNo === data.currentOrderNo ) {
-							data.currentOrder = orders[index];
-						}
 					});
 				}());
 			}
@@ -68,42 +65,46 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 		return name;
 	}
 
-	var getOrders;
+	var getOrdersVar;
+	
+	function getOrders() {
+		getOrdersVar();
+	}
 	
 	function viewChanged() {
 		if (data.currentView === 'All') {
 			data.jobslistView = "joblist/alljobslist.html"
-			getOrders = getAllOrders;
+			getOrdersVar = getAllOrders;
 		} else if (data.currentView === 'Techs') {
 			data.jobslistView = "joblist/techjobslist.html"
-			getOrders = getTechOrders;
+			getOrdersVar = getTechOrders;
 		} else {
 			data.jobslistView = "joblist/userjobslist.html"
-			getOrders = getUserOrders;
+			getOrdersVar = getUserOrders;
 		}
-		console.log(data.jobslistView);;;
 		getOrders();
 	}
 	function userChanged() {
 		data.currentView = data.currentUser;
 		viewChanged();
 	};
-/*
+
 	// use a timer to auto-refresh orders list
 	// We only want one, so we kill the previous one.
 	if ( angular.isDefined( resourceFactory.timerId ) ) {
+	alert("this can't be happening!");
 		clearInterval( resourceFactory.timerId );
 	}
 	resourceFactory.timerId = setInterval( function () {
-		if ( $scope.data.unchanged ) {
-			$scope.getOrders();
+		if ( data.unchanged ) {
+			getOrders();
 		}
 	}, 60000 );
-*/
+
 	return {
 		data: data,
 		userChanged: userChanged,
 		viewChanged: viewChanged,
-		getUserOrders: getUserOrders
+		getOrders: getOrders
 	}
 })

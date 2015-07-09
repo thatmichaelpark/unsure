@@ -1,4 +1,4 @@
-unsureApp.controller( 'OrderCtrl', function ( $scope ) {
+unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 
 	$scope.data.showDetailsCheckbox = false;
 
@@ -12,67 +12,68 @@ unsureApp.controller( 'OrderCtrl', function ( $scope ) {
 	}
 
 	$scope.subtotal = function () {
-		if ( $scope.data.currentOrderCopy ) {
+		if ( orderService.data.currentOrder ) {
 			var t = 0;
-			for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
-				t += $scope.data.currentOrderCopy.bill[i].qty * $scope.data.currentOrderCopy.bill[i].price;
+			for ( var i=0; i<orderService.data.currentOrder.bill.length; ++i ) {
+				t += orderService.data.currentOrder.bill[i].qty * orderService.data.currentOrder.bill[i].price;
 			}
 			return t;
 		}
 	}
 	$scope.tax = function () {
-		if ( $scope.data.currentOrderCopy ) {
+		if ( orderService.data.currentOrder ) {
 			var t = 0;
-			for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
-				if ( $scope.data.currentOrderCopy.bill[i].taxable ) {
-					t += $scope.data.currentOrderCopy.bill[i].qty * $scope.data.currentOrderCopy.bill[i].price;
+			for ( var i=0; i<orderService.data.currentOrder.bill.length; ++i ) {
+				if ( orderService.data.currentOrder.bill[i].taxable ) {
+					t += orderService.data.currentOrder.bill[i].qty * orderService.data.currentOrder.bill[i].price;
 				}
 			}
-			$scope.data.currentOrderCopy.tax = Math.round( t * 9.5 ) / 100;
-			return $scope.data.currentOrderCopy.tax;
+			orderService.data.currentOrder.tax = Math.round( t * 9.5 ) / 100;
+			return orderService.data.currentOrder.tax;
 		}
 	}
 	$scope.clickTender = function ( ) {
 		$scope.data.unchanged = false;
-		$scope.data.currentOrderCopy.tenders.push( { date: new Date(), method: '', amount: 0.00 } );
+		orderService.data.currentOrder.tenders.push( { date: new Date(), method: '', amount: 0.00 } );
 	}
 	$scope.paymentMethods = [ 'Cash', 'Check', 'Credit card', 'Debit card', 'Gift certificate', 'Other' ];
 	$scope.totalTender = function ( ) {
-		if ( $scope.data.currentOrderCopy ) {
+		if ( orderService.data.currentOrder ) {
 			var t = 0.0;
-			for ( var i=0; i<$scope.data.currentOrderCopy.tenders.length; ++i ) {
-				t += Number( $scope.data.currentOrderCopy.tenders[i].amount );
+			for ( var i=0; i<orderService.data.currentOrder.tenders.length; ++i ) {
+				t += Number( orderService.data.currentOrder.tenders[i].amount );
 			}
 			return t;
 		}
 	}
 	
 	$scope.clickOk = function ( ) {
+	return;;;
 		$scope.data.unchanged = true;
-		if ( ($scope.data.currentOrder.status !== $scope.data.currentOrderCopy.status)
-			|| ($scope.data.currentOrder.assignedTo !== $scope.data.currentOrderCopy.assignedTo) 
-			|| ($scope.data.currentOrder.assignedBy !== $scope.data.currentOrderCopy.assignedBy) ) {
-			$scope.data.currentOrderCopy.assignedBy = $scope.currentUser;
-			$scope.data.currentOrderCopy.notes.push( { date: new Date(), by: $scope.currentUser, note:
+		if ( ($scope.data.currentOrder.status !== orderService.data.currentOrder.status)
+			|| ($scope.data.currentOrder.assignedTo !== orderService.data.currentOrder.assignedTo) 
+			|| ($scope.data.currentOrder.assignedBy !== orderService.data.currentOrder.assignedBy) ) {
+			orderService.data.currentOrder.assignedBy = $scope.currentUser;
+			orderService.data.currentOrder.notes.push( { date: new Date(), by: $scope.currentUser, note:
 				$scope.data.currentOrder.status + '/' + $scope.data.currentOrder.assignedTo + ' => ' +
-				$scope.data.currentOrderCopy.status + '/' + $scope.data.currentOrderCopy.assignedTo } );
+				orderService.data.currentOrder.status + '/' + orderService.data.currentOrder.assignedTo } );
 		}
 		
-		if ( $scope.data.currentOrderCopy.status == 'Closed' && !$scope.data.currentOrderCopy.closedDate ) {
-			$scope.data.currentOrderCopy.closedDate = new Date();
+		if ( orderService.data.currentOrder.status == 'Closed' && !orderService.data.currentOrder.closedDate ) {
+			orderService.data.currentOrder.closedDate = new Date();
 		}
 		
 		var j = 0;
 		var newBill = [];
-		for ( var i=0; i<$scope.data.currentOrderCopy.bill.length; ++i ) {
-			if ( Number($scope.data.currentOrderCopy.bill[i].qty) ) {
-				newBill[ j++ ] = $scope.data.currentOrderCopy.bill[i];
+		for ( var i=0; i<orderService.data.currentOrder.bill.length; ++i ) {
+			if ( Number(orderService.data.currentOrder.bill[i].qty) ) {
+				newBill[ j++ ] = orderService.data.currentOrder.bill[i];
 			}
 		}
-		$scope.data.currentOrderCopy.bill = newBill;
-		$scope.data.currentOrderCopy.modifiedDate = new Date();
+		orderService.data.currentOrder.bill = newBill;
+		orderService.data.currentOrder.modifiedDate = new Date();
 
-		$scope.data.currentOrder = angular.copy( $scope.data.currentOrderCopy );
+		$scope.data.currentOrder = angular.copy( orderService.data.currentOrder );
 		new $scope.ordersResource( $scope.data.currentOrder ).$save()
 		.then(
 			function () { $scope.getOrders(); }
@@ -82,21 +83,21 @@ unsureApp.controller( 'OrderCtrl', function ( $scope ) {
 		$scope.$broadcast('resetEdit');
 	}
 	$scope.clickCancel = function ( ) {
-		$scope.data.currentOrderCopy = angular.copy( $scope.data.currentOrder );
-		$scope.data.unchanged = true;
-		$scope.$broadcast('resetEdit');
+	return;;;
+		orderService.data.currentOrder.get();
+		orderService.data.unchanged = true;
 	}
 	$scope.changeStatus = function () {
-		$scope.data.currentOrder.assignedTo = $scope.currentUser;
-		$scope.data.currentOrder.assignedBy = $scope.currentUser;
-		$scope.data.unchanged = false;
+		orderService.data.currentOrder.assignedTo = $scope.currentUser;
+		orderService.data.currentOrder.assignedBy = $scope.currentUser;
+		orderService.data.unchanged = false;
 	}
 	$scope.changeAssignedTo = function () {
-		$scope.data.currentOrder.assignedBy = $scope.currentUser;
-		$scope.data.unchanged = false;
+		orderService.data.currentOrder.assignedBy = $scope.currentUser;
+		orderService.data.unchanged = false;
 	}
 	$scope.changeAssignedBy = function () {
-		$scope.data.unchanged = false;
+		orderService.data.unchanged = false;
 	}
 
 	$scope.data.showStatusChangesCheckbox = false;

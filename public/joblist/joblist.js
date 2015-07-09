@@ -1,8 +1,5 @@
 unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location, resourceFactory, orderService ) {
 
-	$scope.orderServiceData = orderService.orderServiceData;
-
-	getUserOrders = orderService.getUserOrders;
 /*
 	getUserOrders = function () {
 		$scope.data.currentOrder = null;
@@ -139,7 +136,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		$scope.inventory = $scope.inventoryResource.query();
 	}
 	$scope.getInventory();
-	$scope.allUsers = ['Davis', 'Michael', 'Sam', 'Sergey', 'Tony', 'Techs', 'Front', 'All'];
+	$scope.allUsers = ['Davis', 'Michael', 'Sam', 'Tony', 'Techs', 'Front', 'All'];
 
 	
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Awaiting response',
@@ -147,21 +144,19 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	'Part request',	'Part ordered', 'Part received',
 	'Needs QA', 'Complete: call customer', 'Customer notified', 'Declined', 'Closed' ];
 
-	$scope.data.unchanged = true;
-
 	$scope.clickOrder = function( o ) {
-		if ( $scope.data.unchanged ) {
-			$scope.data.currentOrderNo = o.orderNo;
-			$scope.getOrders();
+		if ( orderService.data.unchanged ) {
+			orderService.data.currentOrder = angular.copy(o);
+			orderService.getOrders();
 		}	
 	}
 	
 	$scope.orderClass = function ( order ) {
 		var c = '';
-		if ( order.orderNo === $scope.data.currentOrderNo ) {
+		if ( orderService.data.currentOrder && (order.orderNo === orderService.data.currentOrder.orderNo) ) {
 			c = 'success ';
 		}
-		if ( order.assignedBy != $scope.currentUser ) {
+		if ( order.assignedBy != orderService.data.currentUser ) {
 			c += 'danger';
 		}
 		return c;
@@ -230,7 +225,7 @@ unsureApp.controller( 'editableParentCtrl', function ( $scope ) {
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );
 		$scope.added = true;
-		$scope.data.unchanged = false;
+		orderService.data.unchanged = false;
 	}
 	$scope.newDate = function ( ) { // hack because I couldn't get 'new Date()' to work
 		return new Date();
@@ -250,7 +245,7 @@ unsureApp.controller( 'editableCtrl', function ( $scope ) {
 	}
 	$scope.clickEdit = function ( ) {
 		$scope.edit = !$scope.edit;
-		$scope.data.unchanged = false;
+		orderService.data.unchanged = false;
 	}
 	$scope.$on( 'resetEdit', function ( ) {
 		$scope.edit = false;
@@ -262,7 +257,7 @@ unsureApp.controller( 'editableDeetParentCtrl', function ( $scope ) {
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );
 		$scope.added = true;
-		$scope.data.unchanged = false;
+		$orderService.data.unchanged = false;
 		$scope.data.showDetailsCheckbox = true;	// turn on deets display
 	}
 	$scope.newDate = function ( ) { // hack because I couldn't get 'new Date()' to work

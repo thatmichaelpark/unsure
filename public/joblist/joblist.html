@@ -10,18 +10,18 @@
 				</div>
 				<ng-include src="orderService.data.jobslistView"></ng-include>
 			</div>
-			<div class="col-xs-8" ng-if="orderServiceData.currentOrderNo" ng-controller="OrderCtrl" id="right">
+			<div class="col-xs-8" ng-if="orderService.data.currentOrder" ng-controller="OrderCtrl" id="right">
 				<div class="well mywell" id="right-top">
-					<span><h3>{{orderServiceData.currentOrderNo}}	{{orderServiceData.currentOrder.custName}} ({{orderServiceData.currentOrder.custNo}})</h3></span>
+					<span><h3>{{orderService.data.currentOrder.orderNo}}	{{orderService.data.currentOrder.custName}} ({{orderService.data.currentOrder.custNo}})</h3></span>
 					<span>
-					{{orderServiceData.currentOrder.phone1 | tel}}
-					{{orderServiceData.currentOrder.phone2 | tel}}
+					{{orderService.data.currentOrder.phone1 | tel}}
+					{{orderService.data.currentOrder.phone2 | tel}}
 					</span>
 					<span class="non-printing">
 						<a class="btn pull-right" ng-href="/customers/{{data.currentOrderCopy.custNo}}">Customer Info</a>
 					</span>
 				</div>
-				<div id="right-middle" ng-class="data.unchanged ? '' : 'yellow'">
+				<div id="right-middle" ng-class="orderService.data.unchanged ? '' : 'yellow'">
 					<div class="well mywell2">
 						<table class="table table-condensed mytable" id="ordertable">
 							<thead>
@@ -35,7 +35,7 @@
 								</tr>
 							</thead>
 							<tbody ng-controller="editableParentCtrl">
-								<tr ng-repeat="item in data.currentOrderCopy.bill track by $index" ng-controller="editableCtrl">
+								<tr ng-repeat="item in orderService.data.currentOrder.bill track by $index" ng-controller="editableCtrl">
 									<td>
 										<div>{{item.sku}}</div>
 										<!--<div ng-if="!editing($last)">{{item.sku}}</div>
@@ -82,7 +82,7 @@
 								</tr>
 							</tbody>
 							<tbody ng-controller="editableDeetParentCtrl">
-								<tr ng-repeat="tender in data.currentOrderCopy.tenders track by $index" ng-if="data.showDetailsCheckbox" ng-controller="editableCtrl">
+								<tr ng-repeat="tender in orderService.data.currentOrder.tenders track by $index" ng-if="data.showDetailsCheckbox" ng-controller="editableCtrl">
 									<td>
 										<a href="#" title="{{tender.date | date:'h:mm a'}}" >
 											{{tender.date | date}}
@@ -103,7 +103,7 @@
 										<input ng-if="editing($last)" ng-model="tender.amount" style="width: 50px">
 									</td>
 									<td class="non-printing">
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 								<tr on-before-print="data.showDetailsCheckbox = true;">
@@ -117,7 +117,7 @@
 									<td>Total</td>
 									<td>{{subtotal() + tax() - totalTender() | currency}}</td>
 									<td class="non-printing">
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickAdd( data.currentOrderCopy.tenders, {date: newDate(), method:'', note:'', amount:subtotal() + tax() - totalTender()} )">$</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickAdd( orderService.data.currentOrder.tenders, {date: newDate(), method:'', note:'', amount:subtotal() + tax() - totalTender()} )">$</button>
 									</td>
 								</tr>
 							</tbody>
@@ -134,7 +134,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr  ng-repeat="note in data.currentOrderCopy.notes track by $index" ng-show="showStatusChanges(note.note)" ng-controller="editableCtrl">
+								<tr  ng-repeat="note in orderService.data.currentOrder.notes track by $index" ng-show="showStatusChanges(note.note)" ng-controller="editableCtrl">
 									<td>
 										<a href="#" title="{{note.date | date:'h:mm a'}}">
 											{{note.date | date}}
@@ -146,7 +146,7 @@
 										<textarea ng-if="editing($last)" ng-model="note.note" style="resize: none; width: 100%" focus></textarea>
 									</td>
 									<td class="non-printing">
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 								<tr>
@@ -154,7 +154,7 @@
 									<td></td>
 									<td></td>
 									<td class="non-printing">
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickAdd(data.currentOrderCopy.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickAdd(orderService.data.currentOrder.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
 									</td>
 								</tr>
 							</tbody>
@@ -168,12 +168,12 @@
 							<tbody>
 								<tr ng-controller="editableCtrl">
 									<td>
-										<div ng-if="!editing($last)" ng-bind-html="data.currentOrderCopy.internalNote | nl2br" class="breakall">
+										<div ng-if="!editing($last)" ng-bind-html="orderService.data.currentOrder.internalNote | nl2br" class="breakall">
 										</div>
-										<textarea ng-if="editing($last)" ng-model="data.currentOrderCopy.internalNote" style="resize: none; width: 100%" focus></textarea>
+										<textarea ng-if="editing($last)" ng-model="orderService.data.currentOrder.internalNote" style="resize: none; width: 100%" focus></textarea>
 									</td>
 									<td>
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 							</tbody>
@@ -182,16 +182,16 @@
 				</div>
 				<div class="well mywell non-printing" id="right-bottom">
 						Status:
-						<select ng-model="data.currentOrderCopy.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
+						<select ng-model="orderService.data.currentOrder.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
 						Assigned To:
-						<select ng-model="data.currentOrderCopy.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
-						 Assigned By: {{data.currentOrderCopy.assignedBy}}
+						<select ng-model="orderService.data.currentOrder.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
+						 Assigned By: {{orderService.data.currentOrder.assignedBy}}
 						Tag:
-						<span ng-if="data.unchanged" ng-click="data.unchanged = false">{{data.currentOrderCopy.tag || 'None'}}</span>
-						<input ng-if="!data.unchanged" ng-model="data.currentOrderCopy.tag" focus></input>
-					<span class="pull-right yellow" ng-if="!data.unchanged">
-						<button ng-click="clickOk()" ng-disabled="data.unchanged">OK</button>
-						<button ng-click="clickCancel()" ng-disabled="data.unchanged">Cancel</button>
+						<span ng-if="orderService.data.unchanged" ng-click="orderService.data.unchanged = false">{{orderService.data.currentOrder.tag || 'None'}}</span>
+						<input ng-if="!orderService.data.unchanged" ng-model="orderService.data.currentOrder.tag" focus></input>
+					<span class="pull-right yellow" ng-if="!orderService.data.unchanged">
+						<button ng-click="clickOk()" ng-disabled="orderService.data.unchanged">OK</button>
+						<button ng-click="clickCancel()" ng-disabled="orderService.data.unchanged">Cancel</button>
 					</span>
 				</div>
 			</div>
