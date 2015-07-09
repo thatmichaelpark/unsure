@@ -154,10 +154,10 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	$scope.orderClass = function ( order ) {
 		var c = '';
 		if ( orderService.data.currentOrder && (order.orderNo === orderService.data.currentOrder.orderNo) ) {
-			c = 'success ';
+			c = 'selected ';
 		}
 		if ( order.assignedBy != orderService.data.currentUser ) {
-			c += 'danger';
+			c += 'new';
 		}
 		return c;
 	}

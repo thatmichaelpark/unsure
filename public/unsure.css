@@ -113,10 +113,10 @@ div.breakall {
 	text-decoration: none;
 }
 
-.mytable .success {
+.mytable .selected {
 	border: solid 3px #80e080;
 }
-.danger {
+.mytable .new {
 	background: #fff0f0;
 }
 /*
