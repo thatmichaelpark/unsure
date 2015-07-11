@@ -146,8 +146,13 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 
 	$scope.clickOrder = function( o ) {
 		if ( orderService.data.unchanged ) {
-			orderService.data.currentOrder = angular.copy(o);
-			orderService.getOrders();
+			orderService.data.currentOrder = o;	// currentOrder "points to" order in list.
+			orderService.getOrders();			// this reloads the list of orders so now the order that
+												// currentOrder "points to" is disassociated from the
+												// identical order in the list. Changes to currentOrder
+												// won't be immediately reflected in the list.
+												// In other words, currentOrder is a copy. Previously used
+												// angular.copy(o) but then $get() didn't work.
 		}	
 	}
 	
@@ -235,7 +240,7 @@ unsureApp.controller( 'editableParentCtrl', function ( $scope ) {
 	});
 });
 
-unsureApp.controller( 'editableCtrl', function ( $scope ) {
+unsureApp.controller( 'editableCtrl', function ( $scope, orderService ) {
 	$scope.edit = false;
 	$scope.editing = function ( last ) {
 		if ( $scope.added && last ) {

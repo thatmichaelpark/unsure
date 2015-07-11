@@ -48,9 +48,8 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 	}
 	
 	$scope.clickOk = function ( ) {
-	return;;;
-		$scope.data.unchanged = true;
-		if ( ($scope.data.currentOrder.status !== orderService.data.currentOrder.status)
+		orderService.data.unchanged = true;
+/*		if ( ($scope.data.currentOrder.status !== orderService.data.currentOrder.status)
 			|| ($scope.data.currentOrder.assignedTo !== orderService.data.currentOrder.assignedTo) 
 			|| ($scope.data.currentOrder.assignedBy !== orderService.data.currentOrder.assignedBy) ) {
 			orderService.data.currentOrder.assignedBy = $scope.currentUser;
@@ -58,7 +57,7 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 				$scope.data.currentOrder.status + '/' + $scope.data.currentOrder.assignedTo + ' => ' +
 				orderService.data.currentOrder.status + '/' + orderService.data.currentOrder.assignedTo } );
 		}
-		
+*/		
 		if ( orderService.data.currentOrder.status == 'Closed' && !orderService.data.currentOrder.closedDate ) {
 			orderService.data.currentOrder.closedDate = new Date();
 		}
@@ -73,18 +72,21 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 		orderService.data.currentOrder.bill = newBill;
 		orderService.data.currentOrder.modifiedDate = new Date();
 
-		$scope.data.currentOrder = angular.copy( orderService.data.currentOrder );
-		new $scope.ordersResource( $scope.data.currentOrder ).$save()
+		orderService.data.currentOrder.$save()
 		.then(
-			function () { $scope.getOrders(); }
+			function () { orderService.getOrders(); }
 		).catch(
 			function ( e ) { console.log(e); alert( 'wah-wah:' + e ); }
 		);
 		$scope.$broadcast('resetEdit');
 	}
 	$scope.clickCancel = function ( ) {
-	return;;;
-		orderService.data.currentOrder.get();
+		orderService.data.currentOrder.$get()
+		.then(
+			function() {
+				console.log(orderService.data.currentOrder);;;
+			}
+		);
 		orderService.data.unchanged = true;
 	}
 	$scope.changeStatus = function () {
