@@ -153,7 +153,9 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 												// won't be immediately reflected in the list.
 												// In other words, currentOrder is a copy. Previously used
 												// angular.copy(o) but then $get() didn't work.
-		}	
+			orderService.data.oldStatus = orderService.data.currentOrder.status;
+			orderService.data.oldAssignedTo = orderService.data.currentOrder.assignedTo;
+		}
 	}
 	
 	$scope.orderClass = function ( order ) {

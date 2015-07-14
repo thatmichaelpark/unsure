@@ -49,15 +49,15 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 	
 	$scope.clickOk = function ( ) {
 		orderService.data.unchanged = true;
-/*		if ( ($scope.data.currentOrder.status !== orderService.data.currentOrder.status)
-			|| ($scope.data.currentOrder.assignedTo !== orderService.data.currentOrder.assignedTo) 
-			|| ($scope.data.currentOrder.assignedBy !== orderService.data.currentOrder.assignedBy) ) {
-			orderService.data.currentOrder.assignedBy = $scope.currentUser;
-			orderService.data.currentOrder.notes.push( { date: new Date(), by: $scope.currentUser, note:
-				$scope.data.currentOrder.status + '/' + $scope.data.currentOrder.assignedTo + ' => ' +
-				orderService.data.currentOrder.status + '/' + orderService.data.currentOrder.assignedTo } );
+		if ($scope.statusOrAssignedToChangedFlag) {
+			orderService.data.currentOrder.assignedBy = orderService.data.currentUser;
+			orderService.data.currentOrder.notes.push({
+				date: new Date(),
+				by: orderService.data.currentUser,
+				note: orderService.data.oldStatus + '/' + orderService.data.oldAssignedTo + ' => ' +
+					orderService.data.currentOrder.status + '/' + orderService.data.currentOrder.assignedTo
+			});
 		}
-*/		
 		if ( orderService.data.currentOrder.status == 'Closed' && !orderService.data.currentOrder.closedDate ) {
 			orderService.data.currentOrder.closedDate = new Date();
 		}
@@ -89,16 +89,10 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 		);
 		orderService.data.unchanged = true;
 	}
-	$scope.changeStatus = function () {
-		orderService.data.currentOrder.assignedTo = $scope.currentUser;
-		orderService.data.currentOrder.assignedBy = $scope.currentUser;
-		orderService.data.unchanged = false;
-	}
-	$scope.changeAssignedTo = function () {
-		orderService.data.currentOrder.assignedBy = $scope.currentUser;
-		orderService.data.unchanged = false;
-	}
-	$scope.changeAssignedBy = function () {
+	$scope.statusOrAssignedToChangedFlag = false;
+	
+	$scope.statusOrAssignedToChanged = function () {
+		$scope.statusOrAssignedToChangedFlag = true;
 		orderService.data.unchanged = false;
 	}
 

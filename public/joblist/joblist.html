@@ -182,9 +182,9 @@
 				</div>
 				<div class="well mywell non-printing" id="right-bottom">
 						Status:
-						<select ng-model="orderService.data.currentOrder.status" ng-options="status for status in statuses" ng-change="changeStatus()"></select>
+						<select ng-model="orderService.data.currentOrder.status" ng-options="status for status in statuses" ng-change="statusOrAssignedToChanged()"></select>
 						Assigned To:
-						<select ng-model="orderService.data.currentOrder.assignedTo" ng-options="user for user in allUsers" ng-change="changeAssignedTo()"></select>
+						<select ng-model="orderService.data.currentOrder.assignedTo" ng-options="user for user in allUsers" ng-change="statusOrAssignedToChanged()"></select>
 						 Assigned By: {{orderService.data.currentOrder.assignedBy}}
 						Tag:
 						<span ng-if="orderService.data.unchanged" ng-click="orderService.data.unchanged = false">{{orderService.data.currentOrder.tag || 'None'}}</span>
