@@ -76,7 +76,11 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 		.then(
 			function () { orderService.getOrders(); }
 		).catch(
-			function ( e ) { console.log(e); alert( 'wah-wah:' + e ); }
+			function ( e ) { 
+				console.log('error:');
+				console.log(e);
+				alert( 'wah-wah:' + e ); 
+			}
 		);
 		$scope.$broadcast('resetEdit');
 	}
@@ -84,7 +88,7 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 		orderService.data.currentOrder.$get()
 		.then(
 			function() {
-				console.log(orderService.data.currentOrder);;;
+///				console.log(orderService.data.currentOrder);;;
 			}
 		);
 		orderService.data.unchanged = true;

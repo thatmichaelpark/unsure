@@ -36,6 +36,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 					});
 				}());
 			}
+
 /*
 			if ( $scope.data.currentOrderNo ) {
 				$scope.data.currentOrder = new $scope.ordersResource();

@@ -147,7 +147,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	$scope.clickOrder = function( o ) {
 		if ( orderService.data.unchanged ) {
 			orderService.data.currentOrder = o;	// currentOrder "points to" order in list.
-			orderService.getOrders();			// this reloads the list of orders so now the order that
+			orderService.getOrders();			// This reloads the list of orders so now the order that
 												// currentOrder "points to" is disassociated from the
 												// identical order in the list. Changes to currentOrder
 												// won't be immediately reflected in the list.

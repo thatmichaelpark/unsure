@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongoskin = require('mongoskin');
 
 /* GET orders listing. */
 /*
@@ -46,7 +47,6 @@ router.get('/byorderno/:orderNo', function(req, res) {
  */
 router.post('/add', function(req, res) {
     var db = req.db;
-	console.log('add order: ' + req.body);;;
     db.collection('orders').insert(req.body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
@@ -59,10 +59,9 @@ router.post('/add', function(req, res) {
  */
 router.put('/update/:id', function( req, res ) {
 	var db = req.db;
-	var orderToUpdate = req.params.id;
 	delete req.body._id;
-	db.collection( 'orders' ).updateById( orderToUpdate, req.body, function ( err, result ) {
-		res.send( err === null ? { msg: '' } : { msg: err } );
+	db.collection( 'orders' ).update( {_id: mongoskin.ObjectID(req.params.id)}, req.body, function ( err, result ) {
+		res.send( err === null ? 200 : { msg: err } );
 	});
 });
 
@@ -97,9 +96,6 @@ router.get('/modifiedbetween/:from/:to', function(req, res) {
 		if ( err ) {
 			throw err;
 		}
-	console.log(from);;;
-	console.log(to);;;
-//		console.log(result);;;
 		res.json( result );
 	});
 });

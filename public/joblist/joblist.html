@@ -10,7 +10,7 @@
 				</div>
 				<ng-include src="orderService.data.jobslistView"></ng-include>
 			</div>
-			<div class="col-xs-8" ng-if="orderService.data.currentOrder" ng-controller="OrderCtrl" id="right">
+			<div class="col-xs-8" ng-if="orderService.data.currentOrder.orderNo" ng-controller="OrderCtrl" id="right">
 				<div class="well mywell" id="right-top">
 					<span><h3>{{orderService.data.currentOrder.orderNo}}	{{orderService.data.currentOrder.custName}} ({{orderService.data.currentOrder.custNo}})</h3></span>
 					<span>
