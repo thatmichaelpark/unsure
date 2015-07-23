@@ -227,7 +227,7 @@ unsureApp.directive('focus', function($timeout, $rootScope) {
 	}
 });
 
-unsureApp.controller( 'editableParentCtrl', function ( $scope ) {
+unsureApp.controller( 'editableParentCtrl', function ( $scope, orderService ) {
 	$scope.added = false;
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );
@@ -264,7 +264,7 @@ unsureApp.controller( 'editableDeetParentCtrl', function ( $scope ) {
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );
 		$scope.added = true;
-		$orderService.data.unchanged = false;
+		orderService.data.unchanged = false;
 		$scope.data.showDetailsCheckbox = true;	// turn on deets display
 	}
 	$scope.newDate = function ( ) { // hack because I couldn't get 'new Date()' to work
