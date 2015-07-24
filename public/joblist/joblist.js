@@ -259,7 +259,7 @@ unsureApp.controller( 'editableCtrl', function ( $scope, orderService ) {
 	});
 });
 
-unsureApp.controller( 'editableDeetParentCtrl', function ( $scope ) {
+unsureApp.controller( 'editableDeetParentCtrl', function ( $scope, orderService ) {
 	$scope.added = false;
 	$scope.clickAdd = function ( table, a ) {
 		table.push( a );
