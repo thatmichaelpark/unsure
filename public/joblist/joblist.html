@@ -154,7 +154,7 @@
 									<td></td>
 									<td></td>
 									<td class="non-printing">
-										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickAdd(orderService.data.currentOrder.notes, {date: newDate(), by:currentUser, note:''})">Add</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickAdd(orderService.data.currentOrder.notes, {date: newDate(), by:orderService.data.currentUser, note:''})">Add</button>
 									</td>
 								</tr>
 							</tbody>
