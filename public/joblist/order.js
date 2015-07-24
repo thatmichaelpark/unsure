@@ -92,6 +92,7 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 			}
 		);
 		orderService.data.unchanged = true;
+		$scope.$broadcast('resetEdit');
 	}
 	$scope.statusOrAssignedToChangedFlag = false;
 	
