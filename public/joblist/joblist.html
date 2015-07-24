@@ -18,7 +18,7 @@
 					{{orderService.data.currentOrder.phone2 | tel}}
 					</span>
 					<span class="non-printing">
-						<a class="btn pull-right" ng-href="/customers/{{data.currentOrderCopy.custNo}}">Customer Info</a>
+						<a class="btn pull-right" ng-href="/customers/{{data.currentOrder.custNo}}">Customer Info</a>
 					</span>
 				</div>
 				<div id="right-middle" ng-class="orderService.data.unchanged ? '' : 'yellow'">
@@ -59,7 +59,7 @@
 									</td>
 									<td class="pull-right">{{item.qty * item.price | currency}}</td>
 									<td class="non-printing">
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickEdit()">Edit</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickEdit()">Edit</button>
 									</td>
 								</tr>
 								<tr>
@@ -69,7 +69,7 @@
 									<td>Subtotal</td>
 									<td class="pull-right">{{subtotal() | currency}}</td>
 									<td class="non-printing">
-										<button ng-if="data.currentOrderCopy.status != 'Closed'" ng-click="clickAdd(data.currentOrderCopy.bill, {sku:'', desc:'', qty:'', price:''})">Add</button>
+										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickAdd(orderService.data.currentOrder.bill, {sku:'', desc:'', qty:'', price:''})">Add</button>
 									</td>
 								</tr>
 								<tr ng-if="data.showDetailsCheckbox">
