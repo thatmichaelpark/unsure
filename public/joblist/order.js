@@ -49,7 +49,6 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 	
 	$scope.clickOk = function ( ) {
 		orderService.data.unchanged = true;
-		console.log($scope.statusOrAssignedToChangedFlag);;;
 		if ($scope.statusOrAssignedToChangedFlag) {
 			$scope.statusOrAssignedToChangedFlag = false;
 			orderService.data.currentOrder.assignedBy = orderService.data.currentUser;
