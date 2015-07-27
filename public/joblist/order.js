@@ -49,7 +49,9 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 	
 	$scope.clickOk = function ( ) {
 		orderService.data.unchanged = true;
+		console.log($scope.statusOrAssignedToChangedFlag);;;
 		if ($scope.statusOrAssignedToChangedFlag) {
+			$scope.statusOrAssignedToChangedFlag = false;
 			orderService.data.currentOrder.assignedBy = orderService.data.currentUser;
 			orderService.data.currentOrder.notes.push({
 				date: new Date(),
@@ -79,7 +81,8 @@ unsureApp.controller( 'OrderCtrl', function ( $scope, orderService ) {
 			function ( e ) { 
 				console.log('error:');
 				console.log(e);
-				alert( 'wah-wah:' + e ); 
+				alert( 'wah-wah:' + e + ' ' + orderService.data.currentOrder._id ); 
+				orderService.data.currentOrder.$get();
 			}
 		);
 		$scope.$broadcast('resetEdit');
