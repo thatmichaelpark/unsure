@@ -143,7 +143,7 @@
 									<td>{{note.by}}</td>
 									<td>
 										<div ng-if="!editing($last)" ng-bind-html="note.note | nl2br"></div>
-										<textarea ng-if="editing($last)" ng-model="note.note" style="resize: none; width: 100%" focus></textarea>
+										<textarea ng-if="editing($last)" ng-model="note.note" class="textarea" focus></textarea>
 									</td>
 									<td class="non-printing">
 										<button ng-if="orderService.data.currentOrder.status != 'Closed'" ng-click="clickEdit()">Edit</button>
