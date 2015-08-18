@@ -117,8 +117,9 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 	resourceFactory.timerId = setInterval( function () {
 		if ( data.unchanged ) {
 			getOrders();
+			data.currentOrder.$get();
 		}
-	}, 60000 );
+	}, 30000 );
 
 	return {
 		data: data,
