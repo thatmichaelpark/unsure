@@ -1,4 +1,4 @@
-unsureApp.factory( 'resourceFactory', function ( $resource, baseOrdersUrl, baseCustomersUrl, baseInventoryUrl ) {
+unsureApp.factory( 'resourceFactory', function ( $resource, baseOrdersUrl, baseCustomersUrl, baseInventoryUrl, baseUsersUrl ) {
 
 	var timerId; // for setInterval in joblist
 	
@@ -31,6 +31,14 @@ unsureApp.factory( 'resourceFactory', function ( $resource, baseOrdersUrl, baseC
 				add: { method: 'POST', url: baseInventoryUrl + 'add/' },
 				save: { method: 'PUT', url: baseInventoryUrl + 'update/:id' },
 				delete: { method: 'DELETE', url: baseInventoryUrl + 'delete/:id' }
+			}
+		),
+		usersResource: $resource( baseUsersUrl + 'all', { userName: '@userName', id : '@_id' },
+			{
+				get: { method : 'GET', url : baseUsersUrl + 'byusername/:userName' },
+				add: { method : 'POST', url : baseUsersUrl + 'add/' },
+				save: { method : 'PUT', url : baseUsersUrl + 'update/:id' },
+				delete : { method : 'DELETE', url : baseUsersUrl + 'delete/:id' }
 			}
 		),
 		timerId: timerId

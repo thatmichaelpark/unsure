@@ -6,6 +6,8 @@ var baseUrl = 'http://10.0.20.101:3000/';
 unsureApp.constant( 'baseOrdersUrl', baseUrl + 'orders/' );
 unsureApp.constant( 'baseCustomersUrl', baseUrl + 'customers/' );
 unsureApp.constant( 'baseInventoryUrl', baseUrl + 'inventory/' );
+unsureApp.constant( 'baseUsersUrl', baseUrl + 'users/' );
+
 unsureApp.config( function ( $routeProvider, $locationProvider ) {
 
 	$locationProvider.html5Mode( true );
@@ -28,7 +30,26 @@ unsureApp.controller( 'UnsureCtrl', function ( $scope, resourceFactory, $timeout
 	
 	$scope.data = {};
 
-	$scope.users = ['Davis', 'Michael', 'Sam', 'Tony', 'Front'];
+	$scope.users = [];
+	$scope.allUsers = [];
+
+	resourceFactory.usersResource.query().$promise.then(function (userdata) {
+		for (var i=0; i<userdata.length; ++i) {
+			var name = userdata[i].name;
+			if (name != 'All' && name != 'Front' && name != 'Techs') {
+				$scope.users.push(name);
+				$scope.allUsers.push(name);
+			}
+		}
+		$scope.users.sort();
+		$scope.users.push('Front');
+
+		$scope.allUsers.sort();
+		$scope.allUsers.push('Techs');
+		$scope.allUsers.push('Front');
+		$scope.allUsers.push('All');
+	});
+
 	orderService.data.currentUser = 'Front';
 	orderService.data.currentView = 'Front';
 	orderService.viewChanged();

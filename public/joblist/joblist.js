@@ -4,7 +4,6 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 		$scope.inventory = $scope.inventoryResource.query();
 	}
 	$scope.getInventory();
-	$scope.allUsers = ['Davis', 'Michael', 'Sam', 'Tony', 'Techs', 'Front', 'All'];
 
 	
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Awaiting response',
