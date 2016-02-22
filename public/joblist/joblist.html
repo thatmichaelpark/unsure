@@ -12,13 +12,17 @@
 			</div>
 			<div class="col-xs-8" ng-if="orderService.data.currentOrder.orderNo" ng-controller="OrderCtrl" id="right">
 				<div class="well mywell" id="right-top">
-					<span><h3>{{orderService.data.currentOrder.orderNo}}	{{orderService.data.currentOrder.custName}} ({{orderService.data.currentOrder.custNo}})</h3></span>
+					<h3>Pos#:
+						<span ng-if="orderService.data.unchanged" ng-click="orderService.data.unchanged = false">{{orderService.data.currentOrder.positiveOrderNo || 'None'}}</span>
+						<input ng-if="!orderService.data.unchanged" ng-model="orderService.data.currentOrder.positiveOrderNo" focus></input>
+						<span>({{orderService.data.currentOrder.orderNo}})	{{orderService.data.currentOrder.custName}} ({{orderService.data.currentOrder.custNo}})</span>
+					</h3>
 					<span>
 					{{orderService.data.currentOrder.phone1 | tel}}
 					{{orderService.data.currentOrder.phone2 | tel}}
 					</span>
 					<span class="non-printing">
-						<a class="btn pull-right" ng-href="/customers/{{data.currentOrder.custNo}}">Customer Info</a>
+						<a class="btn pull-right" ng-href="/customers/{{orderService.data.currentOrder.custNo}}">Customer Info</a>
 					</span>
 				</div>
 				<div id="right-middle" ng-class="orderService.data.unchanged ? '' : 'yellow'">
