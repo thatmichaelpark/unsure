@@ -58,8 +58,12 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 			}
 		});
 	}
+	var custNo;
+	function setCustNo(n) {
+		custNo = n;
+	}
 	getCustOrders = function () {
-		var orders = ordersResource.getbycustno( { custNo: data.currentOrder.custNo }, function(){
+		var orders = ordersResource.getbycustno( { custNo: custNo }, function(){
 			for (var i=0; i<orders.length; ++i) {	// compute order age
 				var order = orders[i];
 				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
@@ -112,7 +116,6 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 	}
 	
 	function viewChanged() {
-		console.log(data.currentView);;;
 		if (data.currentView === 'All') {
 			data.jobslistView = "joblist/alljobslist.html";
 			getOrdersVar = getAllOrders;
@@ -152,6 +155,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 		data: data,
 		userChanged: userChanged,
 		viewChanged: viewChanged,
+		setCustNo: setCustNo,
 		getOrders: getOrders
 	}
 })

@@ -1,11 +1,12 @@
-unsureApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, resourceFactory, $routeParams ) {
+unsureApp.controller( 'EditCustomerCtrl', function ( $scope, $http, $location, resourceFactory, $routeParams, orderService ) {
 
 	$scope.data = {};
 
 	$scope.$on( '$routeChangeSuccess', function () {
 		if ( $location.path().indexOf( '/customers/' ) == 0 ) {
 			getCustomer( $routeParams.custNo );
-			getOrders( $routeParams.custNo );
+			orderService.setCustNo( $routeParams.custNo );
+			//getOrders( $routeParams.custNo );
 		}
 	});
 	

@@ -1,4 +1,4 @@
-unsureApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $routeParams, resourceFactory ) {
+unsureApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $routeParams, resourceFactory, orderService ) {
 
 	$scope.data = {};
 	
@@ -72,7 +72,7 @@ unsureApp.filter( 'blah', function ( $filter ) {
 	}
 });
 unsureApp.controller( 'TypeaheadCtrl', 
-	function TypeaheadCtrl($scope, $http) {
+	function TypeaheadCtrl($scope, $http, orderService) {
 			
 		getCustomers = function () {
 			$http.get("/customers/all").success(function(data){
@@ -93,7 +93,8 @@ unsureApp.controller( 'TypeaheadCtrl',
 		}
 		$scope.onSelectPart = function ( item ) {
 			$scope.data.customer = angular.copy( item );
-			$scope.getOrders( $scope.data.customer.custNo );;;
+			orderService.setCustNo($scope.data.customer.custNo);
+			//$scope.getOrders( $scope.data.customer.custNo );;;
 		}
 		$scope.blur = function () {
 			var firstName = function(s) {
