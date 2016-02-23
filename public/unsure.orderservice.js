@@ -58,6 +58,27 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 			}
 		});
 	}
+	getCustOrders = function () {
+		var orders = ordersResource.getbycustno( { custNo: data.currentOrder.custNo }, function(){
+			for (var i=0; i<orders.length; ++i) {	// compute order age
+				var order = orders[i];
+				order.age = (new Date() - new Date(order.modifiedDate)) / (24 * 60 * 60000); // days
+			}
+			data.allOrders = [];
+			for ( var i=0; i<orders.length; ++i ) {
+				data.allOrders.push( orders[i] );
+				(function () {
+					var index = i;
+					var c = new customersResource();
+					c.$get( { custNo: orders[index].custNo } ).then( function () {
+						orders[index].custName = makeDisplayName( c );
+						orders[index].phone1 = c.phone1;
+						orders[index].phone2 = c.phone2;
+					});
+				}());
+			}
+		});
+	}
 	var getTechOrders = function () {
 		var orders = ordersResource.query( { user: 'Techs' }, function(){
 			data.ordersOnBench = [];
@@ -91,14 +112,18 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 	}
 	
 	function viewChanged() {
+		console.log(data.currentView);;;
 		if (data.currentView === 'All') {
-			data.jobslistView = "joblist/alljobslist.html"
+			data.jobslistView = "joblist/alljobslist.html";
 			getOrdersVar = getAllOrders;
 		} else if (data.currentView === 'Techs') {
-			data.jobslistView = "joblist/techjobslist.html"
+			data.jobslistView = "joblist/techjobslist.html";
 			getOrdersVar = getTechOrders;
+		} else if (data.currentView === 'Cust') {
+			data.jobslistView = "custjobslist.html";
+			getOrdersVar = getCustOrders;
 		} else {
-			data.jobslistView = "joblist/userjobslist.html"
+			data.jobslistView = "joblist/userjobslist.html";
 			getOrdersVar = getUserOrders;
 		}
 		getOrders();

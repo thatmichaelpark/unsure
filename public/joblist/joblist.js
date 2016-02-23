@@ -51,9 +51,9 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	
 	$scope.$on( '$routeChangeSuccess', function () {
 		if ( $location.path().indexOf( '/joblist/' ) == 0 ) {
-			$scope.data.currentOrderNo = Number( $routeParams.orderNo );
+			orderService.data.currentView = "Cust";
+			orderService.viewChanged();
 		}
-		///$scope.getOrders(); //hack
 	});
 });
 
