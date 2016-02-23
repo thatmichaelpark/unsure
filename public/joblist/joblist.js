@@ -9,7 +9,7 @@ unsureApp.controller( 'JoblistCtrl', function ( $scope, $routeParams, $location,
 	$scope.statuses = ['Intake', 'Checked in', 'In diags', 'Needs approval', 'Awaiting response',
 	'Work approved', 'In progress', 'Needs attention', 
 	'Part request',	'Part ordered', 'Part received',
-	'Needs QA', 'Complete: call customer', 'Customer notified', 'Declined', 'Closed' ];
+	'Needs QA', 'Complete: call customer', 'Customer notified', 'On hold', 'Declined', 'Closed' ];
 
 	$scope.clickOrder = function( o ) {
 		if ( orderService.data.unchanged ) {
