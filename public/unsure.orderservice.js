@@ -11,6 +11,9 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 	var ordersResource = resourceFactory.ordersResource;
 	var customersResource = resourceFactory.customersResource;
 	
+	function getOrderByNo(orderNo) {
+		data.currentOrder = ordersResource.get( {orderNo: orderNo});
+	}
 	function getUserOrders() {
 		var orders = ordersResource.query( { user: data.currentView }, function(){
 			for (var i=0; i<orders.length; ++i) {	// compute order age
@@ -123,7 +126,7 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 			data.jobslistView = "joblist/techjobslist.html";
 			getOrdersVar = getTechOrders;
 		} else if (data.currentView === 'Cust') {
-			data.jobslistView = "custjobslist.html";
+			data.jobslistView = "joblist/custjobslist.html";
 			getOrdersVar = getCustOrders;
 		} else {
 			data.jobslistView = "joblist/userjobslist.html";
@@ -156,6 +159,8 @@ unsureApp.factory( 'orderService', function ( $resource, resourceFactory ) {
 		userChanged: userChanged,
 		viewChanged: viewChanged,
 		setCustNo: setCustNo,
-		getOrders: getOrders
+		getOrders: getOrders,
+		getOrderByNo: getOrderByNo,
+		makeDisplayName: makeDisplayName
 	}
 })

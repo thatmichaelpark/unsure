@@ -20,20 +20,22 @@ unsureApp.controller( 'CreateOrderCtrl', function ( $scope, $http, $location, $r
 				$scope.currentOrderNo = Number(orderNo);
 				$scope.currentOrder = {};
 				$scope.currentOrder.orderNo = Number(orderNo);
+				$scope.currentOrder.positiveOrderNo = $scope.data.positiveOrderNo;
 				$scope.currentOrder.custNo = $scope.data.customer.custNo;
-				$scope.currentOrder.custName = makeDisplayName( $scope.data.customer );
+				$scope.currentOrder.custName = orderService.makeDisplayName( $scope.data.customer );
 				$scope.currentOrder.bill = [];
 				$scope.currentOrder.tenders = [];
-				$scope.currentOrder.notes = [ { date: new Date(), by: $scope.currentUser, note: $scope.data.note } ];
+				$scope.currentOrder.notes = [ { date: new Date(), by: orderService.data.currentUser, note: $scope.data.note } ];
 				$scope.currentOrder.internalNote = '';
 				$scope.currentOrder.status = "Intake";
-				$scope.currentOrder.assignedTo = $scope.currentUser;
-				$scope.currentOrder.assignedBy = $scope.currentUser;
+				$scope.currentOrder.assignedTo = orderService.data.currentUser;
+				$scope.currentOrder.assignedBy = orderService.data.currentUser;
 				$scope.currentOrder.createdDate = new Date();
 				$scope.currentOrder.modifiedDate = new Date();
 				$scope.currentOrder.closedDate = null;
 				new $scope.ordersResource( $scope.currentOrder ).$add().then(function(){
-					$location.path( '/joblist/' + orderNo );
+					orderService.getOrderByNo(orderNo);
+					$location.path( '/');
 				});
 			});
 		}
